@@ -8,6 +8,7 @@ import {
   useEmotionCache,
 } from "@mantine/core";
 import { spacing } from "./spacing";
+import { colors } from "./colors";
 
 type Props = {
   children: ReactNode;
@@ -40,4 +41,5 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
 
 const theme: MantineThemeOverride = {
   spacing: { ...spacing },
+  ...colors,
 };
