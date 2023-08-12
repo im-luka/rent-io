@@ -9,6 +9,8 @@ import {
 } from "@mantine/core";
 import { spacing } from "./spacing";
 import { colors } from "./colors";
+import { typography } from "./typography";
+import { components } from "./components";
 
 type Props = {
   children: ReactNode;
@@ -42,4 +44,6 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
 const theme: MantineThemeOverride = {
   spacing: { ...spacing },
   ...colors,
+  ...typography,
+  ...components,
 };

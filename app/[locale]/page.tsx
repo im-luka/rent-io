@@ -1,7 +1,8 @@
 "use client";
 
-import { Button, Stack, Text } from "@mantine/core";
+import { Button, Stack } from "@mantine/core";
 import { useTranslations } from "next-intl";
+import { Typography } from "../_components/mantine/typography";
 
 export default function HomePage() {
   const t = useTranslations("metadata.home");
@@ -12,8 +13,7 @@ export default function HomePage() {
       <p>{t("description")}</p>
       <Stack>
         <Button>click</Button>
-        <Text>Text #01</Text>
-        <Text mt="xl">Text #02</Text>
+        <Typography>I am Lux</Typography>
       </Stack>
     </>
   );
