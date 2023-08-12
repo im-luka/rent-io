@@ -1,10 +1,7 @@
-import { Inter } from "next/font/google";
 import { useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { Providers } from "../_components/providers";
 import { getTranslator } from "next-intl/server";
-
-const inter = Inter({ subsets: ["latin"] });
 
 type Metadata = { params: { locale: string } };
 
@@ -30,7 +27,7 @@ export default function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <body>
         <Providers locale={locale}>{children}</Providers>
       </body>
     </html>
