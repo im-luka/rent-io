@@ -42,8 +42,11 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
 };
 
 const theme: MantineThemeOverride = {
-  spacing: { ...spacing },
+  ...spacing,
   ...colors,
   ...typography,
   ...components,
+  cursorType: "pointer",
+  transitionTimingFunction: "ease-out",
+  loader: "oval",
 };
