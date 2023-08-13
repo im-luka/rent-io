@@ -1,5 +1,3 @@
-"use client";
-
 import { FC, ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "./theme";
