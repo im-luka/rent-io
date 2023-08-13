@@ -5,5 +5,9 @@
       "title": "Rent.io - Travel & Explore with Comfort",
       "description": "Unlock Extraordinary Stays: Your Ultimate Rental App for Unforgettable Getaways. Book Now & Create Memories!"
     }
+  },
+  "navbar": {
+    "logoAlt": "Logo",
+    "menu": {}
   }
 }

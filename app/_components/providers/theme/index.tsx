@@ -5,6 +5,7 @@ import { useServerInsertedHTML } from "next/navigation";
 import {
   MantineProvider,
   MantineThemeOverride,
+  rem,
   useEmotionCache,
 } from "@mantine/core";
 import { spacing } from "./spacing";
@@ -42,6 +43,7 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
 };
 
 const theme: MantineThemeOverride = {
+  // colorScheme: "dark",
   ...spacing,
   ...colors,
   ...typography,
@@ -49,4 +51,11 @@ const theme: MantineThemeOverride = {
   cursorType: "pointer",
   transitionTimingFunction: "ease-out",
   loader: "oval",
+  globalStyles: (theme) => ({
+    body: {
+      maxWidth: rem(2056),
+      marginInline: "auto",
+      paddingInline: theme.spacing.sm,
+    },
+  }),
 };
