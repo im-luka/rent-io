@@ -6,8 +6,7 @@ import { ActionIcon, createStyles } from "@mantine/core";
 import { IconMoonStars, IconSunFilled } from "@tabler/icons-react";
 
 export const ColorSchemeIcon: FC = () => {
-  const [{ isDarkTheme }, { toggleColorScheme }] = useColorScheme();
-  const { classes } = useStyles(isDarkTheme);
+  const { classes, isDarkTheme, toggleColorScheme } = useColorSchemeIcon();
 
   return (
     <ActionIcon className={classes.icon} onClick={() => toggleColorScheme()}>
@@ -15,6 +14,13 @@ export const ColorSchemeIcon: FC = () => {
     </ActionIcon>
   );
 };
+
+function useColorSchemeIcon() {
+  const [{ isDarkTheme }, { toggleColorScheme }] = useColorScheme();
+  const { classes } = useStyles(isDarkTheme);
+
+  return { classes, isDarkTheme, toggleColorScheme };
+}
 
 const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
   icon: {

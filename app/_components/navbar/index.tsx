@@ -1,15 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import {
-  Box,
-  Container,
-  Group,
-  Header,
-  createStyles,
-  rem,
-} from "@mantine/core";
-import { useTranslations } from "next-intl";
+import { Box, Group, Header, createStyles } from "@mantine/core";
 import { Logo } from "./logo";
 import { Menu } from "./menu";
 import { Actions } from "./actions";
@@ -18,7 +10,7 @@ import { InternationalizationSwitch } from "./internationalization-switch";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 export const Navbar: FC = () => {
-  const { t, classes, smallScreen } = useNavbar();
+  const { classes, smallScreen } = useNavbar();
 
   return (
     <Header height={smallScreen ? "auto" : 82} pb={smallScreen ? "md" : "0"}>
@@ -42,11 +34,10 @@ export const Navbar: FC = () => {
 };
 
 function useNavbar() {
-  const t = useTranslations("navbar");
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
   const smallScreen = useMediaQuery("xs", "smallerThan");
 
-  return { t, classes, smallScreen };
+  return { classes, smallScreen };
 }
 
 const useStyles = createStyles((theme) => ({

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 export const Logo: FC = () => {
-  const t = useTranslations("navbar");
+  const { t } = useLogo();
 
   return (
     <Image
@@ -17,3 +17,9 @@ export const Logo: FC = () => {
     />
   );
 };
+
+function useLogo() {
+  const t = useTranslations("navbar");
+
+  return { t };
+}

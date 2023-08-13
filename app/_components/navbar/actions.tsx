@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { Button, Group, createStyles, useMantineTheme } from "@mantine/core";
+import { Button, Group, createStyles } from "@mantine/core";
 import { IconPlus, IconWorldPin } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { Typography } from "../mantine/typography";

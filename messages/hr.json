@@ -10,10 +10,11 @@
     "logoAlt": "Logo",
     "actions": {
       "startExploring": "Pokreni Putovanje",
-      "addService": "Dodaj Uslugu"
+      "explore": "Putuj",
+      "addService": "Dodaj Uslugu",
+      "add": "Dodaj"
     },
     "intl": {
-      "ariaLabel": "Toggle internationalization",
       "en": {
         "title": "Engleski",
         "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
@@ -23,6 +24,9 @@
         "flag": "🇭🇷"
       }
     },
-    "menu": {}
+    "menu": {
+      "login": "Prijava",
+      "register": "Registracija"
+    }
   }
 }
