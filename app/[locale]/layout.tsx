@@ -11,6 +11,7 @@ export async function generateMetadata({ params: { locale } }: Metadata) {
   return {
     title: t("title"),
     description: t("description"),
+    icons: [{ rel: "icon", url: "images/logo.png" }],
   };
 }
 
