@@ -8,6 +8,20 @@
   },
   "navbar": {
     "logoAlt": "Logo",
+    "actions": {
+      "startExploring": "Start Exploring",
+      "addService": "Add Service"
+    },
+    "intl": {
+      "en": {
+        "title": "English",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "hr": {
+        "title": "Croatian",
+        "flag": "🇭🇷"
+      }
+    },
     "menu": {}
   }
 }

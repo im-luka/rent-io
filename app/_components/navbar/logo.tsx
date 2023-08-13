@@ -8,6 +8,12 @@ export const Logo: FC = () => {
   const t = useTranslations("navbar");
 
   return (
-    <Image src="/images/logo.png" alt={t("logoAlt")} width={102} height={102} />
+    <Image
+      src="/images/logo.png"
+      alt={t("logoAlt")}
+      width={102}
+      height={102}
+      priority
+    />
   );
 };

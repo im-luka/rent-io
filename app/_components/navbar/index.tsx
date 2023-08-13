@@ -7,6 +7,7 @@ import { Logo } from "./logo";
 import { Menu } from "./menu";
 import { Actions } from "./actions";
 import { ColorSchemeIcon } from "./color-scheme-icon";
+import { InternationalizationSwitch } from "./internationalization-switch";
 
 export const Navbar: FC = () => {
   const { t, classes } = useNavbar();
@@ -23,6 +24,7 @@ export const Navbar: FC = () => {
         <Box className={classes.zIndex}>
           <Group>
             <ColorSchemeIcon />
+            <InternationalizationSwitch />
             <Menu />
           </Group>
         </Box>

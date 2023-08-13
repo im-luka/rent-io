@@ -5,5 +5,24 @@
       "title": "Rent.io - Putujte i Istražujte s Udobnošću",
       "description": "Otkrijte Izvanredne Boravke: Vaša Konačna Aplikacija za Najnevjerojatnije Bijegove. Rezervirajte Sada i Stvorite Uspomene!"
     }
+  },
+  "navbar": {
+    "logoAlt": "Logo",
+    "actions": {
+      "startExploring": "Pokreni Putovanje",
+      "addService": "Dodaj Uslugu"
+    },
+    "intl": {
+      "ariaLabel": "Toggle internationalization",
+      "en": {
+        "title": "Engleski",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "hr": {
+        "title": "Hrvatski",
+        "flag": "🇭🇷"
+      }
+    },
+    "menu": {}
   }
 }
