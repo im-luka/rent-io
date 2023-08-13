@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Logo } from "./logo";
 import { Menu } from "./menu";
 import { Actions } from "./actions";
+import { ColorSchemeIcon } from "./color-scheme-icon";
 
 export const Navbar: FC = () => {
   const { t, classes } = useNavbar();
@@ -21,6 +22,7 @@ export const Navbar: FC = () => {
         </Box>
         <Box className={classes.zIndex}>
           <Group>
+            <ColorSchemeIcon />
             <Menu />
           </Group>
         </Box>
@@ -44,6 +46,7 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+
   zIndex: {
     zIndex: 1,
   },
