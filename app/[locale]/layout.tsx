@@ -2,7 +2,6 @@ import { useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { Providers } from "../_components/providers";
 import { getTranslator } from "next-intl/server";
-import { Navbar } from "../_components/navbar";
 
 type Metadata = { params: { locale: string } };
 
@@ -30,10 +29,7 @@ export default function RootLayout({
   return (
     <html lang={locale}>
       <body>
-        <Providers locale={locale}>
-          <Navbar />
-          {children}
-        </Providers>
+        <Providers locale={locale}>{children}</Providers>
       </body>
     </html>
   );
