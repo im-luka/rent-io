@@ -16,6 +16,8 @@ import { typography } from "./typography";
 import { components } from "./components";
 import { getCookie, setCookie } from "cookies-next";
 
+const COLOR_SCHEME_COOKIE = "color-scheme";
+
 type Props = {
   children: ReactNode;
 };
@@ -26,7 +28,9 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
     const nextColorScheme =
       value || (colorScheme === "dark" ? "light" : "dark");
     setColorScheme(nextColorScheme);
-    setCookie("color-scheme", nextColorScheme);
+    setCookie(COLOR_SCHEME_COOKIE, nextColorScheme, {
+      maxAge: 60 * 60 * 24 * 30,
+    });
   };
 
   const cache = useEmotionCache();
@@ -42,7 +46,7 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
   ));
 
   useLayoutEffect(() => {
-    const cookie = getCookie("color-scheme") as ColorScheme;
+    const cookie = getCookie(COLOR_SCHEME_COOKIE) as ColorScheme;
     setColorScheme(cookie);
   }, []);
 
