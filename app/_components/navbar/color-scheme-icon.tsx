@@ -1,3 +1,5 @@
+"use client";
+
 import { FC } from "react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { ActionIcon, createStyles } from "@mantine/core";

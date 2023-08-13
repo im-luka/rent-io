@@ -1,3 +1,5 @@
+"use client";
+
 import { FC } from "react";
 import { Button, Group, useMantineTheme } from "@mantine/core";
 import { IconPlus, IconWorldPin } from "@tabler/icons-react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useLayoutEffect, useState } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import {
   ColorScheme,
@@ -10,22 +10,24 @@ import {
   rem,
   useEmotionCache,
 } from "@mantine/core";
-import { useColorScheme } from "@mantine/hooks";
 import { spacing } from "./spacing";
 import { colors } from "./colors";
 import { typography } from "./typography";
 import { components } from "./components";
+import { getCookie, setCookie } from "cookies-next";
 
 type Props = {
   children: ReactNode;
 };
 
 export const ThemeProvider: FC<Props> = ({ children }) => {
-  const preferredColorScheme = useColorScheme();
-  const [colorScheme, setColorScheme] =
-    useState<ColorScheme>(preferredColorScheme);
-  const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const nextColorScheme =
+      value || (colorScheme === "dark" ? "light" : "dark");
+    setColorScheme(nextColorScheme);
+    setCookie("color-scheme", nextColorScheme);
+  };
 
   const cache = useEmotionCache();
   cache.compat = true;
@@ -38,6 +40,11 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
       }}
     />
   ));
+
+  useLayoutEffect(() => {
+    const cookie = getCookie("color-scheme") as ColorScheme;
+    setColorScheme(cookie);
+  }, []);
 
   return (
     <ColorSchemeProvider
