@@ -22,7 +22,7 @@ export const Navbar: FC = () => {
           <Logo />
         </Box>
         <Box className={classes.zIndex}>
-          <Group>
+          <Group spacing="sm">
             <ColorSchemeIcon />
             <InternationalizationSwitch />
             <Menu />
