@@ -1,28 +1,36 @@
 "use client";
 
 import { FC } from "react";
-import { Box, Group, Header, createStyles } from "@mantine/core";
+import {
+  Box,
+  Container,
+  Group,
+  Header,
+  createStyles,
+  rem,
+} from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { Logo } from "./logo";
 import { Menu } from "./menu";
 import { Actions } from "./actions";
 import { ColorSchemeIcon } from "./color-scheme-icon";
 import { InternationalizationSwitch } from "./internationalization-switch";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export const Navbar: FC = () => {
-  const { t, classes } = useNavbar();
+  const { t, classes, smallScreen } = useNavbar();
 
   return (
-    <Header height={82}>
-      <Group h="100%" px="xl" pos="relative" position="apart">
-        <Box className={classes.zIndex}>
+    <Header height={smallScreen ? "auto" : 82} pb={smallScreen ? "md" : "0"}>
+      <Group className={classes.containerBlock}>
+        <Box className={classes.actionsBlock}>
           <Actions />
         </Box>
         <Box className={classes.logoBlock}>
           <Logo />
         </Box>
-        <Box className={classes.zIndex}>
-          <Group spacing="sm">
+        <Box className={classes.settingsBlock}>
+          <Group spacing={smallScreen ? "xs" : "sm"}>
             <ColorSchemeIcon />
             <InternationalizationSwitch />
             <Menu />
@@ -35,21 +43,44 @@ export const Navbar: FC = () => {
 
 function useNavbar() {
   const t = useTranslations("navbar");
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
+  const smallScreen = useMediaQuery("xs", "smallerThan");
 
-  return { t, classes };
+  return { t, classes, smallScreen };
 }
 
 const useStyles = createStyles((theme) => ({
-  logoBlock: {
-    position: "absolute",
-    left: 0,
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
+  containerBlock: {
+    position: "relative",
+    height: "100%",
+    paddingInline: theme.spacing.xl,
+    justifyContent: "space-between",
+    [theme.fn.smallerThan("xs")]: {
+      paddingInline: theme.spacing.xs,
+      gap: 0,
+    },
   },
 
-  zIndex: {
+  logoBlock: {
+    order: -1,
+    [theme.fn.largerThan("xs")]: {
+      position: "absolute",
+      left: 0,
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+    },
+  },
+
+  actionsBlock: {
+    zIndex: 1,
+    [theme.fn.smallerThan("xs")]: {
+      order: 1,
+      width: "100%",
+    },
+  },
+
+  settingsBlock: {
     zIndex: 1,
   },
 }));

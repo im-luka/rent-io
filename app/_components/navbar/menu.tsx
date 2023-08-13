@@ -3,25 +3,24 @@
 import { FC } from "react";
 import {
   Avatar,
-  Button,
   Group,
   Menu as MantineMenu,
   UnstyledButton,
   createStyles,
   rem,
-  useMantineTheme,
 } from "@mantine/core";
 import {
   IconBallpen,
   IconChevronDown,
   IconDoorEnter,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
 export const Menu: FC = () => {
-  const { classes, theme } = useStyles();
+  const { t, classes } = useMenu();
 
   return (
-    <MantineMenu>
+    <MantineMenu position="bottom-end">
       <MantineMenu.Target>
         <UnstyledButton>
           <Group className={classes.targetBlock}>
@@ -32,15 +31,22 @@ export const Menu: FC = () => {
       </MantineMenu.Target>
       <MantineMenu.Dropdown>
         <MantineMenu.Item icon={<IconDoorEnter size={14} stroke={1.5} />}>
-          Login
+          {t("login")}
         </MantineMenu.Item>
         <MantineMenu.Item icon={<IconBallpen size={14} stroke={1.5} />}>
-          Register
+          {t("register")}
         </MantineMenu.Item>
       </MantineMenu.Dropdown>
     </MantineMenu>
   );
 };
+
+function useMenu() {
+  const t = useTranslations("navbar.menu");
+  const { classes } = useStyles();
+
+  return { t, classes };
+}
 
 const useStyles = createStyles((theme) => ({
   targetBlock: {

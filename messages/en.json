@@ -10,7 +10,9 @@
     "logoAlt": "Logo",
     "actions": {
       "startExploring": "Start Exploring",
-      "addService": "Add Service"
+      "explore": "Explore",
+      "addService": "Add Service",
+      "add": "Add"
     },
     "intl": {
       "en": {
@@ -22,6 +24,9 @@
         "flag": "🇭🇷"
       }
     },
-    "menu": {}
+    "menu": {
+      "login": "Login",
+      "register": "Register"
+    }
   }
 }

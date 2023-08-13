@@ -1,21 +1,31 @@
 "use client";
 
 import { FC } from "react";
-import { Box, Center, Group, SegmentedControl } from "@mantine/core";
+import {
+  Box,
+  Center,
+  Group,
+  MediaQuery,
+  SegmentedControl,
+  useMantineTheme,
+} from "@mantine/core";
 import { Typography } from "../mantine/typography";
 import { useTranslations } from "next-intl";
 import { useIntl } from "@/hooks/use-intl";
 import { LOCALES } from "@/utils/constants";
 
 export const InternationalizationSwitch: FC = () => {
-  const { t, router, pathname, locale } = useInternationalizationSwitch();
+  const { t, theme, router, pathname, locale } =
+    useInternationalizationSwitch();
 
   const localeLabel = (locale: string) => (
     <Center onClick={() => router.replace(pathname, { locale })}>
       <Box>{t(`${locale}.flag`)}</Box>
-      <Typography size="xs" ml={10}>
-        {t(`${locale}.title`)}
-      </Typography>
+      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+        <Typography size="xs" ml={10}>
+          {t(`${locale}.title`)}
+        </Typography>
+      </MediaQuery>
     </Center>
   );
 
@@ -32,7 +42,8 @@ export const InternationalizationSwitch: FC = () => {
 
 function useInternationalizationSwitch() {
   const t = useTranslations("navbar.intl");
+  const theme = useMantineTheme();
   const { router, pathname, locale } = useIntl();
 
-  return { t, router, pathname, locale };
+  return { t, theme, router, pathname, locale };
 }
