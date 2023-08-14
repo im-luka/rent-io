@@ -22,8 +22,7 @@ export const LayoutContainer: FC<Props> = ({ children }) => {
             src="/images/auth-cover.jpg"
             alt={t("coverImgAlt")}
             fill
-            objectFit="cover"
-            objectPosition="right"
+            className={classes.img}
           />
         </Box>
       )}
@@ -45,5 +44,9 @@ const useStyles = createStyles((theme) => ({
     height: "100%",
     width: "100%",
     flex: 1,
+  },
+  img: {
+    objectFit: "cover",
+    objectPosition: "right",
   },
 }));
