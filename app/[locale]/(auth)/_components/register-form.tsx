@@ -24,25 +24,25 @@ export const RegisterForm: FC = () => {
       <Stack>
         <Stack spacing="xs">
           <TextInput
-            placeholder="example@gmail.com"
-            label="Email"
+            label={t("email")}
+            placeholder={t("emailPlaceholder")}
             withAsterisk
           />
           <Group>
             <TextInput
-              placeholder={t("firstNamePlaceholder")}
               label={t("firstName")}
+              placeholder={t("firstNamePlaceholder")}
               withAsterisk
             />
             <TextInput
-              placeholder={t("lastNamePlaceholder")}
               label={t("lastName")}
+              placeholder={t("lastNamePlaceholder")}
               withAsterisk
             />
           </Group>
           <PasswordInput
-            placeholder={t("password")}
             label={t("password")}
+            placeholder={t("password")}
             withAsterisk
           />
         </Stack>
