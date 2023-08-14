@@ -1,5 +1,3 @@
-import { Navbar } from "@/app/_components/navbar";
-
 export default function HomePage() {
-  return <Navbar />;
+  return <h1>Home Page</h1>;
 }
