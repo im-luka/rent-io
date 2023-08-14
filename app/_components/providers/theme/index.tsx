@@ -76,10 +76,17 @@ const theme: MantineThemeOverride = {
   transitionTimingFunction: "ease-out",
   loader: "oval",
   globalStyles: (theme) => ({
+    html: {
+      height: "100%",
+    },
     body: {
+      height: "100%",
       maxWidth: rem(2056),
       marginInline: "auto",
       paddingInline: theme.spacing.sm,
+    },
+    ".flex-1": {
+      flex: 1,
     },
   }),
 };

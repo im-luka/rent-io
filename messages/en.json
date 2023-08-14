@@ -28,5 +28,8 @@
       "login": "Login",
       "register": "Register"
     }
+  },
+  "auth": {
+    "coverImgAlt": "Traveling camping trailer in a night illustration"
   }
 }
