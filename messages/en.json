@@ -30,6 +30,22 @@
     }
   },
   "auth": {
-    "coverImgAlt": "Traveling camping trailer in a night illustration"
+    "coverImgAlt": "Traveling camping trailer in a night illustration",
+    "register": {
+      "title": "Get Started with <s>Rent.io</s>",
+      "form": {
+        "email": "Email",
+        "emailPlaceholder": "example@gmail.com",
+        "firstName": "First Name",
+        "firstNamePlaceholder": "John",
+        "lastName": "Last Name",
+        "lastNamePlaceholder": "Doe",
+        "password": "Password",
+        "agreeTerms": "By registering, you agree to our <s>Terms of Use</s> and <s>Privacy Policy</s>",
+        "registerAction": "Register Now",
+        "googleAction": "Continue with Google",
+        "githubAction": "Continue with GitHub"
+      }
+    }
   }
 }
