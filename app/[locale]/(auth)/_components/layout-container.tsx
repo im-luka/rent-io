@@ -1,5 +1,6 @@
 "use client";
 
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { Box, Group, createStyles } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -10,20 +11,22 @@ type Props = {
 };
 
 export const LayoutContainer: FC<Props> = ({ children }) => {
-  const { t, classes } = useLayoutContainer();
+  const { t, classes, largeScreen } = useLayoutContainer();
 
   return (
     <Group h="100%">
       <Box className="flex-1">{children}</Box>
-      <Box className={classes.imgBlock}>
-        <Image
-          src="/images/auth-cover.jpg"
-          alt={t("coverImgAlt")}
-          fill
-          objectFit="cover"
-          objectPosition="right"
-        />
-      </Box>
+      {largeScreen && (
+        <Box className={classes.imgBlock}>
+          <Image
+            src="/images/auth-cover.jpg"
+            alt={t("coverImgAlt")}
+            fill
+            objectFit="cover"
+            objectPosition="right"
+          />
+        </Box>
+      )}
     </Group>
   );
 };
@@ -31,8 +34,9 @@ export const LayoutContainer: FC<Props> = ({ children }) => {
 function useLayoutContainer() {
   const t = useTranslations("auth");
   const { classes } = useStyles();
+  const largeScreen = useMediaQuery("md", "largerThan");
 
-  return { t, classes };
+  return { t, classes, largeScreen };
 }
 
 const useStyles = createStyles((theme) => ({
