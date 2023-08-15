@@ -11,16 +11,23 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { FormTextInput } from "@/app/_components/base/form/text-input";
-import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 import { EmailAutocomplete } from "@/app/_components/email-autocomplete";
+import { PasswordProgress } from "@/app/_components/password-progress";
 
 export const RegisterForm: FC = () => {
-  const { t, classes, registerForm, namesErrors, onSubmit } = useRegisterForm();
+  const {
+    t,
+    classes,
+    registerForm,
+    namesErrors,
+    passwordValidationChecks,
+    onSubmit,
+  } = useRegisterForm();
 
   return (
     <FormProvider {...registerForm}>
       <form onSubmit={onSubmit}>
-        <Stack>
+        <Stack spacing="sm">
           <Stack spacing="xs">
             <EmailAutocomplete
               name="email"
@@ -44,8 +51,9 @@ export const RegisterForm: FC = () => {
                 mb={namesErrors.lastName ? "md" : 0}
               />
             </Group>
-            <FormPasswordInput
+            <PasswordProgress
               name="password"
+              validationChecks={passwordValidationChecks}
               label={t("password")}
               placeholder={t("password")}
               withAsterisk
@@ -104,6 +112,7 @@ function useRegisterForm() {
       lastName: "",
       password: "",
     },
+    mode: "onTouched",
   });
   const {
     formState: { errors },
@@ -113,6 +122,7 @@ function useRegisterForm() {
     firstName: !!(!errors.firstName && errors.lastName),
     lastName: !!(!errors.lastName && errors.firstName),
   };
+  const passwordValidationChecks = registerSchema().shape.password._def.checks;
 
   const onSubmit = (values: RegisterFormValues) => {
     console.log(values);
@@ -123,17 +133,25 @@ function useRegisterForm() {
     classes,
     registerForm,
     namesErrors,
+    passwordValidationChecks,
     onSubmit: handleSubmit(onSubmit),
   };
 }
 
 type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
-const registerSchema = (required: string) =>
+const registerSchema = (required?: string) =>
   z.object({
     email: z.string().email(),
     firstName: z.string().nonempty(required),
     lastName: z.string().nonempty(required),
-    password: z.string().nonempty(required),
+    password: z
+      .string()
+      .nonempty("Password is required")
+      .min(8, "At least 8 characters")
+      .regex(RegExp("(?=.*[a-z])"), "One lowercase letter")
+      .regex(RegExp("(?=.*[A-Z])"), "One uppercase letter")
+      .regex(RegExp("(?=.*\\d)"), "At least 1 digit")
+      .regex(RegExp("(?=.*\\W)"), "At least 1 symbol"),
   });
 
 const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
