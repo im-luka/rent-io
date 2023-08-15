@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { FormTextInput } from "@/app/_components/base/form/text-input";
 import { FormPasswordInput } from "@/app/_components/base/form/password-input";
+import { EmailAutocomplete } from "@/app/_components/email-autocomplete";
 
 export const RegisterForm: FC = () => {
   const { t, classes, registerForm, namesErrors, onSubmit } = useRegisterForm();
@@ -21,7 +22,7 @@ export const RegisterForm: FC = () => {
       <form onSubmit={onSubmit}>
         <Stack>
           <Stack spacing="xs">
-            <FormTextInput
+            <EmailAutocomplete
               name="email"
               label={t("email")}
               placeholder={t("emailPlaceholder")}
