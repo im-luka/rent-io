@@ -13,7 +13,11 @@ export const Navbar: FC = () => {
   const { classes, smallScreen } = useNavbar();
 
   return (
-    <Header height={smallScreen ? "auto" : 82} pb={smallScreen ? "md" : "0"}>
+    <Header
+      height={smallScreen ? "auto" : 82}
+      mih={smallScreen ? "auto" : 82}
+      pb={smallScreen ? "md" : "0"}
+    >
       <Group className={classes.containerBlock}>
         <Box className={classes.actionsBlock}>
           <Actions />

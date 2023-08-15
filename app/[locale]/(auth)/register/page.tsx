@@ -14,6 +14,7 @@ export default function RegisterPage() {
       align="center"
       px="sm"
       py="xl"
+      m="xs"
       bg={isDarkTheme ? theme.colors.dark[6] : theme.colors.gray[0]}
       sx={{ borderRadius: theme.radius.md }}
     >
