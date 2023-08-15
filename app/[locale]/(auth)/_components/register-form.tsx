@@ -13,6 +13,7 @@ import { z } from "zod";
 import { FormTextInput } from "@/app/_components/base/form/text-input";
 import { EmailAutocomplete } from "@/app/_components/email-autocomplete";
 import { PasswordProgress } from "@/app/_components/password-progress";
+import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 
 export const RegisterForm: FC = () => {
   const {
@@ -58,6 +59,16 @@ export const RegisterForm: FC = () => {
               placeholder={t("password")}
               withAsterisk
             />
+
+            {!registerForm.formState.errors.password &&
+              registerForm.formState.touchedFields.password && (
+                <FormPasswordInput
+                  name="confirmPassword"
+                  label={t("confirmPassword")}
+                  placeholder={t("confirmPassword")}
+                  withAsterisk
+                />
+              )}
           </Stack>
           <Stack mt="md">
             <Typography size="xs" fw="400" align="center">
@@ -111,6 +122,7 @@ function useRegisterForm() {
       firstName: "",
       lastName: "",
       password: "",
+      confirmPassword: "",
     },
     mode: "onTouched",
   });
@@ -122,7 +134,8 @@ function useRegisterForm() {
     firstName: !!(!errors.firstName && errors.lastName),
     lastName: !!(!errors.lastName && errors.firstName),
   };
-  const passwordValidationChecks = registerSchema().shape.password._def.checks;
+  const passwordValidationChecks =
+    registerSchema()._def.schema.shape.password._def.checks;
 
   const onSubmit = (values: RegisterFormValues) => {
     console.log(values);
@@ -140,19 +153,25 @@ function useRegisterForm() {
 
 type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
 const registerSchema = (required?: string) =>
-  z.object({
-    email: z.string().email(),
-    firstName: z.string().nonempty(required),
-    lastName: z.string().nonempty(required),
-    password: z
-      .string()
-      .nonempty("Password is required")
-      .min(8, "At least 8 characters")
-      .regex(RegExp("(?=.*[a-z])"), "One lowercase letter")
-      .regex(RegExp("(?=.*[A-Z])"), "One uppercase letter")
-      .regex(RegExp("(?=.*\\d)"), "At least 1 digit")
-      .regex(RegExp("(?=.*\\W)"), "At least 1 symbol"),
-  });
+  z
+    .object({
+      email: z.string().email(),
+      firstName: z.string().nonempty(required),
+      lastName: z.string().nonempty(required),
+      password: z
+        .string()
+        .nonempty("Password is required")
+        .min(8, "At least 8 characters")
+        .regex(RegExp("(?=.*[a-z])"), "One lowercase letter")
+        .regex(RegExp("(?=.*[A-Z])"), "One uppercase letter")
+        .regex(RegExp("(?=.*\\d)"), "At least 1 digit")
+        .regex(RegExp("(?=.*\\W)"), "At least 1 symbol"),
+      confirmPassword: z.string(),
+    })
+    .refine(({ confirmPassword, password }) => password === confirmPassword, {
+      message: "Password doesn't match.",
+      path: ["confirmPassword"],
+    });
 
 const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
   githubBtn: {

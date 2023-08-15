@@ -44,6 +44,7 @@
         "lastName": "Last Name",
         "lastNamePlaceholder": "Doe",
         "password": "Password",
+        "confirmPassword": "Confirm password",
         "agreeTerms": "By registering, you agree to our <s>Terms of Use</s> and <s>Privacy Policy</s>",
         "registerAction": "Register Now",
         "googleAction": "Continue with Google",
