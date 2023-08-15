@@ -6,6 +6,9 @@
       "description": "Unlock Extraordinary Stays: Your Ultimate Rental App for Unforgettable Getaways. Book Now & Create Memories!"
     }
   },
+  "validation": {
+    "required": "Required field!"
+  },
   "navbar": {
     "logoAlt": "Logo",
     "actions": {

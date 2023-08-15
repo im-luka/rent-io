@@ -22,6 +22,7 @@ export const LayoutContainer: FC<Props> = ({ children }) => {
             src="/images/auth-cover.jpg"
             alt={t("coverImgAlt")}
             fill
+            priority
             className={classes.img}
           />
         </Box>
