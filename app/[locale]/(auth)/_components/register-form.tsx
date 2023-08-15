@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { Typography } from "@/app/_components/mantine/typography";
+import { Typography } from "@/app/_components/base/typography";
 import { Button, Divider, Group, Stack, createStyles } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { GithubIcon } from "@mantine/ds";
@@ -10,8 +10,8 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { FormTextInput } from "@/app/_components/mantine/form/text-input";
-import { FormPasswordInput } from "@/app/_components/mantine/form/password-input";
+import { FormTextInput } from "@/app/_components/base/form/text-input";
+import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 
 export const RegisterForm: FC = () => {
   const { t, classes, registerForm, namesErrors, onSubmit } = useRegisterForm();

@@ -3,7 +3,7 @@
 import { FC } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Link } from "../mantine/link";
+import { Link } from "../base/link";
 import { paths } from "@/navigation/paths";
 
 export const Logo: FC = () => {

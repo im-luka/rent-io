@@ -16,7 +16,7 @@ import {
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { paths } from "@/navigation/paths";
-import { Link } from "../mantine/link";
+import { Link } from "../base/link";
 
 export const Menu: FC = () => {
   const { t, classes } = useMenu();

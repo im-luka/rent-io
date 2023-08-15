@@ -4,7 +4,7 @@ import { FC } from "react";
 import { Button, Group, createStyles } from "@mantine/core";
 import { IconPlus, IconWorldPin } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { Typography } from "../mantine/typography";
+import { Typography } from "../base/typography";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 export const Actions: FC = () => {

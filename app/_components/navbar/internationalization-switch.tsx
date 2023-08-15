@@ -8,7 +8,7 @@ import {
   MediaQuery,
   SegmentedControl,
 } from "@mantine/core";
-import { Typography } from "../mantine/typography";
+import { Typography } from "../base/typography";
 import { useTranslations } from "next-intl";
 import { useIntl } from "@/hooks/use-intl";
 import { LOCALES } from "@/utils/constants";

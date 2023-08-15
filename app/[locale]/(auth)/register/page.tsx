@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@/app/_components/mantine/typography";
+import { Typography } from "@/app/_components/base/typography";
 import { Stack, useMantineTheme } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { RegisterForm } from "../_components/register-form";
