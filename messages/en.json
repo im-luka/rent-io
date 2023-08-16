@@ -16,6 +16,16 @@
     "includesSymbol": "Includes special symbol",
     "passwordMatch": "Password doesn't match"
   },
+  "notifications": {
+    "error": {
+      "title": "Something went wrong...",
+      "message": "Please report and our team will take care of it ASAP."
+    },
+    "register": {
+      "title": "Registration successful!",
+      "message": "Please check your email and log in."
+    }
+  },
   "navbar": {
     "logoAlt": "Logo",
     "actions": {
