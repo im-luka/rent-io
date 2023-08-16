@@ -58,34 +58,32 @@ export const PasswordProgress: FC<Props> = (props) => {
     <>
       <Controller
         name={props.name}
-        render={({ field, fieldState: { error } }) => {
-          return (
-            <>
-              <PasswordInput
-                {...field}
-                {...restProps}
-                value={value}
-                onChange={(value) => {
-                  field.onChange(value);
-                  setValue(value);
-                }}
-                error={
-                  error && (
-                    <Portal target="#password-error-block">
-                      <Stack spacing={3}>
-                        {validationChecks.map(renderErrorLabel)}
-                      </Stack>
-                    </Portal>
-                  )
-                }
-              />
-              <Group spacing="xs" grow>
-                {validationChecks.map(renderProgressBar)}
-              </Group>
-              <Box id="password-error-block" />
-            </>
-          );
-        }}
+        render={({ field, fieldState: { error } }) => (
+          <>
+            <PasswordInput
+              {...field}
+              {...restProps}
+              value={value}
+              onChange={(value) => {
+                field.onChange(value);
+                setValue(value);
+              }}
+              error={
+                error && (
+                  <Portal target="#password-error-block">
+                    <Stack spacing={3}>
+                      {validationChecks.map(renderErrorLabel)}
+                    </Stack>
+                  </Portal>
+                )
+              }
+            />
+            <Group spacing="xs" grow>
+              {validationChecks.map(renderProgressBar)}
+            </Group>
+            <Box id="password-error-block" />
+          </>
+        )}
       />
     </>
   );

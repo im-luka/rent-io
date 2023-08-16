@@ -14,6 +14,7 @@ import { FormTextInput } from "@/app/_components/base/form/text-input";
 import { EmailAutocomplete } from "@/app/_components/email-autocomplete";
 import { PasswordProgress } from "@/app/_components/password-progress";
 import { FormPasswordInput } from "@/app/_components/base/form/password-input";
+import { MIN_PASSWORD_CHARS } from "@/utils/constants";
 
 export const RegisterForm: FC = () => {
   const {
@@ -115,8 +116,18 @@ function useRegisterForm() {
   const { classes } = useStyles(isDarkTheme);
 
   const tValidation = useTranslations("validation");
+  const validationMessages: Parameters<typeof registerSchema> = [
+    tValidation("required"),
+    tValidation("invalidEmail"),
+    tValidation("minChars", { count: MIN_PASSWORD_CHARS }),
+    tValidation("includesNumber"),
+    tValidation("includesLowercase"),
+    tValidation("includesUppercase"),
+    tValidation("includesSymbol"),
+    tValidation("passwordMatch"),
+  ];
   const registerForm = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema(tValidation("required"))),
+    resolver: zodResolver(registerSchema(...validationMessages)),
     defaultValues: {
       email: "",
       firstName: "",
@@ -134,8 +145,8 @@ function useRegisterForm() {
     firstName: !!(!errors.firstName && errors.lastName),
     lastName: !!(!errors.lastName && errors.firstName),
   };
-  const passwordValidationChecks =
-    registerSchema()._def.schema.shape.password._def.checks;
+  const passwordValidationChecks = registerSchema(...validationMessages)._def
+    .schema.shape.password._def.checks;
 
   const onSubmit = (values: RegisterFormValues) => {
     console.log(values);
@@ -151,25 +162,35 @@ function useRegisterForm() {
   };
 }
 
+// TODO: 💡 potential improvement - figure better way of combining zod & next-intl
 type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
-const registerSchema = (required?: string) =>
+export const registerSchema = (
+  required: string,
+  invalidEmail: string,
+  minPswChars: string,
+  pswNumber: string,
+  pswLowercase: string,
+  pswUppercase: string,
+  pswSymbol: string,
+  pswMatch: string
+) =>
   z
     .object({
-      email: z.string().email(),
+      email: z.string().email(invalidEmail),
       firstName: z.string().nonempty(required),
       lastName: z.string().nonempty(required),
       password: z
         .string()
-        .nonempty("Password is required")
-        .min(8, "At least 8 characters")
-        .regex(RegExp("(?=.*[a-z])"), "One lowercase letter")
-        .regex(RegExp("(?=.*[A-Z])"), "One uppercase letter")
-        .regex(RegExp("(?=.*\\d)"), "At least 1 digit")
-        .regex(RegExp("(?=.*\\W)"), "At least 1 symbol"),
+        .nonempty(required)
+        .min(MIN_PASSWORD_CHARS, minPswChars)
+        .regex(/(?=.*[a-z])/, pswLowercase)
+        .regex(/(?=.*[A-Z])/, pswUppercase)
+        .regex(/(?=.*\\d)/, pswNumber)
+        .regex(/(?=.*\\W)/, pswSymbol),
       confirmPassword: z.string(),
     })
     .refine(({ confirmPassword, password }) => password === confirmPassword, {
-      message: "Password doesn't match.",
+      message: pswMatch,
       path: ["confirmPassword"],
     });
 

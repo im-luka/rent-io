@@ -7,7 +7,14 @@
     }
   },
   "validation": {
-    "required": "Required field!"
+    "required": "Required field",
+    "invalidEmail": "Invalid email format",
+    "minChars": "Has at least {count}",
+    "includesNumber": "Includes number",
+    "includesLowercase": "Includes lowercase",
+    "includesUppercase": "Includes uppercase",
+    "includesSymbol": "Includes special symbol",
+    "passwordMatch": "Password doesn't match"
   },
   "navbar": {
     "logoAlt": "Logo",
@@ -44,7 +51,7 @@
         "lastName": "Last Name",
         "lastNamePlaceholder": "Doe",
         "password": "Password",
-        "confirmPassword": "Confirm password",
+        "confirmPassword": "Confirm Password",
         "agreeTerms": "By registering, you agree to our <s>Terms of Use</s> and <s>Privacy Policy</s>",
         "registerAction": "Register Now",
         "googleAction": "Continue with Google",

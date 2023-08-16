@@ -38,7 +38,7 @@ function useEmailAutocomplete() {
   const [data, setData] = useState<string[]>([]);
 
   // 📧 showcase email providers loading
-  // TODO: potential improvement - fetch providers from some API
+  // TODO: 💡 potential improvement - fetch providers from some API
   const handleChange = (val: string) => {
     window.clearTimeout(timeoutRef.current);
     setData([]);
