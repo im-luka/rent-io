@@ -10,11 +10,13 @@ import {
   rem,
   useEmotionCache,
 } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { spacing } from "./spacing";
 import { colors } from "./colors";
 import { typography } from "./typography";
 import { components } from "./components";
 import { getCookie, setCookie } from "cookies-next";
+import { NOTIFICATIONS_LIMIT, NOTIFICATION_Z_INDEX } from "@/utils/constants";
 
 const COLOR_SCHEME_COOKIE = "color-scheme";
 
@@ -61,6 +63,11 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
         emotionCache={cache}
         theme={{ colorScheme, ...theme }}
       >
+        <Notifications
+          position="top-right"
+          limit={NOTIFICATIONS_LIMIT}
+          zIndex={NOTIFICATION_Z_INDEX}
+        />
         {children}
       </MantineProvider>
     </ColorSchemeProvider>
@@ -76,10 +83,19 @@ const theme: MantineThemeOverride = {
   transitionTimingFunction: "ease-out",
   loader: "oval",
   globalStyles: (theme) => ({
+    html: {
+      height: "100%",
+    },
     body: {
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
       maxWidth: rem(2056),
       marginInline: "auto",
       paddingInline: theme.spacing.sm,
+    },
+    ".flex-1": {
+      flex: 1,
     },
   }),
 };

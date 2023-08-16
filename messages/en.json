@@ -6,6 +6,26 @@
       "description": "Unlock Extraordinary Stays: Your Ultimate Rental App for Unforgettable Getaways. Book Now & Create Memories!"
     }
   },
+  "validation": {
+    "required": "Required field",
+    "invalidEmail": "Invalid email format",
+    "minChars": "Has at least {count}",
+    "includesNumber": "Includes number",
+    "includesLowercase": "Includes lowercase",
+    "includesUppercase": "Includes uppercase",
+    "includesSymbol": "Includes special symbol",
+    "passwordMatch": "Password doesn't match"
+  },
+  "notifications": {
+    "error": {
+      "title": "Something went wrong...",
+      "message": "Please report and our team will take care of it ASAP."
+    },
+    "register": {
+      "title": "Registration successful!",
+      "message": "Please check your email and log in."
+    }
+  },
   "navbar": {
     "logoAlt": "Logo",
     "actions": {
@@ -27,6 +47,26 @@
     "menu": {
       "login": "Login",
       "register": "Register"
+    }
+  },
+  "auth": {
+    "coverImgAlt": "Traveling camping trailer in a night illustration",
+    "register": {
+      "title": "Get Started with <s>Rent.io</s>",
+      "form": {
+        "email": "Email",
+        "emailPlaceholder": "example@gmail.com",
+        "firstName": "First Name",
+        "firstNamePlaceholder": "John",
+        "lastName": "Last Name",
+        "lastNamePlaceholder": "Doe",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "agreeTerms": "By registering, you agree to our <s>Terms of Use</s> and <s>Privacy Policy</s>",
+        "registerAction": "Register Now",
+        "googleAction": "Continue with Google",
+        "githubAction": "Continue with GitHub"
+      }
     }
   }
 }

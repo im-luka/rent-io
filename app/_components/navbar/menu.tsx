@@ -15,6 +15,8 @@ import {
   IconDoorEnter,
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
+import { paths } from "@/navigation/paths";
+import { Link } from "../base/link";
 
 export const Menu: FC = () => {
   const { t, classes } = useMenu();
@@ -34,7 +36,7 @@ export const Menu: FC = () => {
           {t("login")}
         </MantineMenu.Item>
         <MantineMenu.Item icon={<IconBallpen size={14} stroke={1.5} />}>
-          {t("register")}
+          <Link href={paths.register()}>{t("register")}</Link>
         </MantineMenu.Item>
       </MantineMenu.Dropdown>
     </MantineMenu>

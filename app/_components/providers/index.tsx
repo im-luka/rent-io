@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "./theme";
+import { QueryClientProvider } from "./query-client-provider";
 
 type Props = {
   locale: string;
@@ -12,7 +13,9 @@ export const Providers: FC<Props> = async ({ locale, children }) => {
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeProvider>
+        <QueryClientProvider>{children}</QueryClientProvider>
+      </ThemeProvider>
     </NextIntlClientProvider>
   );
 };

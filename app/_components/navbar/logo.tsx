@@ -3,18 +3,22 @@
 import { FC } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { Link } from "../base/link";
+import { paths } from "@/navigation/paths";
 
 export const Logo: FC = () => {
   const { t } = useLogo();
 
   return (
-    <Image
-      src="/images/logo.png"
-      alt={t("logoAlt")}
-      width={102}
-      height={102}
-      priority
-    />
+    <Link href={paths.home()}>
+      <Image
+        src="/images/logo.png"
+        alt={t("logoAlt")}
+        width={102}
+        height={102}
+        priority
+      />
+    </Link>
   );
 };
 
