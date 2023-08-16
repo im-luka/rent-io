@@ -183,10 +183,10 @@ export const registerSchema = (
         .string()
         .nonempty(required)
         .min(MIN_PASSWORD_CHARS, minPswChars)
-        .regex(/(?=.*[a-z])/, pswLowercase)
-        .regex(/(?=.*[A-Z])/, pswUppercase)
-        .regex(/(?=.*\\d)/, pswNumber)
-        .regex(/(?=.*\\W)/, pswSymbol),
+        .regex(RegExp("(?=.*[a-z])"), pswLowercase)
+        .regex(RegExp("(?=.*[A-Z])"), pswUppercase)
+        .regex(RegExp("(?=.*\\d)"), pswNumber)
+        .regex(RegExp("(?=.*\\W)"), pswSymbol),
       confirmPassword: z.string(),
     })
     .refine(({ confirmPassword, password }) => password === confirmPassword, {
