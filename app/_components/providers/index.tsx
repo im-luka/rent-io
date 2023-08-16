@@ -18,10 +18,12 @@ export const Providers: FC<Props> = async ({ locale, children }) => {
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <ThemeProvider>{children}</ThemeProvider>
-      </QueryClientProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          {children}
+        </QueryClientProvider>
+      </ThemeProvider>
     </NextIntlClientProvider>
   );
 };
