@@ -15,6 +15,7 @@
     "@mantine/ds": "^6.0.19",
     "@mantine/hooks": "^6.0.19",
     "@mantine/notifications": "^6.0.19",
+    "@prisma/client": "5.1.1",
     "@tabler/icons-react": "^2.30.0",
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-devtools": "^4.32.6",
@@ -32,5 +33,8 @@
     "react-hook-form": "^7.45.4",
     "typescript": "5.1.6",
     "zod": "3.21.4"
+  },
+  "devDependencies": {
+    "prisma": "^5.1.1"
   }
 }
