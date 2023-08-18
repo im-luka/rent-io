@@ -16,15 +16,21 @@ import { PasswordProgress } from "@/app/_components/password-progress";
 import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 import { MIN_PASSWORD_CHARS } from "@/utils/constants";
 
-export const RegisterForm: FC = () => {
+type Props = {
+  onSubmit: (values: RegisterFormValues) => void;
+  isLoading?: boolean;
+};
+
+export const RegisterForm: FC<Props> = (props) => {
   const {
     t,
     classes,
+    isLoading,
     registerForm,
     namesErrors,
     passwordValidationChecks,
     onSubmit,
-  } = useRegisterForm();
+  } = useRegisterForm(props);
 
   return (
     <FormProvider {...registerForm}>
@@ -60,9 +66,8 @@ export const RegisterForm: FC = () => {
               placeholder={t("password")}
               withAsterisk
             />
-
             {!registerForm.formState.errors.password &&
-              registerForm.formState.touchedFields.password && (
+              registerForm.formState.dirtyFields.password && (
                 <FormPasswordInput
                   name="confirmPassword"
                   label={t("confirmPassword")}
@@ -81,7 +86,7 @@ export const RegisterForm: FC = () => {
                 ),
               })}
             </Typography>
-            <Button type="submit" variant="gradient">
+            <Button type="submit" variant="gradient" loading={isLoading}>
               {t("registerAction")}
             </Button>
             <Divider />
@@ -110,7 +115,7 @@ export const RegisterForm: FC = () => {
   );
 };
 
-function useRegisterForm() {
+function useRegisterForm({ onSubmit, isLoading }: Props) {
   const t = useTranslations("auth.register.form");
   const [{ isDarkTheme }] = useColorScheme();
   const { classes } = useStyles(isDarkTheme);
@@ -148,13 +153,10 @@ function useRegisterForm() {
   const passwordValidationChecks = registerSchema(...validationMessages)._def
     .schema.shape.password._def.checks;
 
-  const onSubmit = (values: RegisterFormValues) => {
-    console.log(values);
-  };
-
   return {
     t,
     classes,
+    isLoading,
     registerForm,
     namesErrors,
     passwordValidationChecks,
@@ -163,8 +165,8 @@ function useRegisterForm() {
 }
 
 // TODO: 💡 potential improvement - figure better way of combining zod & next-intl
-type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
-export const registerSchema = (
+export type RegisterFormValues = z.infer<ReturnType<typeof registerSchema>>;
+const registerSchema = (
   required: string,
   invalidEmail: string,
   minPswChars: string,
