@@ -66,6 +66,11 @@
         "registerAction": "Register Now",
         "googleAction": "Continue with Google",
         "githubAction": "Continue with GitHub"
+      },
+      "success": {
+        "title": "Registration is successful!",
+        "description": "Please verify your email and come back.",
+        "loginLink": "I want to <l>Log In</l>"
       }
     }
   }
