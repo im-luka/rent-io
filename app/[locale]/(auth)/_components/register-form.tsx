@@ -66,9 +66,8 @@ export const RegisterForm: FC<Props> = (props) => {
               placeholder={t("password")}
               withAsterisk
             />
-
             {!registerForm.formState.errors.password &&
-              registerForm.formState.touchedFields.password && (
+              registerForm.formState.dirtyFields.password && (
                 <FormPasswordInput
                   name="confirmPassword"
                   label={t("confirmPassword")}
