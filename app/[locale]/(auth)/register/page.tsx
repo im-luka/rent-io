@@ -4,7 +4,7 @@ import { Typography } from "@/app/_components/base/typography";
 import { useTranslations } from "next-intl";
 import { RegisterForm, RegisterFormValues } from "../_components/register-form";
 import { useMutation } from "@tanstack/react-query";
-import { useNotificationSettled } from "@/hooks/use-notification-settled";
+import { useNotification } from "@/hooks/use-notification";
 import { registerMutation } from "@/domain/mutations/register-mutation";
 import { RegisterSuccess } from "../_components/register-success";
 import { FormContainer } from "../_components/form-container";
@@ -40,7 +40,7 @@ export default function RegisterPage() {
 
 function useRegisterPage() {
   const t = useTranslations("auth.register");
-  const { notify } = useNotificationSettled("register");
+  const { onSuccess } = useNotification("register");
 
   const {
     mutate: register,
@@ -48,7 +48,7 @@ function useRegisterPage() {
     isSuccess: isRegistrationSuccess,
   } = useMutation({
     mutationFn: registerMutation.fnc,
-    onSettled: notify,
+    onSuccess,
   });
 
   const handleRegistration = (values: RegisterFormValues) => {

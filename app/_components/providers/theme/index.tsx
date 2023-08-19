@@ -67,6 +67,7 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
           position="top-right"
           limit={NOTIFICATIONS_LIMIT}
           zIndex={NOTIFICATION_Z_INDEX}
+          autoClose={5000}
         />
         {children}
       </MantineProvider>
