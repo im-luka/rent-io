@@ -75,7 +75,14 @@
     },
     "login": {
       "title": "Welcome back to <s>Rent.io</s>",
-      "form": {}
+      "form": {
+        "email": "Email",
+        "emailPlaceholder": "example@gmail.com",
+        "password": "Password",
+        "loginAction": "Login",
+        "googleAction": "Continue with Google",
+        "githubAction": "Continue with GitHub"
+      }
     }
   }
 }
