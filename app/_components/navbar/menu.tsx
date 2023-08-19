@@ -33,7 +33,7 @@ export const Menu: FC = () => {
       </MantineMenu.Target>
       <MantineMenu.Dropdown>
         <MantineMenu.Item icon={<IconDoorEnter size={14} stroke={1.5} />}>
-          {t("login")}
+          <Link href={paths.login()}>{t("login")}</Link>
         </MantineMenu.Item>
         <MantineMenu.Item icon={<IconBallpen size={14} stroke={1.5} />}>
           <Link href={paths.register()}>{t("register")}</Link>

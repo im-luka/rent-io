@@ -1,34 +1,20 @@
 "use client";
 
 import { Typography } from "@/app/_components/base/typography";
-import { Stack, useMantineTheme } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { RegisterForm, RegisterFormValues } from "../_components/register-form";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useMutation } from "@tanstack/react-query";
 import { useNotificationSettled } from "@/hooks/use-notification-settled";
 import { registerMutation } from "@/domain/mutations/register-mutation";
 import { RegisterSuccess } from "../_components/register-success";
+import { FormContainer } from "../_components/form-container";
 
 export default function RegisterPage() {
-  const {
-    t,
-    theme,
-    isDarkTheme,
-    isRegistering,
-    isRegistrationSuccess,
-    handleRegistration,
-  } = useRegisterPage();
+  const { t, isRegistering, isRegistrationSuccess, handleRegistration } =
+    useRegisterPage();
 
   return (
-    <Stack
-      align="center"
-      px="sm"
-      py="xl"
-      m="xs"
-      bg={isDarkTheme ? theme.colors.dark[6] : theme.colors.gray[0]}
-      sx={{ borderRadius: theme.radius.md }}
-    >
+    <FormContainer>
       {isRegistrationSuccess ? (
         <RegisterSuccess />
       ) : (
@@ -48,14 +34,12 @@ export default function RegisterPage() {
           />
         </>
       )}
-    </Stack>
+    </FormContainer>
   );
 }
 
 function useRegisterPage() {
   const t = useTranslations("auth.register");
-  const theme = useMantineTheme();
-  const [{ isDarkTheme }] = useColorScheme();
   const { notify } = useNotificationSettled("register");
 
   const {
@@ -74,8 +58,6 @@ function useRegisterPage() {
 
   return {
     t,
-    theme,
-    isDarkTheme,
     isRegistering,
     isRegistrationSuccess,
     handleRegistration,

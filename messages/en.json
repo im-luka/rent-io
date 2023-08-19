@@ -72,6 +72,10 @@
         "description": "Please verify your email and come back.",
         "loginLink": "I want to <l>Log In</l>"
       }
+    },
+    "login": {
+      "title": "Welcome back to <s>Rent.io</s>",
+      "form": {}
     }
   }
 }
