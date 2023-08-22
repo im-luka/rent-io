@@ -76,9 +76,7 @@
         "password": "Password",
         "confirmPassword": "Confirm Password",
         "agreeTerms": "By registering, you agree to our <s>Terms of Use</s> and <s>Privacy Policy</s>",
-        "registerAction": "Register Now",
-        "googleAction": "Continue with Google",
-        "githubAction": "Continue with GitHub"
+        "registerAction": "Register Now"
       },
       "success": {
         "title": "Registration is successful!",
@@ -92,10 +90,12 @@
         "email": "Email",
         "emailPlaceholder": "example@gmail.com",
         "password": "Password",
-        "loginAction": "Login",
-        "googleAction": "Continue with Google",
-        "githubAction": "Continue with GitHub"
+        "loginAction": "Login"
       }
+    },
+    "socials": {
+      "googleAction": "Continue with Google",
+      "githubAction": "Continue with GitHub"
     }
   }
 }

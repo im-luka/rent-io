@@ -2,11 +2,8 @@
 
 import { FC } from "react";
 import { Typography } from "@/app/_components/base/typography";
-import { Button, Divider, Group, Stack, createStyles } from "@mantine/core";
+import { Button, Divider, Group, Stack } from "@mantine/core";
 import { useTranslations } from "next-intl";
-import { GithubIcon } from "@mantine/ds";
-import { GoogleIcon } from "@/app/_components/icons/google-icon";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,6 +13,7 @@ import { PasswordProgress } from "@/app/_components/password-progress";
 import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 import { MIN_PASSWORD_CHARS } from "@/utils/constants";
 import { AuthForm } from "./form";
+import { SocialsAuth } from "./socials-auth";
 
 type Props = {
   onSubmit: (values: RegisterFormValues) => void;
@@ -25,7 +23,6 @@ type Props = {
 export const RegisterForm: FC<Props> = (props) => {
   const {
     t,
-    classes,
     isLoading,
     registerForm,
     namesErrors,
@@ -93,24 +90,7 @@ export const RegisterForm: FC<Props> = (props) => {
               {t("registerAction")}
             </Button>
             <Divider />
-            <Stack spacing="xs">
-              <Button
-                size="xs"
-                variant="default"
-                color="gray.2"
-                leftIcon={<GoogleIcon />}
-              >
-                {t("googleAction")}
-              </Button>
-              <Button
-                size="xs"
-                variant="filled"
-                leftIcon={<GithubIcon size={16} />}
-                className={classes.githubBtn}
-              >
-                {t("githubAction")}
-              </Button>
-            </Stack>
+            <SocialsAuth />
           </Stack>
         </Stack>
       </AuthForm>
@@ -120,8 +100,6 @@ export const RegisterForm: FC<Props> = (props) => {
 
 function useRegisterForm({ onSubmit, isLoading }: Props) {
   const t = useTranslations("auth.register.form");
-  const [{ isDarkTheme }] = useColorScheme();
-  const { classes } = useStyles(isDarkTheme);
 
   const tValidation = useTranslations("validation");
   const validationMessages: Parameters<typeof registerSchema> = [
@@ -158,7 +136,6 @@ function useRegisterForm({ onSubmit, isLoading }: Props) {
 
   return {
     t,
-    classes,
     isLoading,
     registerForm,
     namesErrors,
@@ -198,13 +175,3 @@ const registerSchema = (
       message: pswMatch,
       path: ["confirmPassword"],
     });
-
-const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
-  githubBtn: {
-    backgroundColor: theme.colors.dark[isDarkTheme ? 9 : 5],
-    color: theme.white,
-    ":hover": {
-      backgroundColor: theme.colors.dark[isDarkTheme ? 8 : 6],
-    },
-  },
-}));
