@@ -24,7 +24,16 @@
     "register": {
       "title": "Registration successful!",
       "message": "Please check your email and log in."
+    },
+    "login": {
+      "title": "Successfully logged in!",
+      "message": "Glad to have you back"
     }
+  },
+  "error": {
+    "invalidCredentials": "Invalid credentials",
+    "noEmail": "Email doesn't exist",
+    "wrongPassword": "Wrong password"
   },
   "navbar": {
     "logoAlt": "Logo",

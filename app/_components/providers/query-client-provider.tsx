@@ -12,6 +12,7 @@ import { useTranslations } from "next-intl";
 import { isAxiosError } from "axios";
 import { notifications } from "@mantine/notifications";
 import { IconX } from "@tabler/icons-react";
+import { useCustomError } from "@/hooks/use-custom-error";
 
 type Props = {
   children: ReactNode;
@@ -29,7 +30,8 @@ export const QueryClientProvider: FC<Props> = ({ children }) => {
 };
 
 function useQueryClientProvider() {
-  const t = useTranslations("notifications");
+  const t = useTranslations();
+  const { generateErrorMessage } = useCustomError();
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -43,8 +45,12 @@ function useQueryClientProvider() {
           mutations: {
             onError: (error) => {
               const errorKnown = isAxiosError(error) || error instanceof Error;
-              const title = errorKnown ? error.name : t("error.title");
-              const message = errorKnown ? error.message : t("error.message");
+              const title = errorKnown
+                ? generateErrorMessage(error.name)
+                : t("notifications.error.title");
+              const message = errorKnown
+                ? generateErrorMessage(error.message)
+                : t("notifications.error.message");
               notifications.show({
                 message,
                 title,

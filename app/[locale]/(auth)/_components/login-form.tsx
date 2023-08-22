@@ -1,6 +1,5 @@
 "use client";
 
-import { FormTextInput } from "@/app/_components/base/form/text-input";
 import { EmailAutocomplete } from "@/app/_components/email-autocomplete";
 import { GoogleIcon } from "@/app/_components/icons/google-icon";
 import { useColorScheme } from "@/hooks/use-color-scheme";
@@ -12,9 +11,15 @@ import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { AuthForm } from "./form";
+import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 
-export const LoginForm: FC = () => {
-  const { t, classes, loginForm, onSubmit } = useLoginForm();
+type Props = {
+  onSubmit: (values: LoginFormValues) => Promise<void>;
+  isLoading?: boolean;
+};
+
+export const LoginForm: FC<Props> = (props) => {
+  const { t, classes, loginForm, isLoading, onSubmit } = useLoginForm(props);
 
   return (
     <FormProvider {...loginForm}>
@@ -27,7 +32,7 @@ export const LoginForm: FC = () => {
               placeholder={t("emailPlaceholder")}
               withAsterisk
             />
-            <FormTextInput
+            <FormPasswordInput
               name="password"
               label={t("password")}
               placeholder={t("password")}
@@ -35,7 +40,7 @@ export const LoginForm: FC = () => {
             />
           </Stack>
           <Stack mt="md">
-            <Button type="submit" variant="gradient">
+            <Button type="submit" variant="gradient" loading={isLoading}>
               {t("loginAction")}
             </Button>
             <Divider />
@@ -64,7 +69,7 @@ export const LoginForm: FC = () => {
   );
 };
 
-function useLoginForm() {
+function useLoginForm({ onSubmit, isLoading }: Props) {
   const t = useTranslations("auth.login.form");
   const [{ isDarkTheme }] = useColorScheme();
   const { classes } = useStyles(isDarkTheme);
@@ -80,17 +85,20 @@ function useLoginForm() {
       email: "",
       password: "",
     },
+    mode: "onTouched",
   });
   const { handleSubmit } = loginForm;
 
-  const onSubmit = (values: LoginFormValues) => {
-    console.log(values);
+  return {
+    t,
+    classes,
+    loginForm,
+    isLoading,
+    onSubmit: handleSubmit(onSubmit),
   };
-
-  return { t, classes, loginForm, onSubmit: handleSubmit(onSubmit) };
 }
 
-type LoginFormValues = z.infer<ReturnType<typeof loginSchema>>;
+export type LoginFormValues = z.infer<ReturnType<typeof loginSchema>>;
 const loginSchema = (required: string, invalidEmail: string) =>
   z.object({
     email: z.string().email(invalidEmail),

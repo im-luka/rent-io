@@ -1,3 +1,5 @@
+"use client";
+
 import { PasswordInput, PasswordInputProps } from "@mantine/core";
 import { FC } from "react";
 import { useController } from "react-hook-form";
