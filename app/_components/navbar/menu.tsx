@@ -99,10 +99,11 @@ export const Menu: FC = () => {
             />
             {user && (
               <Typography size="sm">
-                {t.rich("userData", {
-                  firstName: user?.firstName,
-                  lastName: user?.lastName,
-                })}
+                {user?.name ??
+                  t.rich("userData", {
+                    firstName: user?.firstName,
+                    lastName: user?.lastName,
+                  })}
               </Typography>
             )}
             <IconChevronDown size={14} />
