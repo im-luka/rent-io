@@ -55,7 +55,11 @@
     },
     "menu": {
       "login": "Login",
-      "register": "Register"
+      "register": "Register",
+      "signOut": "Sign out",
+      "userData": "{firstName} {lastName}",
+      "accountSettings": "Account settings",
+      "profile": "Profile"
     }
   },
   "auth": {
