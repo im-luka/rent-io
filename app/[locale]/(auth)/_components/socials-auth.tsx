@@ -1,11 +1,12 @@
 "use client";
 
+import { FC } from "react";
 import { GoogleIcon } from "@/app/_components/icons/google-icon";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Button, Stack, createStyles } from "@mantine/core";
 import { GithubIcon } from "@mantine/ds";
 import { useTranslations } from "next-intl";
-import { FC } from "react";
+import { signIn } from "next-auth/react";
 
 export const SocialsAuth: FC = () => {
   const { t, classes } = useSocialsAuth();
@@ -25,6 +26,7 @@ export const SocialsAuth: FC = () => {
         variant="filled"
         leftIcon={<GithubIcon size={16} />}
         className={classes.githubBtn}
+        onClick={() => signIn("github")}
       >
         {t("githubAction")}
       </Button>
