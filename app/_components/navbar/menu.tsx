@@ -22,7 +22,7 @@ import {
 import { useTranslations } from "next-intl";
 import { paths } from "@/navigation/paths";
 import { Link } from "../base/link";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Typography } from "../base/typography";
 
 export const Menu: FC = () => {
@@ -61,6 +61,7 @@ export const Menu: FC = () => {
       </MantineMenu.Item>
       <MantineMenu.Item
         icon={<IconLogout size={14} stroke={1.5} color={theme.colors.red[5]} />}
+        onClick={() => signOut()}
       >
         {t("signOut")}
       </MantineMenu.Item>
