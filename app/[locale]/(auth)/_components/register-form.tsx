@@ -15,6 +15,7 @@ import { EmailAutocomplete } from "@/app/_components/email-autocomplete";
 import { PasswordProgress } from "@/app/_components/password-progress";
 import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 import { MIN_PASSWORD_CHARS } from "@/utils/constants";
+import { AuthForm } from "./form";
 
 type Props = {
   onSubmit: (values: RegisterFormValues) => void;
@@ -34,7 +35,7 @@ export const RegisterForm: FC<Props> = (props) => {
 
   return (
     <FormProvider {...registerForm}>
-      <form onSubmit={onSubmit}>
+      <AuthForm onSubmit={onSubmit}>
         <Stack spacing="sm">
           <Stack spacing="xs">
             <EmailAutocomplete
@@ -49,6 +50,7 @@ export const RegisterForm: FC<Props> = (props) => {
                 label={t("firstName")}
                 placeholder={t("firstNamePlaceholder")}
                 withAsterisk
+                w="100%"
                 mb={namesErrors.firstName ? "md" : 0}
               />
               <FormTextInput
@@ -56,6 +58,7 @@ export const RegisterForm: FC<Props> = (props) => {
                 label={t("lastName")}
                 placeholder={t("lastNamePlaceholder")}
                 withAsterisk
+                w="100%"
                 mb={namesErrors.lastName ? "md" : 0}
               />
             </Group>
@@ -110,7 +113,7 @@ export const RegisterForm: FC<Props> = (props) => {
             </Stack>
           </Stack>
         </Stack>
-      </form>
+      </AuthForm>
     </FormProvider>
   );
 };

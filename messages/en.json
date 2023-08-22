@@ -24,7 +24,16 @@
     "register": {
       "title": "Registration successful!",
       "message": "Please check your email and log in."
+    },
+    "login": {
+      "title": "Successfully logged in!",
+      "message": "Glad to have you back"
     }
+  },
+  "error": {
+    "invalidCredentials": "Invalid credentials",
+    "noEmail": "Email doesn't exist",
+    "wrongPassword": "Wrong password"
   },
   "navbar": {
     "logoAlt": "Logo",
@@ -46,7 +55,11 @@
     },
     "menu": {
       "login": "Login",
-      "register": "Register"
+      "register": "Register",
+      "signOut": "Sign out",
+      "userData": "{firstName} {lastName}",
+      "accountSettings": "Account settings",
+      "profile": "Profile"
     }
   },
   "auth": {
@@ -71,6 +84,17 @@
         "title": "Registration is successful!",
         "description": "Please verify your email and come back.",
         "loginLink": "I want to <l>Log In</l>"
+      }
+    },
+    "login": {
+      "title": "Welcome back to <s>Rent.io</s>",
+      "form": {
+        "email": "Email",
+        "emailPlaceholder": "example@gmail.com",
+        "password": "Password",
+        "loginAction": "Login",
+        "googleAction": "Continue with Google",
+        "githubAction": "Continue with GitHub"
       }
     }
   }

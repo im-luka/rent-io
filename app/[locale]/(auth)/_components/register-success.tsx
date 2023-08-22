@@ -21,7 +21,7 @@ export const RegisterSuccess: FC = () => {
       <Typography size="md" ta="center">
         {t.rich("loginLink", {
           l: (chunk) => (
-            <Link href={paths.home()} color={colors.blue[5]} underline>
+            <Link href={paths.login()} color={colors.blue[5]} underline>
               {chunk}
             </Link>
           ),
