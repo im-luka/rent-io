@@ -17,6 +17,7 @@ import {
 import { useTranslations } from "next-intl";
 import { paths } from "@/navigation/paths";
 import { Link } from "../base/link";
+import { useSession } from "next-auth/react";
 
 export const Menu: FC = () => {
   const { t, classes } = useMenu();
@@ -45,7 +46,10 @@ export const Menu: FC = () => {
 
 function useMenu() {
   const t = useTranslations("navbar.menu");
+  const { data: session } = useSession();
   const { classes } = useStyles();
+
+  console.log(session?.user?.firstName);
 
   return { t, classes };
 }

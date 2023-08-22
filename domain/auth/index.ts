@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "../db/prisma-client";
+import { User } from "@prisma/client";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -59,7 +60,7 @@ export const authOptions: AuthOptions = {
     },
     session: ({ session, token }) => {
       if (token && token.user) {
-        session.user = token.user;
+        session.user = token.user as User;
       }
       return session;
     },
