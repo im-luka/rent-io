@@ -68,11 +68,19 @@ export const Menu: FC = () => {
     </>
   ) : (
     <>
-      <MantineMenu.Item icon={<IconDoorEnter size={14} stroke={1.5} />}>
-        <Link href={paths.login()}>{t("login")}</Link>
+      <MantineMenu.Item
+        component={Link}
+        href={paths.login()}
+        icon={<IconDoorEnter size={14} stroke={1.5} />}
+      >
+        {t("login")}
       </MantineMenu.Item>
-      <MantineMenu.Item icon={<IconBallpen size={14} stroke={1.5} />}>
-        <Link href={paths.register()}>{t("register")}</Link>
+      <MantineMenu.Item
+        component={Link}
+        href={paths.register()}
+        icon={<IconBallpen size={14} stroke={1.5} />}
+      >
+        {t("register")}
       </MantineMenu.Item>
     </>
   );
