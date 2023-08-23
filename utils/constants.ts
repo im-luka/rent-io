@@ -5,6 +5,7 @@ export const EMAIL_PROVIDERS = ["gmail", "outlook", "yahoo", "icloud"].map(
   (el) => `${el}.com`
 );
 export const PASSWORD_HASH_SALT = 12;
+export const TOKEN_CRYPTO_DEFAULT = 32;
 
 // 🖼️ UI
 export const MIN_PASSWORD_CHARS = 8;
