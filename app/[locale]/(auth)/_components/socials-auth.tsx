@@ -7,6 +7,7 @@ import { Button, Stack, createStyles } from "@mantine/core";
 import { GithubIcon } from "@mantine/ds";
 import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
+import { IconBrandReddit } from "@tabler/icons-react";
 
 export const SocialsAuth: FC = () => {
   const { t, classes } = useSocialsAuth();
@@ -30,6 +31,15 @@ export const SocialsAuth: FC = () => {
       >
         {t("githubAction")}
       </Button>
+      <Button
+        size="xs"
+        variant="filled"
+        leftIcon={<IconBrandReddit size={16} />}
+        className={classes.redditBtn}
+        onClick={() => signIn("reddit")}
+      >
+        {t("redditAction")}
+      </Button>
     </Stack>
   );
 };
@@ -48,6 +58,12 @@ const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
     color: theme.white,
     ":hover": {
       backgroundColor: theme.colors.dark[isDarkTheme ? 8 : 6],
+    },
+  },
+  redditBtn: {
+    backgroundColor: "#FE4500",
+    ":hover": {
+      backgroundColor: "#FE4500DD",
     },
   },
 }));

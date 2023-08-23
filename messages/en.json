@@ -95,7 +95,8 @@
     },
     "socials": {
       "googleAction": "Continue with Google",
-      "githubAction": "Continue with GitHub"
+      "githubAction": "Continue with GitHub",
+      "redditAction": "Continue with Reddit"
     }
   }
 }
