@@ -4,6 +4,9 @@ import { RegisterData } from "@/domain/types/register-data";
 import { prisma } from "@/domain/db/prisma-client";
 import { NextResponse } from "next/server";
 import { generateRandomToken } from "@/utils/token";
+import mail, { MailDataRequired } from "@sendgrid/mail";
+
+mail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export async function POST(request: Request) {
   const data: RegisterData = await request.json();
@@ -22,6 +25,24 @@ export async function POST(request: Request) {
       verificationToken,
     },
   });
+
+  if (user) {
+    try {
+      const data: MailDataRequired = {
+        templateId: process.env.SENDGRID_VERIFY_EMAIL_TEMPLATE_ID as string,
+        from: process.env.SENDGRID_FROM_EMAIL as string,
+        to: "luka.dusak@zeromolecule.com",
+        dynamicTemplateData: {
+          userName: user.firstName,
+          verifyUrlLink: `${process.env.NEXTAUTH_VERIFY_EMAIL_URL}?token=${user.verificationToken}`,
+          baseUrlLink: process.env.NEXTAUTH_URL,
+        },
+      };
+      await mail.send(data);
+    } catch (error) {
+      return NextResponse.json("custom.verificationEmail", { status: 400 });
+    }
+  }
 
   return NextResponse.json(user);
 }

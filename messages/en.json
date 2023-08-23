@@ -34,7 +34,8 @@
     "invalidCredentials": "Invalid credentials",
     "noEmail": "Email doesn't exist",
     "wrongPassword": "Wrong password",
-    "notVerified": "Email not verified"
+    "notVerified": "Email not verified",
+    "verificationEmail": "Problem with sending verification email"
   },
   "navbar": {
     "logoAlt": "Logo",
@@ -81,7 +82,7 @@
       },
       "success": {
         "title": "Registration is successful!",
-        "description": "Please verify your email and come back.",
+        "description": "Please verify your email and come back. <b></b>(be sure to check the spam folder)",
         "loginLink": "I want to <l>Log In</l>"
       }
     },
