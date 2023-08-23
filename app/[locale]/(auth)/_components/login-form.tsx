@@ -1,17 +1,15 @@
 "use client";
 
 import { EmailAutocomplete } from "@/app/_components/email-autocomplete";
-import { GoogleIcon } from "@/app/_components/icons/google-icon";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Divider, Stack, createStyles } from "@mantine/core";
-import { GithubIcon } from "@mantine/ds";
+import { Button, Divider, Stack } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { AuthForm } from "./form";
 import { FormPasswordInput } from "@/app/_components/base/form/password-input";
+import { SocialsAuth } from "./socials-auth";
 
 type Props = {
   onSubmit: (values: LoginFormValues) => Promise<void>;
@@ -19,7 +17,7 @@ type Props = {
 };
 
 export const LoginForm: FC<Props> = (props) => {
-  const { t, classes, loginForm, isLoading, onSubmit } = useLoginForm(props);
+  const { t, loginForm, isLoading, onSubmit } = useLoginForm(props);
 
   return (
     <FormProvider {...loginForm}>
@@ -44,24 +42,7 @@ export const LoginForm: FC<Props> = (props) => {
               {t("loginAction")}
             </Button>
             <Divider />
-            <Stack spacing="xs">
-              <Button
-                size="xs"
-                variant="default"
-                color="gray.2"
-                leftIcon={<GoogleIcon />}
-              >
-                {t("googleAction")}
-              </Button>
-              <Button
-                size="xs"
-                variant="filled"
-                leftIcon={<GithubIcon size={16} />}
-                className={classes.githubBtn}
-              >
-                {t("githubAction")}
-              </Button>
-            </Stack>
+            <SocialsAuth />
           </Stack>
         </Stack>
       </AuthForm>
@@ -71,8 +52,6 @@ export const LoginForm: FC<Props> = (props) => {
 
 function useLoginForm({ onSubmit, isLoading }: Props) {
   const t = useTranslations("auth.login.form");
-  const [{ isDarkTheme }] = useColorScheme();
-  const { classes } = useStyles(isDarkTheme);
 
   const tValidation = useTranslations("validation");
   const validationMessages: Parameters<typeof loginSchema> = [
@@ -91,7 +70,6 @@ function useLoginForm({ onSubmit, isLoading }: Props) {
 
   return {
     t,
-    classes,
     loginForm,
     isLoading,
     onSubmit: handleSubmit(onSubmit),
@@ -104,13 +82,3 @@ const loginSchema = (required: string, invalidEmail: string) =>
     email: z.string().email(invalidEmail),
     password: z.string().nonempty(required),
   });
-
-const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
-  githubBtn: {
-    backgroundColor: theme.colors.dark[isDarkTheme ? 9 : 5],
-    color: theme.white,
-    ":hover": {
-      backgroundColor: theme.colors.dark[isDarkTheme ? 8 : 6],
-    },
-  },
-}));
