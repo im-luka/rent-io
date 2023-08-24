@@ -16,7 +16,11 @@ export const RegisterSuccess: FC = () => {
         <Typography component="h2" ta="center">
           {t("title")}
         </Typography>
-        <Typography ta="center">{t("description")}</Typography>
+        <Typography ta="center">
+          {t.rich("description", {
+            b: () => <br />,
+          })}
+        </Typography>
       </Stack>
       <Typography size="md" ta="center">
         {t.rich("loginLink", {

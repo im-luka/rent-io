@@ -49,7 +49,11 @@ function useQueryClientProvider() {
                 ? generateErrorMessage(error.name)
                 : t("notifications.error.title");
               const message = errorKnown
-                ? generateErrorMessage(error.message)
+                ? generateErrorMessage(
+                    isAxiosError(error)
+                      ? error?.response?.data || error.message
+                      : error.message
+                  )
                 : t("notifications.error.message");
               notifications.show({
                 message,

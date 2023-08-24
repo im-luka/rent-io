@@ -33,7 +33,11 @@
   "error": {
     "invalidCredentials": "Invalid credentials",
     "noEmail": "Email doesn't exist",
-    "wrongPassword": "Wrong password"
+    "wrongPassword": "Wrong password",
+    "notVerified": "Email not verified",
+    "verificationEmail": "Problem with sending verification email",
+    "noToken": "Token not provided",
+    "invalidToken": "Invalid token provided"
   },
   "navbar": {
     "logoAlt": "Logo",
@@ -80,7 +84,7 @@
       },
       "success": {
         "title": "Registration is successful!",
-        "description": "Please verify your email and come back.",
+        "description": "Please verify your email and come back. <b></b>(be sure to check the spam folder)",
         "loginLink": "I want to <l>Log In</l>"
       }
     },
@@ -97,6 +101,18 @@
       "googleAction": "Continue with Google",
       "githubAction": "Continue with GitHub",
       "redditAction": "Continue with Reddit"
+    }
+  },
+  "verify": {
+    "loading": {
+      "title": "Verifying your email..."
+    },
+    "error": {
+      "title": "Something went wrong..."
+    },
+    "success": {
+      "title": "Verification complete!",
+      "description": "Redirecting to login page in {count}..."
     }
   }
 }
