@@ -40,7 +40,7 @@ export const authOptions: AuthOptions = {
           throw new Error("custom.wrongPassword");
         }
 
-        if (user.verificationToken) {
+        if (user.verificationToken || !user.emailVerified) {
           throw new Error("custom.notVerified");
         }
 

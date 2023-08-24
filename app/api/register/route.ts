@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       const data: MailDataRequired = {
         templateId: process.env.SENDGRID_VERIFY_EMAIL_TEMPLATE_ID as string,
         from: process.env.SENDGRID_FROM_EMAIL as string,
-        to: "luka.dusak@zeromolecule.com",
+        to: user.email!,
         dynamicTemplateData: {
           userName: user.firstName,
           verifyUrlLink: `${process.env.NEXTAUTH_VERIFY_EMAIL_URL}?token=${user.verificationToken}`,
