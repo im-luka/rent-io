@@ -67,6 +67,20 @@
       "profile": "Profile"
     }
   },
+  "home": {
+    "categories": {
+      "title": "Categories",
+      "create": {
+        "title": "New Category",
+        "tooltip": "New Category",
+        "name": "Name",
+        "namePlaceholder": "e.g. Apartments",
+        "emoji": "Emoji",
+        "emojiPlaceholder": "🏡",
+        "createAction": "Create"
+      }
+    }
+  },
   "auth": {
     "coverImgAlt": "Traveling camping trailer in a night illustration",
     "register": {

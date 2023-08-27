@@ -19,13 +19,16 @@ import { IconCommand, IconPlus, IconSearch } from "@tabler/icons-react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Category } from "@prisma/client";
 import { useIntl } from "@/hooks/use-intl";
+import { SEARCH_CATEGORIES_KEY } from "@/utils/constants";
+import { useTranslations } from "next-intl";
 
 type Props = {
   categories: Category[] | undefined;
+  onOpen: () => void;
 };
 
-export const CategoryWrapper: FC<Props> = ({ categories }) => {
-  const { classes, locale } = useCategoryWrapper();
+export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
+  const { t, classes, locale } = useCategoryWrapper();
 
   const renderCategory = ({ id, name, emoji }: Category) => (
     <Button
@@ -50,7 +53,7 @@ export const CategoryWrapper: FC<Props> = ({ categories }) => {
           rightSection={
             <Code className={classes.codeBlock}>
               <IconCommand size={12} />
-              <Typography>K</Typography>
+              <Typography>{SEARCH_CATEGORIES_KEY}</Typography>
             </Code>
           }
         />
@@ -58,9 +61,9 @@ export const CategoryWrapper: FC<Props> = ({ categories }) => {
       <Navbar.Section className={classes.categoriesBlock}>
         <Divider />
         <Group position="apart" px="xs">
-          <Typography size="xs">Categories</Typography>
-          <Tooltip label="Create category" position="right" withArrow>
-            <ActionIcon variant="default" size={18}>
+          <Typography size="xs">{t("title")}</Typography>
+          <Tooltip label={t("create.tooltip")} position="right" withArrow>
+            <ActionIcon variant="default" size={18} onClick={onOpen}>
               <IconPlus size={14} stroke={1.5} />
             </ActionIcon>
           </Tooltip>
@@ -72,11 +75,12 @@ export const CategoryWrapper: FC<Props> = ({ categories }) => {
 };
 
 function useCategoryWrapper() {
+  const t = useTranslations("home.categories");
   const [{ isDarkTheme }] = useColorScheme();
   const { classes } = useStyles(isDarkTheme);
   const { locale } = useIntl();
 
-  return { classes, locale };
+  return { t, classes, locale };
 }
 
 const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
