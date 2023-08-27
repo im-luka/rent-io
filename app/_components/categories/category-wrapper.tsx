@@ -3,7 +3,6 @@
 import { FC } from "react";
 import {
   ActionIcon,
-  Button,
   Code,
   Divider,
   Group,
@@ -16,11 +15,10 @@ import {
 } from "@mantine/core";
 import { Typography } from "../base/typography";
 import { IconCommand, IconPlus, IconSearch } from "@tabler/icons-react";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Category } from "@prisma/client";
-import { useIntl } from "@/hooks/use-intl";
 import { SEARCH_CATEGORIES_KEY } from "@/utils/constants";
 import { useTranslations } from "next-intl";
+import { CategoryItem } from "./category-item";
 
 type Props = {
   categories: Category[] | undefined;
@@ -28,18 +26,10 @@ type Props = {
 };
 
 export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
-  const { t, classes, locale } = useCategoryWrapper();
+  const { t, classes } = useCategoryWrapper();
 
-  const renderCategory = ({ id, name, emoji }: Category) => (
-    <Button
-      key={id}
-      variant="subtle"
-      size="sm"
-      fw={500}
-      className={classes.categoryItem}
-    >
-      {emoji} {(name as Record<string, string>)[locale]}
-    </Button>
+  const renderCategory = (item: Category) => (
+    <CategoryItem key={item.id} item={item} />
   );
 
   return (
@@ -76,14 +66,12 @@ export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
 
 function useCategoryWrapper() {
   const t = useTranslations("home.categories");
-  const [{ isDarkTheme }] = useColorScheme();
-  const { classes } = useStyles(isDarkTheme);
-  const { locale } = useIntl();
+  const { classes } = useStyles();
 
-  return { t, classes, locale };
+  return { t, classes };
 }
 
-const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
+const useStyles = createStyles((theme) => ({
   wrapper: {
     minWidth: rem(200),
     display: "flex",
@@ -104,17 +92,5 @@ const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
     alignItems: "center",
     gap: rem(3),
     cursor: "pointer",
-  },
-
-  categoryItem: {
-    display: "flex",
-    padding: theme.spacing.xs,
-    color: isDarkTheme ? theme.colors.gray[5] : theme.colors.gray[7],
-    ":hover": {
-      color: isDarkTheme ? theme.colors.gray[1] : theme.colors.dark[9],
-      backgroundColor: isDarkTheme
-        ? theme.colors.dark[6]
-        : theme.colors.gray[0],
-    },
   },
 }));
