@@ -5,15 +5,23 @@ import {
   CategoryFormValues,
   NewCategoryModal,
 } from "@/app/_components/categories/new-category-modal";
+import { categoryMutation } from "@/domain/mutations/category-mutation";
 import { categoryQuery } from "@/domain/queries/categories-query";
+import { useNotification } from "@/hooks/use-notification";
 import { Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Category } from "@prisma/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export default function HomePage() {
-  const { isModalOpen, openModal, closeModal, categories, handleSubmit } =
-    useHomePage();
+  const {
+    isModalOpen,
+    openModal,
+    closeModal,
+    categories,
+    handleSubmit,
+    isAdding,
+  } = useHomePage();
 
   return (
     <Group h="100%" align="start" sx={{ border: "1px solid #ff000022" }}>
@@ -23,6 +31,7 @@ export default function HomePage() {
           opened={isModalOpen}
           onClose={closeModal}
           onSubmit={handleSubmit}
+          isAdding={isAdding}
         />
       </Group>
       <Group>category example</Group>
@@ -33,12 +42,30 @@ export default function HomePage() {
 function useHomePage() {
   const [isModalOpen, { open: openModal, close: closeModal }] =
     useDisclosure(false);
+  const { onSuccess } = useNotification("category");
 
-  const { data: categories } = useQuery<Category[]>(categoryQuery.key);
+  const { data: categories, refetch } = useQuery<Category[]>(categoryQuery.key);
+  const { mutateAsync: addCategory, isLoading: isAdding } = useMutation(
+    categoryMutation.fnc,
+    {
+      onSuccess: () => {
+        onSuccess();
+        closeModal();
+        refetch();
+      },
+    }
+  );
 
   const handleSubmit = async (values: CategoryFormValues) => {
-    console.log(values);
+    await addCategory(values);
   };
 
-  return { isModalOpen, openModal, closeModal, categories, handleSubmit };
+  return {
+    isModalOpen,
+    openModal,
+    closeModal,
+    categories,
+    handleSubmit,
+    isAdding,
+  };
 }

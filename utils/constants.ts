@@ -7,6 +7,7 @@ export const EMAIL_PROVIDERS = ["gmail", "outlook", "yahoo", "icloud"].map(
 export const PASSWORD_HASH_SALT = 12;
 export const TOKEN_CRYPTO_DEFAULT = 32;
 export const SEARCH_CATEGORIES_KEY = "K";
+export const DEFAULT_CATEGORY_EMOJI = "🏡";
 
 // 🖼️ UI
 export const MIN_PASSWORD_CHARS = 8;

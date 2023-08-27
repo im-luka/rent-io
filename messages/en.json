@@ -28,6 +28,10 @@
     "login": {
       "title": "Successfully logged in!",
       "message": "Glad to have you back"
+    },
+    "category": {
+      "title": "Category added!",
+      "message": "More travel, more fun!"
     }
   },
   "error": {
@@ -38,7 +42,8 @@
     "verificationEmail": "Problem with sending verification email",
     "noToken": "Token not provided",
     "invalidToken": "Invalid token provided",
-    "noCategories": "There is no categories"
+    "noCategories": "There is no categories",
+    "addCategory": "Problem with adding new category"
   },
   "navbar": {
     "logoAlt": "Logo",

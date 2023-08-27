@@ -11,10 +11,11 @@ type Props = {
   opened: boolean;
   onClose: () => void;
   onSubmit: (values: CategoryFormValues) => Promise<void>;
+  isAdding: boolean;
 };
 
 export const NewCategoryModal: FC<Props> = (props) => {
-  const { t, opened, onClose, categoryForm, onSubmit } =
+  const { t, opened, onClose, categoryForm, onSubmit, isAdding } =
     useNewCategoryModal(props);
 
   return (
@@ -39,7 +40,9 @@ export const NewCategoryModal: FC<Props> = (props) => {
               placeholder={t("emojiPlaceholder")}
             />
             <Divider my="sm" />
-            <Button type="submit">{t("createAction")}</Button>
+            <Button type="submit" loading={isAdding}>
+              {t("createAction")}
+            </Button>
           </Stack>
         </form>
       </FormProvider>
@@ -47,7 +50,7 @@ export const NewCategoryModal: FC<Props> = (props) => {
   );
 };
 
-function useNewCategoryModal({ opened, onClose, onSubmit }: Props) {
+function useNewCategoryModal({ opened, onClose, onSubmit, isAdding }: Props) {
   const t = useTranslations("home.categories.create");
 
   const tValidation = useTranslations("validation");
@@ -59,12 +62,18 @@ function useNewCategoryModal({ opened, onClose, onSubmit }: Props) {
     },
   });
 
+  const handleSubmit = async (values: CategoryFormValues) => {
+    await onSubmit(values);
+    categoryForm.reset();
+  };
+
   return {
     t,
     opened,
     onClose,
     categoryForm,
-    onSubmit: categoryForm.handleSubmit(onSubmit),
+    onSubmit: categoryForm.handleSubmit(handleSubmit),
+    isAdding,
   };
 }
 
