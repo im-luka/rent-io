@@ -93,7 +93,7 @@ const theme: MantineThemeOverride = {
       flexDirection: "column",
       maxWidth: rem(2056),
       marginInline: "auto",
-      paddingInline: theme.spacing.sm,
+      paddingInline: `${theme.spacing.sm} !important`,
     },
     ".flex-1": {
       flex: 1,

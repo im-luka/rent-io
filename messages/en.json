@@ -28,6 +28,10 @@
     "login": {
       "title": "Successfully logged in!",
       "message": "Glad to have you back"
+    },
+    "category": {
+      "title": "Category added!",
+      "message": "More travel, more fun!"
     }
   },
   "error": {
@@ -37,7 +41,10 @@
     "notVerified": "Email not verified",
     "verificationEmail": "Problem with sending verification email",
     "noToken": "Token not provided",
-    "invalidToken": "Invalid token provided"
+    "invalidToken": "Invalid token provided",
+    "noCategories": "There is no categories",
+    "addCategory": "Problem with adding new category",
+    "translate": "Problem with translating entities"
   },
   "navbar": {
     "logoAlt": "Logo",
@@ -64,6 +71,20 @@
       "userData": "{firstName} {lastName}",
       "accountSettings": "Account settings",
       "profile": "Profile"
+    }
+  },
+  "home": {
+    "categories": {
+      "title": "Categories",
+      "create": {
+        "title": "New Category",
+        "tooltip": "New Category",
+        "name": "Name",
+        "namePlaceholder": "e.g. Apartments",
+        "emoji": "Emoji",
+        "emojiPlaceholder": "🏡",
+        "createAction": "Create"
+      }
     }
   },
   "auth": {

@@ -42,3 +42,12 @@ model User {
 
   accounts              Account[]
 }
+
+model Category {
+  id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  name                  Json
+  emoji                 String?
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
