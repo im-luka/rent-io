@@ -43,7 +43,8 @@
     "noToken": "Token not provided",
     "invalidToken": "Invalid token provided",
     "noCategories": "There is no categories",
-    "addCategory": "Problem with adding new category"
+    "addCategory": "Problem with adding new category",
+    "translate": "Problem with translating entities"
   },
   "navbar": {
     "logoAlt": "Logo",
