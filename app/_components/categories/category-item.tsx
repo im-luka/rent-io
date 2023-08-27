@@ -1,34 +1,57 @@
+"use client";
+
 import { FC } from "react";
+import { useSearchParams } from "next/navigation";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useIntl } from "@/hooks/use-intl";
 import { Button, createStyles } from "@mantine/core";
 import { Category } from "@prisma/client";
+import qs from "query-string";
 
 type Props = {
   item: Category;
 };
 
-export const CategoryItem: FC<Props> = ({ item: { name, emoji } }) => {
-  const { classes, locale } = useCategoryItem();
+export const CategoryItem: FC<Props> = (props) => {
+  const { classes, name, emoji, isActive, cx, handleClick } =
+    useCategoryItem(props);
 
   return (
     <Button
       variant="subtle"
       size="sm"
       fw={500}
-      className={classes.categoryItem}
+      className={cx(classes.categoryItem, {
+        [classes.categoryItemActive]: isActive,
+      })}
+      onClick={handleClick}
     >
-      {emoji} {(name as Record<string, string>)[locale]}
+      {emoji} {name}
     </Button>
   );
 };
 
-function useCategoryItem() {
+function useCategoryItem({ item: { id, name, emoji } }: Props) {
   const [{ isDarkTheme }] = useColorScheme();
-  const { classes } = useStyles(isDarkTheme);
-  const { locale } = useIntl();
+  const { classes, cx } = useStyles(isDarkTheme);
+  const { locale, router, pathname } = useIntl();
+  const searchParams = useSearchParams();
 
-  return { classes, locale };
+  const localeName = (name as Record<string, string>)[locale];
+  const isActive = searchParams.get("category") === id;
+
+  const handleClick = () => {
+    const url = qs.stringifyUrl(
+      {
+        url: pathname,
+        query: { category: isActive ? null : id },
+      },
+      { skipNull: true }
+    );
+    router.replace(url);
+  };
+
+  return { classes, name: localeName, emoji, isActive, cx, handleClick };
 }
 
 const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
@@ -41,6 +64,18 @@ const useStyles = createStyles((theme, isDarkTheme: boolean) => ({
       backgroundColor: isDarkTheme
         ? theme.colors.dark[6]
         : theme.colors.gray[0],
+    },
+  },
+  categoryItemActive: {
+    backgroundColor: isDarkTheme
+      ? theme.colors.indigo[2]
+      : theme.colors.indigo[5],
+    color: isDarkTheme ? theme.colors.dark[9] : theme.white,
+    ":hover": {
+      backgroundColor: isDarkTheme
+        ? theme.colors.indigo[2]
+        : theme.colors.indigo[5],
+      color: isDarkTheme ? theme.colors.dark[9] : theme.white,
     },
   },
 }));

@@ -24,7 +24,7 @@ export default function HomePage() {
   } = useHomePage();
 
   return (
-    <Group h="100%" align="start" sx={{ border: "1px solid #ff000022" }}>
+    <Group h="100%" align="start">
       <Group>
         <CategoryWrapper categories={categories} onOpen={openModal} />
         <NewCategoryModal
