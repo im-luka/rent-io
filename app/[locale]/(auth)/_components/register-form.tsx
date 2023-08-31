@@ -14,6 +14,8 @@ import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 import { MIN_PASSWORD_CHARS } from "@/utils/constants";
 import { AuthForm } from "./form";
 import { SocialsAuth } from "./socials-auth";
+import { Link } from "@/app/_components/base/link";
+import { paths } from "@/navigation/paths";
 
 type Props = {
   onSubmit: (values: RegisterFormValues) => void;
@@ -89,6 +91,15 @@ export const RegisterForm: FC<Props> = (props) => {
             <Button type="submit" variant="gradient" loading={isLoading}>
               {t("registerAction")}
             </Button>
+            <Typography size="xs" ta="center">
+              {t.rich("goLoginAction", {
+                s: (chunk) => (
+                  <Link href={paths.login()} color="blue.5">
+                    {chunk}
+                  </Link>
+                ),
+              })}
+            </Typography>
             <Divider />
             <SocialsAuth />
           </Stack>
