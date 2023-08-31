@@ -101,7 +101,8 @@
         "password": "Password",
         "confirmPassword": "Confirm Password",
         "agreeTerms": "By registering, you agree to our <s>Terms of Use</s> and <s>Privacy Policy</s>",
-        "registerAction": "Register Now"
+        "registerAction": "Register Now",
+        "goLoginAction": "Already have an account? <s>Login now.</s>"
       },
       "success": {
         "title": "Registration is successful!",
@@ -115,7 +116,8 @@
         "email": "Email",
         "emailPlaceholder": "example@gmail.com",
         "password": "Password",
-        "loginAction": "Login"
+        "loginAction": "Login",
+        "goRegisterAction": "Don't have an account? <s>Create one.</s>"
       }
     },
     "socials": {
