@@ -10,6 +10,9 @@ import { z } from "zod";
 import { AuthForm } from "./form";
 import { FormPasswordInput } from "@/app/_components/base/form/password-input";
 import { SocialsAuth } from "./socials-auth";
+import { Typography } from "@/app/_components/base/typography";
+import { Link } from "@/app/_components/base/link";
+import { paths } from "@/navigation/paths";
 
 type Props = {
   onSubmit: (values: LoginFormValues) => Promise<void>;
@@ -41,6 +44,15 @@ export const LoginForm: FC<Props> = (props) => {
             <Button type="submit" variant="gradient" loading={isLoading}>
               {t("loginAction")}
             </Button>
+            <Typography size="xs" ta="center">
+              {t.rich("goRegisterAction", {
+                s: (chunk) => (
+                  <Link href={paths.register()} color="blue.5">
+                    {chunk}
+                  </Link>
+                ),
+              })}
+            </Typography>
             <Divider />
             <SocialsAuth />
           </Stack>

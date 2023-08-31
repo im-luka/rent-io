@@ -115,7 +115,8 @@
         "email": "Email",
         "emailPlaceholder": "example@gmail.com",
         "password": "Password",
-        "loginAction": "Login"
+        "loginAction": "Login",
+        "goRegisterAction": "Don't have an account? <s>Create one.</s>"
       }
     },
     "socials": {
