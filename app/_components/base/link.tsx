@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef } from "react";
 import { Anchor, AnchorProps } from "@mantine/core";
 import { LinkProps as NextLinkProps } from "next/link";

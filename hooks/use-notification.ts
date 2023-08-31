@@ -1,9 +1,9 @@
-import { notifications } from "@mantine/notifications";
-import { AxiosResponse } from "axios";
-import { useTranslations } from "next-intl";
-import { IconCheck } from "@tabler/icons-react";
 import { createElement } from "react";
 import { SignInResponse } from "next-auth/react";
+import { useTranslations } from "next-intl";
+import { AxiosResponse } from "axios";
+import { notifications } from "@mantine/notifications";
+import { IconCheck } from "@tabler/icons-react";
 
 export const useNotification = <T>(key: string) => {
   const t = useTranslations("notifications");

@@ -1,5 +1,7 @@
-import { Autocomplete, AutocompleteProps } from "@mantine/core";
+"use client";
+
 import { FC } from "react";
+import { Autocomplete, AutocompleteProps } from "@mantine/core";
 import { useController } from "react-hook-form";
 
 type Props = AutocompleteProps & {

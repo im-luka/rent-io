@@ -1,5 +1,5 @@
-import { useRouter, usePathname } from "next-intl/client";
 import { useLocale } from "next-intl";
+import { useRouter, usePathname } from "next-intl/client";
 
 export const useIntl = () => {
   const router = useRouter();

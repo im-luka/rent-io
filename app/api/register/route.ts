@@ -9,8 +9,8 @@ import mail, { MailDataRequired } from "@sendgrid/mail";
 mail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export async function POST(request: Request) {
-  const data: RegisterData = await request.json();
-  const { firstName, lastName, email, password } = data;
+  const { firstName, lastName, email, password }: RegisterData =
+    await request.json();
   const name = firstName.concat(" ", lastName);
   const verificationToken = generateRandomToken();
 

@@ -1,5 +1,7 @@
-import { Text, TextProps, Title, TitleOrder, TitleProps } from "@mantine/core";
+"use client";
+
 import { FC } from "react";
+import { Text, TextProps, Title, TitleOrder, TitleProps } from "@mantine/core";
 import { calculateLineHeight } from "../providers/theme/typography";
 
 type TitleVariant = "h1" | "h2" | "h3" | "h4";
