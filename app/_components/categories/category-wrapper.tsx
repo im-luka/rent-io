@@ -19,10 +19,11 @@ import { Category } from "@prisma/client";
 import { SEARCH_CATEGORIES_KEY } from "@/utils/constants";
 import { useTranslations } from "next-intl";
 import { CategoryItem } from "./category-item";
+import { ModalType } from "@/hooks/use-modal";
 
 type Props = {
   categories: Category[] | undefined;
-  onOpen: () => void;
+  onOpen: (type: ModalType) => void;
 };
 
 export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
@@ -53,7 +54,11 @@ export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
         <Group position="apart" px="xs">
           <Typography size="xs">{t("title")}</Typography>
           <Tooltip label={t("create.tooltip")} position="right" withArrow>
-            <ActionIcon variant="default" size={18} onClick={onOpen}>
+            <ActionIcon
+              variant="default"
+              size={18}
+              onClick={() => onOpen("addCategory")}
+            >
               <IconPlus size={14} stroke={1.5} />
             </ActionIcon>
           </Tooltip>
