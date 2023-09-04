@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useReducer } from "react";
 import { Modal, Stepper } from "@mantine/core";
 import {
   PropertyStepOneCategory,
@@ -9,42 +9,13 @@ import {
   PropertyStepTwoLocationFormValues,
 } from "./property-step-two-location";
 
-enum StepType {
-  PREVIOUS = "previous",
-  NEXT = "next",
-}
-export enum AddPropertyStep {
-  CATEGORY = 0,
-  LOCATION = 1,
-}
-export type FormState = {
-  category: PropertyStepOneCategoryFormValues;
-  location: PropertyStepTwoLocationFormValues;
-};
-
 type Props = {
   opened: boolean;
   onClose: () => void;
 };
 
 export const AddPropertyModal: FC<Props> = (props) => {
-  const { opened, onClose } = useAddPropertyModal(props);
-  const [active, setActive] = useState(AddPropertyStep.CATEGORY);
-  const [formState, setFormState] = useState<FormState>({
-    category: { title: "" },
-    location: { subject: "" },
-  });
-  const numberOfSteps = Object.values(AddPropertyStep).length / 2;
-
-  const handlePrevStep = () =>
-    setActive((currActiveStep) =>
-      currActiveStep <= 0 ? 0 : currActiveStep - 1
-    );
-
-  const handleNextStep = () =>
-    setActive((currActiveStep) =>
-      currActiveStep >= numberOfSteps ? numberOfSteps : currActiveStep + 1
-    );
+  const { opened, onClose, state, dispatch } = useAddPropertyModal(props);
 
   return (
     <Modal
@@ -53,25 +24,12 @@ export const AddPropertyModal: FC<Props> = (props) => {
       title="Add Property Modal"
       centered
     >
-      <Stepper
-        size="sm"
-        active={active}
-        onStepClick={setActive}
-        allowNextStepsSelect={false}
-      >
+      <Stepper size="sm" active={state.active} allowNextStepsSelect={false}>
         <Stepper.Step label="Step 1" description="Select Category">
-          <PropertyStepOneCategory
-            formState={formState}
-            setFormState={setFormState}
-            onPrevStep={handlePrevStep}
-            onNextStep={handleNextStep}
-          />
+          <PropertyStepOneCategory formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
         <Stepper.Step label="Step 2" description="Select Location">
-          <PropertyStepTwoLocation
-            onPrevStep={handlePrevStep}
-            onNextStep={handleNextStep}
-          />
+          <PropertyStepTwoLocation formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
         <Stepper.Completed>Property ready to create!</Stepper.Completed>
       </Stepper>
@@ -79,6 +37,61 @@ export const AddPropertyModal: FC<Props> = (props) => {
   );
 };
 
+enum AddPropertyStep {
+  CATEGORY = 0,
+  LOCATION = 1,
+}
+export enum StepType {
+  PREVIOUS = "previous",
+  NEXT = "next",
+}
+export type StepForm = {
+  category: PropertyStepOneCategoryFormValues;
+  location: PropertyStepTwoLocationFormValues;
+};
+type StepPayload = {
+  active: number;
+  form: StepForm;
+};
+const initialData: StepPayload = {
+  active: AddPropertyStep.CATEGORY,
+  form: {
+    category: { title: "" },
+    location: { subject: "" },
+  },
+};
+export type StepAction = {
+  type: StepType;
+  payload?: Partial<StepForm>;
+};
+
+function reducerFnc(
+  state: StepPayload,
+  { type, payload }: StepAction
+): StepPayload {
+  const numberOfSteps = Object.values(AddPropertyStep).length / 2;
+  switch (type) {
+    case StepType.PREVIOUS:
+      return {
+        active: state.active <= 0 ? 0 : state.active - 1,
+        form: state.form,
+      };
+    case StepType.NEXT:
+      return {
+        active:
+          state.active >= numberOfSteps ? numberOfSteps : state.active + 1,
+        form: {
+          ...state.form,
+          ...payload,
+        },
+      };
+    default:
+      return state;
+  }
+}
+
 function useAddPropertyModal({ opened, onClose }: Props) {
-  return { opened, onClose };
+  const [state, dispatch] = useReducer(reducerFnc, initialData);
+
+  return { opened, onClose, state, dispatch };
 }

@@ -1,45 +1,46 @@
-import { FC } from "react";
+import { Dispatch, FC } from "react";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@mantine/core";
 import { FormTextInput } from "../base/form/text-input";
+import { StepAction, StepForm, StepType } from ".";
 
 type Props = {
-  onPrevStep: () => void;
-  onNextStep: () => void;
+  formState: StepForm;
+  dispatch: Dispatch<StepAction>;
 };
 
 export const PropertyStepTwoLocation: FC<Props> = (props) => {
-  const { stepTwoForm, onPrevStep, onSubmit } =
+  const { stepTwoForm, handlePrevButton, onSubmit } =
     usePropertyStepTwoLocation(props);
 
   return (
     <FormProvider {...stepTwoForm}>
       <form onSubmit={onSubmit}>
         <FormTextInput name="subject" label="Subject" />
-        <Button onClick={onPrevStep}>prev step</Button>
+        <Button onClick={handlePrevButton}>prev step</Button>
         <Button type="submit">next step</Button>
       </form>
     </FormProvider>
   );
 };
 
-function usePropertyStepTwoLocation({ onPrevStep, onNextStep }: Props) {
+function usePropertyStepTwoLocation({ formState, dispatch }: Props) {
   const stepTwoForm = useForm<PropertyStepTwoLocationFormValues>({
     resolver: zodResolver(propertyStepTwoLocationSchema("required field!")),
-    defaultValues: {
-      subject: "",
-    },
+    defaultValues: formState.location,
   });
 
+  const handlePrevButton = () => dispatch({ type: StepType.PREVIOUS });
+
   const handleSubmit = (values: PropertyStepTwoLocationFormValues) => {
-    onNextStep();
+    dispatch({ type: StepType.NEXT, payload: { location: values } });
   };
 
   return {
     stepTwoForm,
-    onPrevStep,
+    handlePrevButton,
     onSubmit: stepTwoForm.handleSubmit(handleSubmit),
   };
 }

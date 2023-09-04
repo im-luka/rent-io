@@ -1,52 +1,46 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC, Dispatch } from "react";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@mantine/core";
 import { FormTextInput } from "../base/form/text-input";
-import { FormState } from ".";
+import { StepAction, StepForm, StepType } from ".";
 
 type Props = {
-  formState: FormState;
-  setFormState: Dispatch<SetStateAction<FormState>>;
-  onPrevStep: () => void;
-  onNextStep: () => void;
+  formState: StepForm;
+  dispatch: Dispatch<StepAction>;
 };
 
 export const PropertyStepOneCategory: FC<Props> = (props) => {
-  const { stepOneForm, onPrevStep, onSubmit } =
+  const { stepOneForm, handlePrevButton, onSubmit } =
     usePropertyStepOneCategory(props);
 
   return (
     <FormProvider {...stepOneForm}>
       <form onSubmit={onSubmit}>
         <FormTextInput name="title" label="Title" />
-        <Button onClick={onPrevStep}>prev step</Button>
+        <Button onClick={handlePrevButton}>prev step</Button>
         <Button type="submit">next step</Button>
       </form>
     </FormProvider>
   );
 };
 
-function usePropertyStepOneCategory({
-  onPrevStep,
-  onNextStep,
-  formState,
-  setFormState,
-}: Props) {
+function usePropertyStepOneCategory({ formState, dispatch }: Props) {
   const stepOneForm = useForm<PropertyStepOneCategoryFormValues>({
     resolver: zodResolver(propertyStepOneCategorySchema("required!")),
     defaultValues: formState.category,
   });
 
+  const handlePrevButton = () => dispatch({ type: StepType.PREVIOUS });
+
   const handleSubmit = (values: PropertyStepOneCategoryFormValues) => {
-    onNextStep();
-    setFormState((currState) => ({ ...currState, category: values }));
+    dispatch({ type: StepType.NEXT, payload: { category: values } });
   };
 
   return {
     stepOneForm,
-    onPrevStep,
+    handlePrevButton,
     onSubmit: stepOneForm.handleSubmit(handleSubmit),
   };
 }
