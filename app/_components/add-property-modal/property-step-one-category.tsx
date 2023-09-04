@@ -13,8 +13,9 @@ type Props = {
   onNextStep: () => void;
 };
 
-export const PropertyStepOne: FC<Props> = (props) => {
-  const { stepOneForm, onPrevStep, onSubmit } = usePropertyStepOne(props);
+export const PropertyStepOneCategory: FC<Props> = (props) => {
+  const { stepOneForm, onPrevStep, onSubmit } =
+    usePropertyStepOneCategory(props);
 
   return (
     <FormProvider {...stepOneForm}>
@@ -27,18 +28,18 @@ export const PropertyStepOne: FC<Props> = (props) => {
   );
 };
 
-function usePropertyStepOne({
+function usePropertyStepOneCategory({
   onPrevStep,
   onNextStep,
   formState,
   setFormState,
 }: Props) {
-  const stepOneForm = useForm<PropertyStepOneFormValues>({
-    resolver: zodResolver(propertyStepOneSchema("required!")),
+  const stepOneForm = useForm<PropertyStepOneCategoryFormValues>({
+    resolver: zodResolver(propertyStepOneCategorySchema("required!")),
     defaultValues: formState.category,
   });
 
-  const handleSubmit = (values: PropertyStepOneFormValues) => {
+  const handleSubmit = (values: PropertyStepOneCategoryFormValues) => {
     onNextStep();
     setFormState((currState) => ({ ...currState, category: values }));
   };
@@ -50,10 +51,10 @@ function usePropertyStepOne({
   };
 }
 
-export type PropertyStepOneFormValues = z.infer<
-  ReturnType<typeof propertyStepOneSchema>
+export type PropertyStepOneCategoryFormValues = z.infer<
+  ReturnType<typeof propertyStepOneCategorySchema>
 >;
-const propertyStepOneSchema = (required: string) =>
+const propertyStepOneCategorySchema = (required: string) =>
   z.object({
     title: z.string().nonempty(required),
   });

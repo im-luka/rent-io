@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { Modal, Stepper } from "@mantine/core";
 import {
-  PropertyStepOne,
-  PropertyStepOneFormValues,
+  PropertyStepOneCategory,
+  PropertyStepOneCategoryFormValues,
 } from "./property-step-one-category";
 import {
-  PropertyStepTwo,
-  PropertyStepTwoFormValues,
-} from "./property-step-two";
+  PropertyStepTwoLocation,
+  PropertyStepTwoLocationFormValues,
+} from "./property-step-two-location";
 
 enum StepType {
   PREVIOUS = "previous",
@@ -18,8 +18,8 @@ export enum AddPropertyStep {
   LOCATION = 1,
 }
 export type FormState = {
-  category: PropertyStepOneFormValues;
-  location: PropertyStepTwoFormValues;
+  category: PropertyStepOneCategoryFormValues;
+  location: PropertyStepTwoLocationFormValues;
 };
 
 type Props = {
@@ -60,7 +60,7 @@ export const AddPropertyModal: FC<Props> = (props) => {
         allowNextStepsSelect={false}
       >
         <Stepper.Step label="Step 1" description="Select Category">
-          <PropertyStepOne
+          <PropertyStepOneCategory
             formState={formState}
             setFormState={setFormState}
             onPrevStep={handlePrevStep}
@@ -68,7 +68,7 @@ export const AddPropertyModal: FC<Props> = (props) => {
           />
         </Stepper.Step>
         <Stepper.Step label="Step 2" description="Select Location">
-          <PropertyStepTwo
+          <PropertyStepTwoLocation
             onPrevStep={handlePrevStep}
             onNextStep={handleNextStep}
           />

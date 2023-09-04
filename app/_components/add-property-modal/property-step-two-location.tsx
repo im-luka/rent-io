@@ -10,8 +10,9 @@ type Props = {
   onNextStep: () => void;
 };
 
-export const PropertyStepTwo: FC<Props> = (props) => {
-  const { stepTwoForm, onPrevStep, onSubmit } = usePropertyStepTwo(props);
+export const PropertyStepTwoLocation: FC<Props> = (props) => {
+  const { stepTwoForm, onPrevStep, onSubmit } =
+    usePropertyStepTwoLocation(props);
 
   return (
     <FormProvider {...stepTwoForm}>
@@ -24,15 +25,15 @@ export const PropertyStepTwo: FC<Props> = (props) => {
   );
 };
 
-function usePropertyStepTwo({ onPrevStep, onNextStep }: Props) {
-  const stepTwoForm = useForm<PropertyStepTwoFormValues>({
-    resolver: zodResolver(propertyStepTwoSchema("required field!")),
+function usePropertyStepTwoLocation({ onPrevStep, onNextStep }: Props) {
+  const stepTwoForm = useForm<PropertyStepTwoLocationFormValues>({
+    resolver: zodResolver(propertyStepTwoLocationSchema("required field!")),
     defaultValues: {
       subject: "",
     },
   });
 
-  const handleSubmit = (values: PropertyStepTwoFormValues) => {
+  const handleSubmit = (values: PropertyStepTwoLocationFormValues) => {
     onNextStep();
   };
 
@@ -43,10 +44,10 @@ function usePropertyStepTwo({ onPrevStep, onNextStep }: Props) {
   };
 }
 
-export type PropertyStepTwoFormValues = z.infer<
-  ReturnType<typeof propertyStepTwoSchema>
+export type PropertyStepTwoLocationFormValues = z.infer<
+  ReturnType<typeof propertyStepTwoLocationSchema>
 >;
-const propertyStepTwoSchema = (required: string) =>
+const propertyStepTwoLocationSchema = (required: string) =>
   z.object({
     subject: z.string().nonempty(required),
   });
