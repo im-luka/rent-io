@@ -85,6 +85,23 @@
         "emojiPlaceholder": "🏡",
         "createAction": "Create"
       }
+    },
+    "propertyModal": {
+      "title": "Add Property",
+      "category": {
+        "label": "Step 1",
+        "description": "Select Category"
+      },
+      "location": {
+        "label": "Step 2",
+        "description": "Enter Location"
+      },
+      "completed": {
+        "title": "Property ready for creation!",
+        "submit": "Submit",
+        "back": "Go Back",
+        "reset": "Reset"
+      }
     }
   },
   "auth": {

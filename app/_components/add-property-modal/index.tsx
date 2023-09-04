@@ -9,6 +9,7 @@ import {
   PropertyStepTwoLocationFormValues,
 } from "./property-step-two-location";
 import { Typography } from "../base/typography";
+import { useTranslations } from "next-intl";
 
 type Props = {
   opened: boolean;
@@ -16,41 +17,42 @@ type Props = {
 };
 
 export const AddPropertyModal: FC<Props> = (props) => {
-  const { opened, onClose, state, dispatch, handleSubmit } =
+  const { t, opened, onClose, state, dispatch, handleSubmit } =
     useAddPropertyModal(props);
 
   return (
-    <Modal
-      opened={opened}
-      onClose={onClose}
-      title="Add Property Modal"
-      centered
-    >
+    <Modal opened={opened} onClose={onClose} title={t("title")} centered>
       <Stepper size="sm" active={state.active} allowNextStepsSelect={false}>
-        <Stepper.Step label="Step 1" description="Select Category">
+        <Stepper.Step
+          label={t("category.label")}
+          description={t("category.description")}
+        >
           <PropertyStepOneCategory formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
-        <Stepper.Step label="Step 2" description="Select Location">
+        <Stepper.Step
+          label={t("location.label")}
+          description={t("location.description")}
+        >
           <PropertyStepTwoLocation formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
         <Stepper.Completed>
           <Stack spacing="xl" mt="md">
             <Typography component="h4" ta="center">
-              Property ready for creation!
+              {t("completed.title")}
             </Typography>
             <Stack spacing="xs">
-              <Button onClick={handleSubmit}>Submit</Button>
+              <Button onClick={handleSubmit}>{t("completed.submit")}</Button>
               <Button
                 variant="subtle"
                 onClick={() => dispatch({ type: StepType.PREVIOUS })}
               >
-                Go Back
+                {t("completed.back")}
               </Button>
               <Button
                 color="red.7"
                 onClick={() => dispatch({ type: StepType.RESET })}
               >
-                Reset
+                {t("completed.reset")}
               </Button>
             </Stack>
           </Stack>
@@ -117,9 +119,10 @@ function reducerFnc(
 }
 
 function useAddPropertyModal({ opened, onClose }: Props) {
+  const t = useTranslations("home.propertyModal");
   const [state, dispatch] = useReducer(reducerFnc, initialData);
 
   const handleSubmit = () => console.log(state);
 
-  return { opened, onClose, state, dispatch, handleSubmit };
+  return { t, opened, onClose, state, dispatch, handleSubmit };
 }
