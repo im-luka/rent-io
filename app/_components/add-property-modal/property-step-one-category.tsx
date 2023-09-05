@@ -1,10 +1,13 @@
-import { FC, Dispatch } from "react";
-import { z } from "zod";
-import { FormProvider, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormTextInput } from "../base/form/text-input";
+import { FC, Dispatch, useState, FormEvent } from "react";
 import { StepAction, StepForm, StepType } from ".";
 import { Actions } from "./actions";
+import { useQuery } from "@tanstack/react-query";
+import { Category } from "@prisma/client";
+import { categoryQuery } from "@/domain/queries/categories-query";
+import { Chip, Grid } from "@mantine/core";
+import { useIntl } from "@/hooks/use-intl";
+import { Typography } from "../base/typography";
+import { useTranslations } from "next-intl";
 
 type Props = {
   formState: StepForm;
@@ -12,42 +15,71 @@ type Props = {
 };
 
 export const PropertyStepOneCategory: FC<Props> = (props) => {
-  const { stepOneForm, handlePrevButton, onSubmit } =
-    usePropertyStepOneCategory(props);
+  const {
+    selected,
+    setSelected,
+    locale,
+    categories,
+    error,
+    isSubmitted,
+    handlePrevButton,
+    handleSubmit,
+  } = usePropertyStepOneCategory(props);
+
+  const renderCategory = ({ id, name, emoji }: Category) => (
+    <Grid.Col span={6} key={id}>
+      <Chip value={id} sx={{ width: "100%" }}>
+        {emoji} {(name as Record<string, string>)[locale]}
+      </Chip>
+    </Grid.Col>
+  );
 
   return (
-    <FormProvider {...stepOneForm}>
-      <form onSubmit={onSubmit}>
-        <FormTextInput name="title" label="Title" />
-        <Actions handlePrevButton={handlePrevButton} />
-      </form>
-    </FormProvider>
+    <form onSubmit={handleSubmit}>
+      <Chip.Group multiple value={selected} onChange={setSelected}>
+        <Grid mt="lg">{categories?.map(renderCategory)}</Grid>
+      </Chip.Group>
+      {error.active && isSubmitted && (
+        <Typography size="xs" mt="sm" ta="center" color="red.5">
+          {error.msg}
+        </Typography>
+      )}
+      <Actions handlePrevButton={handlePrevButton} />
+    </form>
   );
 };
 
 function usePropertyStepOneCategory({ formState, dispatch }: Props) {
-  const stepOneForm = useForm<PropertyStepOneCategoryFormValues>({
-    resolver: zodResolver(propertyStepOneCategorySchema("required!")),
-    defaultValues: formState.category,
-  });
+  const t = useTranslations();
+  const { locale } = useIntl();
+  const [selected, setSelected] = useState<string[]>(formState.category);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const error = {
+    active: selected.length === 0,
+    msg: t("validation.categorySelected"),
+  };
+
+  const { data: categories } = useQuery<Category[]>(categoryQuery.key);
 
   const handlePrevButton = () => dispatch({ type: StepType.PREVIOUS });
 
-  const handleSubmit = (values: PropertyStepOneCategoryFormValues) => {
-    dispatch({ type: StepType.NEXT, payload: { category: values } });
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    if (!error.active) {
+      dispatch({ type: StepType.NEXT, payload: { category: selected } });
+      setIsSubmitted(false);
+    }
   };
 
   return {
-    stepOneForm,
+    selected,
+    setSelected,
+    locale,
+    categories,
+    error,
+    isSubmitted,
     handlePrevButton,
-    onSubmit: stepOneForm.handleSubmit(handleSubmit),
+    handleSubmit,
   };
 }
-
-export type PropertyStepOneCategoryFormValues = z.infer<
-  ReturnType<typeof propertyStepOneCategorySchema>
->;
-const propertyStepOneCategorySchema = (required: string) =>
-  z.object({
-    title: z.string().nonempty(required),
-  });

@@ -11,14 +11,21 @@ export const components: Pick<MantineThemeOverride, "components"> = {
       },
     },
     Modal: {
-      styles: (theme) => ({
+      styles: {
         overlay: {
           zIndex: MODAL_OVERLAY_Z_INDEX,
         },
         inner: {
           zIndex: MODAL_OVERLAY_Z_INDEX + 1,
         },
-      }),
+      },
+    },
+    Chip: {
+      styles: {
+        label: {
+          width: "100%",
+        },
+      },
     },
   },
 };

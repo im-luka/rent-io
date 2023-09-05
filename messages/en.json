@@ -14,7 +14,8 @@
     "includesLowercase": "Includes lowercase",
     "includesUppercase": "Includes uppercase",
     "includesSymbol": "Includes special symbol",
-    "passwordMatch": "Password doesn't match"
+    "passwordMatch": "Password doesn't match",
+    "categorySelected": "At least one category is required"
   },
   "notifications": {
     "error": {

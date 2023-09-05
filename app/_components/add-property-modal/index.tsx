@@ -1,9 +1,6 @@
 import { FC, useReducer } from "react";
 import { Button, Modal, Stack, Stepper } from "@mantine/core";
-import {
-  PropertyStepOneCategory,
-  PropertyStepOneCategoryFormValues,
-} from "./property-step-one-category";
+import { PropertyStepOneCategory } from "./property-step-one-category";
 import {
   PropertyStepTwoLocation,
   PropertyStepTwoLocationFormValues,
@@ -72,7 +69,7 @@ export enum StepType {
   RESET = "reset",
 }
 export type StepForm = {
-  category: PropertyStepOneCategoryFormValues;
+  category: string[];
   location: PropertyStepTwoLocationFormValues;
 };
 type StepPayload = {
@@ -82,7 +79,7 @@ type StepPayload = {
 const initialData: StepPayload = {
   active: AddPropertyStep.CATEGORY,
   form: {
-    category: { title: "" },
+    category: [],
     location: { subject: "" },
   },
 };
