@@ -38,6 +38,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
     "typescript": "5.1.6",
+    "world-countries": "^4.0.0",
     "zod": "3.21.4"
   },
   "devDependencies": {

@@ -80,7 +80,7 @@ const initialData: StepPayload = {
   active: AddPropertyStep.CATEGORY,
   form: {
     category: [],
-    location: { subject: "" },
+    location: { country: "" },
   },
 };
 export type StepAction = {
