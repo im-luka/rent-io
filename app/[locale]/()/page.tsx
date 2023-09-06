@@ -1,5 +1,6 @@
 "use client";
 
+import "leaflet/dist/leaflet.css";
 import { AddPropertyModal } from "@/app/_components/add-property-modal";
 import { CategoryWrapper } from "@/app/_components/categories/category-wrapper";
 import {

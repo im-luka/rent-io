@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, Dispatch, useState } from "react";
 import { z } from "zod";
 import { Controller, FormProvider, useForm } from "react-hook-form";
@@ -6,8 +8,15 @@ import { StepAction, StepForm, StepType } from ".";
 import { Actions } from "./actions";
 import { useCountries } from "@/hooks/use-countries";
 import { FormSelect } from "../base/form/select";
-import { Group, Stack } from "@mantine/core";
+import { Box, Group, Stack } from "@mantine/core";
 import { FormTextInput } from "../base/form/text-input";
+import { MapContainer, TileLayer } from "react-leaflet";
+import {
+  COUNTRY_MAP_DEFAULT_ZOOM,
+  COUNTRY_MAP_MAX_ZOOM,
+  COUNTRY_MAP_MIN_ZOOM,
+  COUNTRY_SELECT_Z_INDEX,
+} from "@/utils/constants";
 
 type Props = {
   formState: StepForm;
@@ -47,10 +56,42 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
                 searchable
                 allowDeselect
                 withAsterisk
+                zIndex={COUNTRY_SELECT_Z_INDEX}
               />
             )}
           />
-          {/* TODO: 🗺️ leaflet map goes here */}
+          <Box
+            sx={{
+              height: "200px",
+              position: "relative",
+              borderRadius: "8px",
+            }}
+          >
+            <MapContainer
+              center={[51.505, -0.09]}
+              attributionControl={false}
+              zoomControl={false}
+              scrollWheelZoom={false}
+              zoom={COUNTRY_MAP_DEFAULT_ZOOM}
+              minZoom={COUNTRY_MAP_MIN_ZOOM}
+              maxZoom={COUNTRY_MAP_MAX_ZOOM}
+              style={{
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                left: 0,
+                top: 0,
+                borderRadius: "8px",
+              }}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              {/* <Marker position={[51.505, -0.09]}>
+                <Popup>
+                  A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+              </Marker> */}
+            </MapContainer>
+          </Box>
           <Stack spacing="xs">
             <Group noWrap>
               <FormTextInput

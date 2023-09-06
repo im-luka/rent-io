@@ -14,3 +14,7 @@ export const MIN_PASSWORD_CHARS = 8;
 export const NOTIFICATIONS_LIMIT = 5;
 export const MODAL_OVERLAY_Z_INDEX = 1001;
 export const NOTIFICATION_Z_INDEX = 9999;
+export const COUNTRY_SELECT_Z_INDEX = 1000;
+export const COUNTRY_MAP_DEFAULT_ZOOM = 10;
+export const COUNTRY_MAP_MIN_ZOOM = 3;
+export const COUNTRY_MAP_MAX_ZOOM = 13;
