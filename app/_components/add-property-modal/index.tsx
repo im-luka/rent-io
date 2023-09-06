@@ -7,6 +7,7 @@ import {
 } from "./property-step-two-location";
 import { Typography } from "../base/typography";
 import { useTranslations } from "next-intl";
+import { DEFAULT_MAP_LATLNG } from "@/utils/constants";
 
 type Props = {
   opened: boolean;
@@ -84,8 +85,9 @@ const initialData: StepPayload = {
       country: "",
       city: "",
       street: "",
-      postalCode: 0,
+      postalCode: "",
       county: "",
+      latlng: DEFAULT_MAP_LATLNG,
     },
   },
 };

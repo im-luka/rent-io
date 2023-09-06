@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, Dispatch, useState } from "react";
+import { FC, Dispatch, useRef } from "react";
 import { z } from "zod";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,7 @@ import {
   COUNTRY_MAP_MIN_ZOOM,
   COUNTRY_SELECT_Z_INDEX,
 } from "@/utils/constants";
+import L, { Map } from "leaflet";
 
 type Props = {
   formState: StepForm;
@@ -25,7 +26,9 @@ type Props = {
 
 export const PropertyStepTwoLocation: FC<Props> = (props) => {
   const {
+    mapRef,
     stepTwoForm,
+    defaultLatLng,
     countries,
     addressErrors,
     handleChange,
@@ -50,7 +53,7 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
                 }))}
                 onChange={(value) => {
                   field.onChange(value);
-                  handleChange(value);
+                  handleChange(value!);
                 }}
                 dropdownPosition="bottom"
                 searchable
@@ -68,7 +71,8 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
             }}
           >
             <MapContainer
-              center={[51.505, -0.09]}
+              ref={mapRef}
+              center={defaultLatLng as L.LatLngTuple}
               attributionControl={false}
               zoomControl={false}
               scrollWheelZoom={false}
@@ -137,15 +141,16 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
 };
 
 function usePropertyStepTwoLocation({ formState, dispatch }: Props) {
-  const [country, setCountry] = useState<string>(formState.location.country);
-  const [countries] = useCountries();
+  const mapRef = useRef<Map>(null);
+  const [countries, { getCountry }] = useCountries();
 
   const stepTwoForm = useForm<PropertyStepTwoLocationFormValues>({
     resolver: zodResolver(propertyStepTwoLocationSchema("required field!")),
-    defaultValues: { ...formState.location, postalCode: undefined },
+    defaultValues: formState.location,
   });
   const {
     formState: { errors },
+    setValue,
     handleSubmit,
   } = stepTwoForm;
   const addressErrors = {
@@ -158,9 +163,14 @@ function usePropertyStepTwoLocation({ formState, dispatch }: Props) {
       postalCode: !!(!errors.postalCode && errors.county),
     },
   };
+  const defaultLatLng = formState.location.latlng;
 
-  const handleChange = (value: string | null) => {
-    setCountry(countries.find((c) => c.id === value)?.id ?? "");
+  const handleChange = (value: string) => {
+    const country = getCountry(value);
+    if (country) {
+      setValue("latlng", country.latlng);
+      mapRef.current?.flyTo(country.latlng, undefined, { duration: 1 });
+    }
   };
 
   const handlePrevButton = () => dispatch({ type: StepType.PREVIOUS });
@@ -170,7 +180,9 @@ function usePropertyStepTwoLocation({ formState, dispatch }: Props) {
   };
 
   return {
+    mapRef,
     stepTwoForm,
+    defaultLatLng,
     countries,
     addressErrors,
     handleChange,
@@ -187,6 +199,7 @@ const propertyStepTwoLocationSchema = (required: string) =>
     country: z.string().nonempty(required),
     city: z.string().nonempty(required),
     street: z.string().nonempty(required),
-    postalCode: z.number({ required_error: required }),
+    postalCode: z.string().nonempty(required),
     county: z.string(),
+    latlng: z.array(z.number().optional()),
   });
