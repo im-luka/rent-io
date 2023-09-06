@@ -10,14 +10,9 @@ import { useCountries } from "@/hooks/use-countries";
 import { FormSelect } from "../base/form/select";
 import { Box, Group, Stack } from "@mantine/core";
 import { FormTextInput } from "../base/form/text-input";
-import L, { Map } from "leaflet";
-import { MapContainer, TileLayer } from "react-leaflet";
-import {
-  COUNTRY_MAP_DEFAULT_ZOOM,
-  COUNTRY_MAP_MAX_ZOOM,
-  COUNTRY_MAP_MIN_ZOOM,
-  COUNTRY_SELECT_Z_INDEX,
-} from "@/utils/constants";
+import { Map, LatLngTuple } from "leaflet";
+import { COUNTRY_SELECT_Z_INDEX } from "@/utils/constants";
+import { PropertyMap } from "./property-map";
 
 type Props = {
   formState: StepForm;
@@ -70,31 +65,7 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
               borderRadius: "8px",
             }}
           >
-            <MapContainer
-              ref={mapRef}
-              center={defaultLatLng as L.LatLngTuple}
-              attributionControl={false}
-              zoomControl={false}
-              scrollWheelZoom={false}
-              zoom={COUNTRY_MAP_DEFAULT_ZOOM}
-              minZoom={COUNTRY_MAP_MIN_ZOOM}
-              maxZoom={COUNTRY_MAP_MAX_ZOOM}
-              style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                left: 0,
-                top: 0,
-                borderRadius: "8px",
-              }}
-            >
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              {/* <Marker position={[51.505, -0.09]}>
-                <Popup>
-                  A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-              </Marker> */}
-            </MapContainer>
+            <PropertyMap ref={mapRef} center={defaultLatLng as LatLngTuple} />
           </Box>
           <Stack spacing="xs">
             <Group noWrap>
