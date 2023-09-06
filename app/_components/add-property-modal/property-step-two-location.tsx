@@ -10,6 +10,7 @@ import { useCountries } from "@/hooks/use-countries";
 import { FormSelect } from "../base/form/select";
 import { Box, Group, Stack } from "@mantine/core";
 import { FormTextInput } from "../base/form/text-input";
+import L, { Map } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import {
   COUNTRY_MAP_DEFAULT_ZOOM,
@@ -17,7 +18,6 @@ import {
   COUNTRY_MAP_MIN_ZOOM,
   COUNTRY_SELECT_Z_INDEX,
 } from "@/utils/constants";
-import L, { Map } from "leaflet";
 
 type Props = {
   formState: StepForm;
