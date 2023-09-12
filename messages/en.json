@@ -47,6 +47,12 @@
     "addCategory": "Problem with adding new category",
     "translate": "Problem with translating entities"
   },
+  "symbol": {
+    "dot": ".",
+    "comma": ",",
+    "minus": "-",
+    "plus": "+"
+  },
   "navbar": {
     "logoAlt": "Logo",
     "actions": {
@@ -96,6 +102,10 @@
       "location": {
         "label": "Step 2",
         "description": "Enter Location"
+      },
+      "misc": {
+        "label": "Step 3",
+        "description": "Additional Data"
       },
       "completed": {
         "title": "Property ready for creation!",

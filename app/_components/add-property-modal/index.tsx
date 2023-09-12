@@ -8,6 +8,10 @@ import {
 import { Typography } from "../base/typography";
 import { useTranslations } from "next-intl";
 import { DEFAULT_MAP_LATLNG } from "@/utils/constants";
+import {
+  PropertyStepThreeMisc,
+  PropertyStepThreeMiscFormValues,
+} from "./property-step-three-misc";
 
 type Props = {
   opened: boolean;
@@ -32,6 +36,12 @@ export const AddPropertyModal: FC<Props> = (props) => {
           description={t("location.description")}
         >
           <PropertyStepTwoLocation formState={state.form} dispatch={dispatch} />
+        </Stepper.Step>
+        <Stepper.Step
+          label={t("misc.label")}
+          description={t("misc.description")}
+        >
+          <PropertyStepThreeMisc formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
         <Stepper.Completed>
           <Stack spacing="xl" mt="md">
@@ -63,6 +73,7 @@ export const AddPropertyModal: FC<Props> = (props) => {
 enum AddPropertyStep {
   CATEGORY = 0,
   LOCATION = 1,
+  MISC = 2,
 }
 export enum StepType {
   PREVIOUS = "previous",
@@ -72,6 +83,7 @@ export enum StepType {
 export type StepForm = {
   category: string[];
   location: PropertyStepTwoLocationFormValues;
+  misc: PropertyStepThreeMiscFormValues;
 };
 type StepPayload = {
   active: number;
@@ -88,6 +100,13 @@ const initialData: StepPayload = {
       postalCode: "",
       county: "",
       latlng: DEFAULT_MAP_LATLNG,
+    },
+    misc: {
+      quadrature: 0,
+      guestCount: 0,
+      bathroomCount: 0,
+      includesKitchen: false,
+      includesParking: false,
     },
   },
 };
