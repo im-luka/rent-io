@@ -12,6 +12,10 @@ import {
   PropertyStepThreeMisc,
   PropertyStepThreeMiscFormValues,
 } from "./property-step-three-misc";
+import {
+  PropertyStepFourBaseInfo,
+  PropertyStepFourBaseInfoFormValues,
+} from "./property-step-four-base-info";
 
 type Props = {
   opened: boolean;
@@ -42,6 +46,15 @@ export const AddPropertyModal: FC<Props> = (props) => {
           description={t("misc.description")}
         >
           <PropertyStepThreeMisc formState={state.form} dispatch={dispatch} />
+        </Stepper.Step>
+        <Stepper.Step
+          label={t("baseInfo.label")}
+          description={t("baseInfo.description")}
+        >
+          <PropertyStepFourBaseInfo
+            formState={state.form}
+            dispatch={dispatch}
+          />
         </Stepper.Step>
         <Stepper.Completed>
           <Stack spacing="xl" mt="md">
@@ -74,6 +87,7 @@ enum AddPropertyStep {
   CATEGORY = 0,
   LOCATION = 1,
   MISC = 2,
+  BASE_INFO = 3,
 }
 export enum StepType {
   PREVIOUS = "previous",
@@ -84,6 +98,7 @@ export type StepForm = {
   category: string[];
   location: PropertyStepTwoLocationFormValues;
   misc: PropertyStepThreeMiscFormValues;
+  baseInfo: PropertyStepFourBaseInfoFormValues;
 };
 type StepPayload = {
   active: number;
@@ -107,6 +122,11 @@ const initialData: StepPayload = {
       bathroomCount: 1,
       includesKitchen: false,
       includesParking: false,
+    },
+    baseInfo: {
+      name: "",
+      description: "",
+      price: 100,
     },
   },
 };

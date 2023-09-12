@@ -107,6 +107,10 @@
         "label": "Step 3",
         "description": "Additional Data"
       },
+      "baseInfo": {
+        "label": "Step 4",
+        "description": "Base Info"
+      },
       "completed": {
         "title": "Property ready for creation!",
         "submit": "Submit",

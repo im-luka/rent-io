@@ -12,9 +12,9 @@ import {
   Styles,
   rem,
 } from "@mantine/core";
-import { FormNumberInput } from "../base/form/number-input";
 import { Typography } from "../base/typography";
 import { FormCheckbox } from "../base/form/checkbox";
+import { NumberInputWithHandlers } from "../number-input-with-handlers";
 
 type Props = {
   formState: StepForm;
@@ -33,7 +33,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
             <Typography size="sm" ta="right">
               Number of Guests:
             </Typography>
-            <FormNumberInput
+            <NumberInputWithHandlers
               name="guestCount"
               min={1}
               withAsterisk
@@ -44,7 +44,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
             <Typography size="sm" ta="right">
               Quadrature:
             </Typography>
-            <FormNumberInput
+            <NumberInputWithHandlers
               name="quadrature"
               step={5}
               min={1}
@@ -56,7 +56,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
             <Typography size="sm" ta="right">
               Number of Bathrooms:
             </Typography>
-            <FormNumberInput
+            <NumberInputWithHandlers
               name="bathroomCount"
               min={1}
               withAsterisk
