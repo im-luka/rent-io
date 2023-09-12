@@ -102,9 +102,9 @@ const initialData: StepPayload = {
       latlng: DEFAULT_MAP_LATLNG,
     },
     misc: {
-      quadrature: 0,
-      guestCount: 0,
-      bathroomCount: 0,
+      quadrature: 1,
+      guestCount: 1,
+      bathroomCount: 1,
       includesKitchen: false,
       includesParking: false,
     },

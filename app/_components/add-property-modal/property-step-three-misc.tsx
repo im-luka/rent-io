@@ -35,6 +35,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
             </Typography>
             <FormNumberInput
               name="guestCount"
+              min={1}
               withAsterisk
               styles={fieldInputStyles}
             />
@@ -46,6 +47,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
             <FormNumberInput
               name="quadrature"
               step={5}
+              min={1}
               withAsterisk
               styles={fieldInputStyles}
             />
@@ -56,6 +58,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
             </Typography>
             <FormNumberInput
               name="bathroomCount"
+              min={1}
               withAsterisk
               styles={fieldInputStyles}
             />
