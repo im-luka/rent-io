@@ -10,6 +10,7 @@ import {
   Stack,
   Tooltip,
   createStyles,
+  rem,
 } from "@mantine/core";
 import { IconPhoto, IconTrash, IconUpload, IconX } from "@tabler/icons-react";
 import { Typography } from "../base/typography";
@@ -37,7 +38,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       {imageUrl ? (
-        <Box w="100%" pos="relative" h={250}>
+        <Box w="100%" pos="relative" h={300}>
           <ActionIcon
             variant="subtle"
             size="lg"
@@ -66,7 +67,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
           multiple={false}
           onDrop={(files) => setImageUrl(URL.createObjectURL(files[0]))}
         >
-          <Group position="center">
+          <Group h={rem(100)} position="center" align="center">
             <Dropzone.Accept>
               <IconUpload size={32} />
             </Dropzone.Accept>
