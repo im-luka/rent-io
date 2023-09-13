@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, useReducer } from "react";
 import { Button, Modal, Stack, Stepper } from "@mantine/core";
 import { PropertyStepOneCategory } from "./property-step-one-category";
@@ -16,6 +18,7 @@ import {
   PropertyStepFourBaseInfo,
   PropertyStepFourBaseInfoFormValues,
 } from "./property-step-four-base-info";
+import { PropertyStepFiveImage } from "./property-step-five-image";
 
 type Props = {
   opened: boolean;
@@ -56,6 +59,12 @@ export const AddPropertyModal: FC<Props> = (props) => {
             dispatch={dispatch}
           />
         </Stepper.Step>
+        <Stepper.Step
+          label={t("image.label")}
+          description={t("image.description")}
+        >
+          <PropertyStepFiveImage formState={state.form} dispatch={dispatch} />
+        </Stepper.Step>
         <Stepper.Completed>
           <Stack spacing="xl" mt="md">
             <Typography component="h4" ta="center">
@@ -88,6 +97,7 @@ enum AddPropertyStep {
   LOCATION = 1,
   MISC = 2,
   BASE_INFO = 3,
+  IMAGE = 4,
 }
 export enum StepType {
   PREVIOUS = "previous",
@@ -99,6 +109,7 @@ export type StepForm = {
   location: PropertyStepTwoLocationFormValues;
   misc: PropertyStepThreeMiscFormValues;
   baseInfo: PropertyStepFourBaseInfoFormValues;
+  image: string;
 };
 type StepPayload = {
   active: number;
@@ -128,6 +139,7 @@ const initialData: StepPayload = {
       description: "",
       price: 100,
     },
+    image: "",
   },
 };
 export type StepAction = {

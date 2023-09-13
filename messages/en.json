@@ -111,6 +111,10 @@
         "label": "Step 4",
         "description": "Base Info"
       },
+      "image": {
+        "label": "Step 5",
+        "description": "Select Image"
+      },
       "completed": {
         "title": "Property ready for creation!",
         "submit": "Submit",

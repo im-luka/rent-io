@@ -98,5 +98,8 @@ const theme: MantineThemeOverride = {
     ".flex-1": {
       flex: 1,
     },
+    ".z-index-1": {
+      zIndex: 1,
+    },
   }),
 };
