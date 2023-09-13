@@ -8,6 +8,8 @@ import { Divider, Stack } from "@mantine/core";
 import { FormTextInput } from "../base/form/text-input";
 import { FormTextarea } from "../base/form/textarea";
 import { FormNumberInput } from "../base/form/number-input";
+import { useTranslations } from "next-intl";
+import { IconCurrencyEuro } from "@tabler/icons-react";
 
 type Props = {
   formState: StepForm;
@@ -15,7 +17,7 @@ type Props = {
 };
 
 export const PropertyStepFourBaseInfo: FC<Props> = (props) => {
-  const { stepFourForm, handlePrevButton, onSubmit } =
+  const { t, stepFourForm, handlePrevButton, onSubmit } =
     usePropertyStepFourBaseInfo(props);
 
   return (
@@ -24,24 +26,25 @@ export const PropertyStepFourBaseInfo: FC<Props> = (props) => {
         <Stack>
           <FormTextInput
             name="name"
-            label="Name"
-            placeholder="Luxury Apartment in Beverly Hills"
+            label={t("name")}
+            placeholder={t("namePlaceholder")}
             withAsterisk
           />
           <FormTextarea
             name="description"
-            label="Description"
-            placeholder="Apartment with luxury interior and amazing view set in the livest part of the town"
+            label={t("descriptionLabel")}
+            placeholder={t("descriptionLabelPlaceholder")}
             minRows={5}
             withAsterisk
           />
           <Divider mt="sm" />
           <FormNumberInput
             name="price"
-            label="Price"
+            label={t("price")}
             precision={2}
             step={50}
             withAsterisk
+            icon={<IconCurrencyEuro size={16} />}
           />
         </Stack>
         <Actions handlePrevButton={handlePrevButton} />
@@ -51,9 +54,14 @@ export const PropertyStepFourBaseInfo: FC<Props> = (props) => {
 };
 
 function usePropertyStepFourBaseInfo({ formState, dispatch }: Props) {
+  const t = useTranslations("home.propertyModal.baseInfo");
+
+  const tValidation = useTranslations("validation");
+  const validationMessages: Parameters<typeof propertyStepFourBaseInfoSchema> =
+    [tValidation("required"), tValidation("greaterThanZero")];
   const stepFourForm = useForm<PropertyStepFourBaseInfoFormValues>({
     resolver: zodResolver(
-      propertyStepFourBaseInfoSchema("required field!", "bigger than 0 must!")
+      propertyStepFourBaseInfoSchema(...validationMessages)
     ),
     defaultValues: formState.baseInfo,
   });
@@ -65,6 +73,7 @@ function usePropertyStepFourBaseInfo({ formState, dispatch }: Props) {
   };
 
   return {
+    t,
     stepFourForm,
     handlePrevButton,
     onSubmit: stepFourForm.handleSubmit(handleSubmit),

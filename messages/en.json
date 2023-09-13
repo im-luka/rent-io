@@ -52,7 +52,8 @@
     "dot": ".",
     "comma": ",",
     "minus": "-",
-    "plus": "+"
+    "plus": "+",
+    "dollar": "$"
   },
   "navbar": {
     "logoAlt": "Logo",
@@ -120,7 +121,12 @@
       },
       "baseInfo": {
         "label": "Step 4",
-        "description": "Base Info"
+        "description": "Base Info",
+        "name": "Name",
+        "namePlaceholder": "Luxury Apartment in Beverly Hills",
+        "descriptionLabel": "Description",
+        "descriptionLabelPlaceholder": "Apartment with luxury interior and amazing view set in the livest part of the town",
+        "price": "Price"
       },
       "image": {
         "label": "Step 5",
