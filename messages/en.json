@@ -8,13 +8,16 @@
   },
   "validation": {
     "required": "Required field",
+    "requiredImage": "Image is required",
     "invalidEmail": "Invalid email format",
     "minChars": "Has at least {count}",
     "includesNumber": "Includes number",
     "includesLowercase": "Includes lowercase",
     "includesUppercase": "Includes uppercase",
     "includesSymbol": "Includes special symbol",
-    "passwordMatch": "Password doesn't match"
+    "passwordMatch": "Password doesn't match",
+    "categorySelected": "At least one category is required",
+    "greaterThanZero": "Must be greater than 0"
   },
   "notifications": {
     "error": {
@@ -46,12 +49,19 @@
     "addCategory": "Problem with adding new category",
     "translate": "Problem with translating entities"
   },
+  "symbol": {
+    "dot": ".",
+    "comma": ",",
+    "minus": "-",
+    "plus": "+",
+    "dollar": "$"
+  },
   "navbar": {
     "logoAlt": "Logo",
     "actions": {
       "startExploring": "Start Exploring",
       "explore": "Explore",
-      "addService": "Add Service",
+      "addYours": "Add Yours",
       "add": "Add"
     },
     "intl": {
@@ -84,6 +94,57 @@
         "emoji": "Emoji",
         "emojiPlaceholder": "🏡",
         "createAction": "Create"
+      }
+    },
+    "propertyModal": {
+      "title": "Add Property",
+      "actions": {
+        "back": "Back",
+        "next": "Next"
+      },
+      "category": {
+        "label": "Step 1",
+        "description": "Select Category"
+      },
+      "location": {
+        "label": "Step 2",
+        "description": "Enter Location",
+        "country": "Country",
+        "city": "City",
+        "street": "Street",
+        "county": "County",
+        "postalCode": "Postal Code"
+      },
+      "misc": {
+        "label": "Step 3",
+        "description": "Additional Data",
+        "guestNumber": "Number of guests:",
+        "quadrature": "Quadrature (in m²):",
+        "bathroomNumber": "Number of bathrooms:",
+        "includesKitchen": "Includes Kitchen",
+        "includesParking": "Includes Parking"
+      },
+      "baseInfo": {
+        "label": "Step 4",
+        "description": "Base Info",
+        "name": "Name",
+        "namePlaceholder": "Luxury Apartment in Beverly Hills",
+        "descriptionLabel": "Description",
+        "descriptionLabelPlaceholder": "Apartment with luxury interior and amazing view set in the livest part of the town",
+        "price": "Price"
+      },
+      "image": {
+        "label": "Step 5",
+        "description": "Select Image",
+        "tooltip": "Remove",
+        "dropzoneTitle": "Drag here or click to select image",
+        "dropzoneDescription": "Please select only one image"
+      },
+      "completed": {
+        "title": "Property ready for creation!",
+        "submit": "Submit",
+        "back": "Go Back",
+        "reset": "Reset"
       }
     }
   },

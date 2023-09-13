@@ -37,10 +37,13 @@ model User {
   hashedPassword        String?
   verificationToken     String?
 
+  accounts              Account[]
+  properties            Property[]
+  reviews               Review[]
+
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
-  accounts              Account[]
 }
 
 model Category {
@@ -48,6 +51,65 @@ model Category {
   name                  Json
   emoji                 String?
 
+  propertyIds           String[] @db.ObjectId
+
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
+
+  properties            Property[] @relation(fields: [propertyIds], references: [id])
+}
+
+model Property {
+  id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String
+  description           String?
+  price                 Int
+  imageSrc              String
+  quadrature            Int
+  guestCount            Int
+  roomCount             Int
+  bathroomCount         Int
+  includesKitchen       Boolean
+  includesParking       Boolean
+
+  userId                String @db.ObjectId
+  adressId              String @db.ObjectId @unique
+  categoryIds           String[] @db.ObjectId
+  reviews               Review[]
+
+  createdAt             DateTime @default(now())
+  updatedtAt            DateTime @updatedAt
+
+  user                  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  address               Address @relation(fields: [adressId], references: [id])
+  categories            Category[] @relation(fields: [categoryIds], references: [id])
+}
+
+model Address {
+  id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  street                String
+  city                  String
+  county                String?
+  country               String
+  postalCode            Int
+
+  property              Property?
+
+  createdAt             DateTime @default(now())
+  updatedtAt            DateTime @updatedAt
+}
+
+model Review {
+  id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  rating                Int
+  comment               String
+
+  userId                String @db.ObjectId
+  propertyId            String @db.ObjectId
+
+  createdAt             DateTime @default(now())
+  updatedtAt            DateTime @updatedAt
+
+  user                  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property              Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }
