@@ -15,6 +15,7 @@ import { IconPhoto, IconTrash, IconUpload, IconX } from "@tabler/icons-react";
 import { Typography } from "../base/typography";
 import Image from "next/image";
 import { Actions } from "./actions";
+import { useTranslations } from "next-intl";
 
 type Props = {
   formState: StepForm;
@@ -23,6 +24,7 @@ type Props = {
 
 export const PropertyStepFiveImage: FC<Props> = (props) => {
   const {
+    t,
     classes,
     theme,
     imageUrl,
@@ -47,7 +49,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
             className="z-index-1"
             onClick={() => setImageUrl("")}
           >
-            <Tooltip label="Remove">
+            <Tooltip label={t("home.propertyModal.image.tooltip")}>
               <IconTrash size={28} color={theme.colors.red[6]} />
             </Tooltip>
           </ActionIcon>
@@ -75,9 +77,11 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
               <IconPhoto size={32} />
             </Dropzone.Idle>
             <Stack spacing={0}>
-              <Typography>Drag here or click to select image</Typography>
+              <Typography>
+                {t("home.propertyModal.image.dropzoneTitle")}
+              </Typography>
               <Typography size="sm" color="gray.7" italic>
-                Please select only one image
+                {t("home.propertyModal.image.dropzoneDescription")}
               </Typography>
             </Stack>
           </Group>
@@ -85,7 +89,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
       )}
       {!imageUrl && isSubmitted && (
         <Typography size="xs" mt="sm" ta="center" color="red.5">
-          Image is required
+          {t("validation.requiredImage")}
         </Typography>
       )}
       <Actions handlePrevButton={handlePrevButton} />
@@ -94,6 +98,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
 };
 
 function usePropertyStepFiveImage({ formState, dispatch }: Props) {
+  const t = useTranslations();
   const { classes, theme } = useStyles();
   const [imageUrl, setImageUrl] = useState(formState.image);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -110,6 +115,7 @@ function usePropertyStepFiveImage({ formState, dispatch }: Props) {
   };
 
   return {
+    t,
     classes,
     theme,
     imageUrl,

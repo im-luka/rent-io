@@ -8,6 +8,7 @@
   },
   "validation": {
     "required": "Required field",
+    "requiredImage": "Image is required",
     "invalidEmail": "Invalid email format",
     "minChars": "Has at least {count}",
     "includesNumber": "Includes number",
@@ -130,7 +131,10 @@
       },
       "image": {
         "label": "Step 5",
-        "description": "Select Image"
+        "description": "Select Image",
+        "tooltip": "Remove",
+        "dropzoneTitle": "Drag here or click to select image",
+        "dropzoneDescription": "Please select only one image"
       },
       "completed": {
         "title": "Property ready for creation!",
