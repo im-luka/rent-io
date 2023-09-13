@@ -8,11 +8,12 @@ import { StepAction, StepForm, StepType } from ".";
 import { Actions } from "./actions";
 import { useCountries } from "@/hooks/use-countries";
 import { FormSelect } from "../base/form/select";
-import { Box, Group, Stack } from "@mantine/core";
+import { Box, Group, Stack, createStyles, rem } from "@mantine/core";
 import { FormTextInput } from "../base/form/text-input";
 import { Map, LatLngTuple } from "leaflet";
 import { COUNTRY_SELECT_Z_INDEX } from "@/utils/constants";
 import { PropertyMap } from "./property-map";
+import { useTranslations } from "next-intl";
 
 type Props = {
   formState: StepForm;
@@ -21,6 +22,8 @@ type Props = {
 
 export const PropertyStepTwoLocation: FC<Props> = (props) => {
   const {
+    t,
+    classes,
     mapRef,
     stepTwoForm,
     defaultLatLng,
@@ -40,8 +43,8 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
             render={({ field }) => (
               <FormSelect
                 name="country"
-                label="Country"
-                placeholder="Select Country"
+                label={t("country")}
+                placeholder={t("country")}
                 data={countries.map(({ id, flag, name }) => ({
                   value: id,
                   label: `${flag} ${name}`,
@@ -58,29 +61,23 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
               />
             )}
           />
-          <Box
-            sx={{
-              height: "200px",
-              position: "relative",
-              borderRadius: "8px",
-            }}
-          >
+          <Box className={classes.mapWrapper}>
             <PropertyMap ref={mapRef} center={defaultLatLng as LatLngTuple} />
           </Box>
           <Stack spacing="xs">
             <Group noWrap>
               <FormTextInput
                 name="city"
-                label="City"
-                placeholder="City"
+                label={t("city")}
+                placeholder={t("city")}
                 withAsterisk
                 w="100%"
                 mb={addressErrors.cityStreet.city ? "md" : 0}
               />
               <FormTextInput
                 name="street"
-                label="Street"
-                placeholder="Street"
+                label={t("street")}
+                placeholder={t("street")}
                 withAsterisk
                 w="100%"
                 mb={addressErrors.cityStreet.street ? "md" : 0}
@@ -89,15 +86,15 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
             <Group noWrap>
               <FormTextInput
                 name="county"
-                label="County"
-                placeholder="County"
+                label={t("county")}
+                placeholder={t("county")}
                 w="100%"
                 mb={addressErrors.countyPostalCode.county ? "md" : 0}
               />
               <FormTextInput
                 name="postalCode"
-                label="Postal Code"
-                placeholder="Postal Code"
+                label={t("postalCode")}
+                placeholder={t("postalCode")}
                 withAsterisk
                 w="100%"
                 mb={addressErrors.countyPostalCode.postalCode ? "md" : 0}
@@ -112,11 +109,16 @@ export const PropertyStepTwoLocation: FC<Props> = (props) => {
 };
 
 function usePropertyStepTwoLocation({ formState, dispatch }: Props) {
+  const t = useTranslations("home.propertyModal.location");
+  const { classes } = useStyles();
   const mapRef = useRef<Map>(null);
   const [countries, { getCountry }] = useCountries();
 
+  const tValidation = useTranslations("validation");
   const stepTwoForm = useForm<PropertyStepTwoLocationFormValues>({
-    resolver: zodResolver(propertyStepTwoLocationSchema("required field!")),
+    resolver: zodResolver(
+      propertyStepTwoLocationSchema(tValidation("required"))
+    ),
     defaultValues: formState.location,
   });
   const {
@@ -151,6 +153,8 @@ function usePropertyStepTwoLocation({ formState, dispatch }: Props) {
   };
 
   return {
+    t,
+    classes,
     mapRef,
     stepTwoForm,
     defaultLatLng,
@@ -174,3 +178,11 @@ const propertyStepTwoLocationSchema = (required: string) =>
     county: z.string(),
     latlng: z.array(z.number().optional()),
   });
+
+const useStyles = createStyles((theme) => ({
+  mapWrapper: {
+    height: rem(200),
+    position: "relative",
+    borderRadius: theme.radius.md,
+  },
+}));

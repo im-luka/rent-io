@@ -101,7 +101,12 @@
       },
       "location": {
         "label": "Step 2",
-        "description": "Enter Location"
+        "description": "Enter Location",
+        "country": "Country",
+        "city": "City",
+        "street": "Street",
+        "county": "County",
+        "postalCode": "Postal Code"
       },
       "misc": {
         "label": "Step 3",
