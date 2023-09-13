@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useReducer } from "react";
-import { Button, Modal, Stack, Stepper } from "@mantine/core";
+import { Button, Modal, Stack, Stepper, rem } from "@mantine/core";
 import { PropertyStepOneCategory } from "./property-step-one-category";
 import {
   PropertyStepTwoLocation,
@@ -30,7 +30,13 @@ export const AddPropertyModal: FC<Props> = (props) => {
     useAddPropertyModal(props);
 
   return (
-    <Modal opened={opened} onClose={onClose} title={t("title")} centered>
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      title={t("title")}
+      centered
+      styles={{ content: { minWidth: rem(900) } }}
+    >
       <Stepper size="sm" active={state.active} allowNextStepsSelect={false}>
         <Stepper.Step
           label={t("category.label")}
