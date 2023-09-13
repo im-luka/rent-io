@@ -15,6 +15,7 @@ import {
 import { Typography } from "../base/typography";
 import { FormCheckbox } from "../base/form/checkbox";
 import { NumberInputWithHandlers } from "../number-input-with-handlers";
+import { useTranslations } from "next-intl";
 
 type Props = {
   formState: StepForm;
@@ -22,7 +23,7 @@ type Props = {
 };
 
 export const PropertyStepThreeMisc: FC<Props> = (props) => {
-  const { stepThreeForm, fieldInputStyles, handlePrevButton, onSubmit } =
+  const { t, stepThreeForm, fieldInputStyles, handlePrevButton, onSubmit } =
     usePropertyStepThreeMisc(props);
 
   return (
@@ -31,7 +32,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
         <Stack mt="xs">
           <Group align="center" grow spacing="md">
             <Typography size="sm" ta="right">
-              Number of Guests:
+              {t("guestNumber")}
             </Typography>
             <NumberInputWithHandlers
               name="guestCount"
@@ -42,7 +43,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
           </Group>
           <Group align="center" grow spacing="md">
             <Typography size="sm" ta="right">
-              Quadrature:
+              {t("quadrature")}
             </Typography>
             <NumberInputWithHandlers
               name="quadrature"
@@ -54,7 +55,7 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
           </Group>
           <Group align="center" grow spacing="md">
             <Typography size="sm" ta="right">
-              Number of Bathrooms:
+              {t("bathroomNumber")}
             </Typography>
             <NumberInputWithHandlers
               name="bathroomCount"
@@ -65,8 +66,8 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
           </Group>
           <Divider />
           <Group mx="auto" spacing="xl">
-            <FormCheckbox name="includesKitchen" label="Includes Kitchen" />
-            <FormCheckbox name="includesParking" label="Includes Parking" />
+            <FormCheckbox name="includesKitchen" label={t("includesKitchen")} />
+            <FormCheckbox name="includesParking" label={t("includesParking")} />
           </Group>
         </Stack>
         <Actions handlePrevButton={handlePrevButton} />
@@ -76,9 +77,12 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
 };
 
 function usePropertyStepThreeMisc({ formState, dispatch }: Props) {
+  const t = useTranslations("home.propertyModal.misc");
+
+  const tValidation = useTranslations("validation");
   const stepThreeForm = useForm<PropertyStepThreeMiscFormValues>({
     resolver: zodResolver(
-      propertyStepThreeMiscSchema("must be greater than zero")
+      propertyStepThreeMiscSchema(tValidation("greaterThanZero"))
     ),
     defaultValues: formState.misc,
   });
@@ -98,6 +102,7 @@ function usePropertyStepThreeMisc({ formState, dispatch }: Props) {
   };
 
   return {
+    t,
     stepThreeForm,
     fieldInputStyles,
     handlePrevButton,

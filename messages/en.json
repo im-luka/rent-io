@@ -15,7 +15,8 @@
     "includesUppercase": "Includes uppercase",
     "includesSymbol": "Includes special symbol",
     "passwordMatch": "Password doesn't match",
-    "categorySelected": "At least one category is required"
+    "categorySelected": "At least one category is required",
+    "greaterThanZero": "Must be greater than 0"
   },
   "notifications": {
     "error": {
@@ -110,7 +111,12 @@
       },
       "misc": {
         "label": "Step 3",
-        "description": "Additional Data"
+        "description": "Additional Data",
+        "guestNumber": "Number of guests:",
+        "quadrature": "Quadrature (in m²):",
+        "bathroomNumber": "Number of bathrooms:",
+        "includesKitchen": "Includes Kitchen",
+        "includesParking": "Includes Parking"
       },
       "baseInfo": {
         "label": "Step 4",
