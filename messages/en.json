@@ -98,6 +98,10 @@
     },
     "propertyModal": {
       "title": "Add Property",
+      "actions": {
+        "back": "Back",
+        "next": "Next"
+      },
       "category": {
         "label": "Step 1",
         "description": "Select Category"
