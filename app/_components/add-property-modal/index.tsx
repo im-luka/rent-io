@@ -19,6 +19,13 @@ import {
   PropertyStepFourBaseInfoFormValues,
 } from "./property-step-four-base-info";
 import { PropertyStepFiveImage } from "./property-step-five-image";
+import {
+  IconBoxMultiple,
+  IconCategory,
+  IconHome,
+  IconMap,
+  IconPhoto,
+} from "@tabler/icons-react";
 
 type Props = {
   opened: boolean;
@@ -41,24 +48,28 @@ export const AddPropertyModal: FC<Props> = (props) => {
         <Stepper.Step
           label={t("category.label")}
           description={t("category.description")}
+          icon={<IconCategory size={16} />}
         >
           <PropertyStepOneCategory formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
         <Stepper.Step
           label={t("location.label")}
           description={t("location.description")}
+          icon={<IconMap size={16} />}
         >
           <PropertyStepTwoLocation formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
         <Stepper.Step
           label={t("misc.label")}
           description={t("misc.description")}
+          icon={<IconBoxMultiple size={16} />}
         >
           <PropertyStepThreeMisc formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
         <Stepper.Step
           label={t("baseInfo.label")}
           description={t("baseInfo.description")}
+          icon={<IconHome size={16} />}
         >
           <PropertyStepFourBaseInfo
             formState={state.form}
@@ -68,6 +79,7 @@ export const AddPropertyModal: FC<Props> = (props) => {
         <Stepper.Step
           label={t("image.label")}
           description={t("image.description")}
+          icon={<IconPhoto size={16} />}
         >
           <PropertyStepFiveImage formState={state.form} dispatch={dispatch} />
         </Stepper.Step>
