@@ -27,8 +27,8 @@ export const PropertyStepOneCategory: FC<Props> = (props) => {
   } = usePropertyStepOneCategory(props);
 
   const renderCategory = ({ id, name, emoji }: Category) => (
-    <Grid.Col span={6} key={id}>
-      <Chip value={id} sx={{ width: "100%" }}>
+    <Grid.Col key={id} span={6}>
+      <Chip value={id} w="100%">
         {emoji} {(name as Record<string, string>)[locale]}
       </Chip>
     </Grid.Col>
