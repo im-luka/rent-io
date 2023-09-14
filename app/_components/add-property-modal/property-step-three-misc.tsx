@@ -91,7 +91,7 @@ function usePropertyStepThreeMisc({ formState, dispatch }: Props) {
     NumberInputStylesNames,
     Record<string, any>
   > = {
-    wrapper: { width: rem(42) },
+    wrapper: { width: rem(50) },
     input: { textAlign: "center" },
   };
 
