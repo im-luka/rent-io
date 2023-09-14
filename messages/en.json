@@ -121,6 +121,7 @@
         "guestNumber": "Number of guests:",
         "quadrature": "Quadrature (in m²):",
         "bathroomNumber": "Number of bathrooms:",
+        "roomNumber": "Number of rooms:",
         "includesKitchen": "Includes Kitchen",
         "includesParking": "Includes Parking"
       },

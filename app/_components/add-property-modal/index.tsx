@@ -148,6 +148,7 @@ const initialData: StepPayload = {
     misc: {
       quadrature: 1,
       guestCount: 1,
+      roomCount: 1,
       bathroomCount: 1,
       includesKitchen: false,
       includesParking: false,
