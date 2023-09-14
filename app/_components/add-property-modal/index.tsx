@@ -196,7 +196,9 @@ function useAddPropertyModal({ opened, onClose }: Props) {
   const t = useTranslations("home.propertyModal");
   const [state, dispatch] = useReducer(reducerFnc, initialData);
 
-  const handleSubmit = () => console.log(state);
+  const handleSubmit = () => {
+    console.log(state);
+  };
 
   return { t, opened, onClose, state, dispatch, handleSubmit };
 }

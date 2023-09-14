@@ -62,7 +62,7 @@ model Category {
 model Property {
   id                    String @id @default(auto()) @map("_id") @db.ObjectId
   name                  String
-  description           String?
+  description           String
   price                 Int
   imageSrc              String
   quadrature            Int
