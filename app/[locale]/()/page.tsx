@@ -14,6 +14,7 @@ import { useNotification } from "@/hooks/use-notification";
 import { Group } from "@mantine/core";
 import { Category } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { propertyMutation } from "@/domain/mutations/property-mutation";
 
 export default function HomePage() {
   const { isOpen, open, close, categories, handleSubmit, isAdding } =
@@ -37,7 +38,7 @@ export default function HomePage() {
 }
 
 function useHomePage() {
-  const { onSuccess } = useNotification("category");
+  const { onSuccess } = useNotification();
   const [{ isOpen }, { open, close }] = useModal();
 
   const { data: categories, refetch } = useQuery<Category[]>(categoryQuery.key);
@@ -45,12 +46,18 @@ function useHomePage() {
     categoryMutation.fnc,
     {
       onSuccess: () => {
-        onSuccess();
+        onSuccess()("category");
         close();
         refetch();
       },
     }
   );
+
+  const {} = useMutation(propertyMutation.fnc, {
+    onSuccess: () => {
+      onSuccess()("property");
+    },
+  });
 
   const handleSubmit = async (values: CategoryFormValues) => {
     await addCategory(values);

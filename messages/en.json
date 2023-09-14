@@ -35,6 +35,10 @@
     "category": {
       "title": "Category added!",
       "message": "More travel, more fun!"
+    },
+    "property": {
+      "title": "Property added!",
+      "message": "Expect traffic real soon!"
     }
   },
   "error": {
