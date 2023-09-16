@@ -3,6 +3,7 @@
 import "leaflet/dist/leaflet.css";
 import {
   AddPropertyModal,
+  PropertyModalRef,
   StepForm,
 } from "@/app/_components/add-property-modal";
 import { CategoryWrapper } from "@/app/_components/categories/category-wrapper";
@@ -18,9 +19,11 @@ import { Group } from "@mantine/core";
 import { Category } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { propertyMutation } from "@/domain/mutations/property-mutation";
+import { useRef } from "react";
 
 export default function HomePage() {
   const {
+    propertyModalRef,
     isOpen,
     open,
     close,
@@ -44,6 +47,7 @@ export default function HomePage() {
       </Group>
       <Group>category example</Group>
       <AddPropertyModal
+        ref={propertyModalRef}
         opened={isOpen.addProperty}
         onClose={close}
         onSubmit={handlePropertySubmit}
@@ -54,6 +58,7 @@ export default function HomePage() {
 }
 
 function useHomePage() {
+  const propertyModalRef = useRef<PropertyModalRef>(null);
   const { onSuccess } = useNotification();
   const [{ isOpen }, { open, close }] = useModal();
 
@@ -77,6 +82,7 @@ function useHomePage() {
       onSuccess: () => {
         onSuccess()("property");
         close();
+        propertyModalRef.current?.resetForm();
       },
     }
   );
@@ -104,6 +110,7 @@ function useHomePage() {
   };
 
   return {
+    propertyModalRef,
     isOpen,
     open,
     close,
