@@ -2,7 +2,8 @@ export type PropertyData = {
   name: string;
   description: string;
   price: number;
-  imageSrc: string;
+  image?: File | null;
+  imageSrc?: string;
   quadrature: number;
   guestCount: number;
   roomCount: number;
@@ -14,4 +15,5 @@ export type PropertyData = {
   street: string;
   postalCode: string;
   county?: string;
+  categories: string[];
 };

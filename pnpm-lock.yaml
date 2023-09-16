@@ -52,6 +52,9 @@ dependencies:
   '@types/react-dom':
     specifier: 18.2.7
     version: 18.2.7
+  '@uploadcare/upload-client':
+    specifier: ^6.6.1
+    version: 6.6.1
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -1047,6 +1050,17 @@ packages:
     dependencies:
       '@typescript-eslint/types': 6.4.1
       eslint-visitor-keys: 3.4.3
+    dev: false
+
+  /@uploadcare/upload-client@6.6.1:
+    resolution: {integrity: sha512-bUePLdFBmuu6gTc1vWwo9Mq9dIWznnY5GY/FqLnWQTsP9/4Ht2hF/CZ8b4oFGipEda1DURcc7XrdTZxywBparQ==}
+    engines: {node: '>=16'}
+    dependencies:
+      form-data: 4.0.0
+      ws: 8.14.1
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
     dev: false
 
   /abbrev@1.1.1:
@@ -3802,6 +3816,19 @@ packages:
 
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+    dev: false
+
+  /ws@8.14.1:
+    resolution: {integrity: sha512-4OOseMUq8AzRBI/7SLMUwO+FEDnguetSk7KMb1sHwvF2w2Wv5Hoj0nlifx8vtGsftE/jWHojPy8sMMzYLJ2G/A==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
     dev: false
 
   /yallist@4.0.0:

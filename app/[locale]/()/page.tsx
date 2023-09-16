@@ -1,7 +1,10 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { AddPropertyModal } from "@/app/_components/add-property-modal";
+import {
+  AddPropertyModal,
+  StepForm,
+} from "@/app/_components/add-property-modal";
 import { CategoryWrapper } from "@/app/_components/categories/category-wrapper";
 import {
   CategoryFormValues,
@@ -17,8 +20,16 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { propertyMutation } from "@/domain/mutations/property-mutation";
 
 export default function HomePage() {
-  const { isOpen, open, close, categories, handleSubmit, isAdding } =
-    useHomePage();
+  const {
+    isOpen,
+    open,
+    close,
+    categories,
+    isAddingCategory,
+    handleCategorySubmit,
+    isAddingProperty,
+    handlePropertySubmit,
+  } = useHomePage();
 
   return (
     <Group h="100%" align="start">
@@ -27,12 +38,17 @@ export default function HomePage() {
         <NewCategoryModal
           opened={isOpen.addCategory}
           onClose={close}
-          onSubmit={handleSubmit}
-          isAdding={isAdding}
+          onSubmit={handleCategorySubmit}
+          isAdding={isAddingCategory}
         />
       </Group>
       <Group>category example</Group>
-      <AddPropertyModal opened={isOpen.addProperty} onClose={close} />
+      <AddPropertyModal
+        opened={isOpen.addProperty}
+        onClose={close}
+        onSubmit={handlePropertySubmit}
+        isAdding={isAddingProperty}
+      />
     </Group>
   );
 }
@@ -41,26 +57,50 @@ function useHomePage() {
   const { onSuccess } = useNotification();
   const [{ isOpen }, { open, close }] = useModal();
 
-  const { data: categories, refetch } = useQuery<Category[]>(categoryQuery.key);
-  const { mutateAsync: addCategory, isLoading: isAdding } = useMutation(
+  const { data: categories, refetch: categoriesRefetch } = useQuery<Category[]>(
+    categoryQuery.key
+  );
+  const { mutateAsync: addCategory, isLoading: isAddingCategory } = useMutation(
     categoryMutation.fnc,
     {
       onSuccess: () => {
         onSuccess()("category");
         close();
-        refetch();
+        categoriesRefetch();
       },
     }
   );
 
-  const {} = useMutation(propertyMutation.fnc, {
-    onSuccess: () => {
-      onSuccess()("property");
-    },
-  });
+  const { mutateAsync: addProperty, isLoading: isAddingProperty } = useMutation(
+    propertyMutation.fnc,
+    {
+      onSuccess: () => {
+        onSuccess()("property");
+        close();
+      },
+    }
+  );
 
-  const handleSubmit = async (values: CategoryFormValues) => {
+  const handleCategorySubmit = async (values: CategoryFormValues) => {
     await addCategory(values);
+  };
+
+  const handlePropertySubmit = async (values: StepForm) => {
+    const {
+      baseInfo,
+      category: categories,
+      image,
+      misc,
+      location: { latlng, ...restLocation },
+    } = values;
+
+    await addProperty({
+      ...baseInfo,
+      categories,
+      image,
+      ...misc,
+      ...restLocation,
+    });
   };
 
   return {
@@ -68,7 +108,9 @@ function useHomePage() {
     open,
     close,
     categories,
-    handleSubmit,
-    isAdding,
+    isAddingCategory,
+    handleCategorySubmit,
+    isAddingProperty,
+    handlePropertySubmit,
   };
 }

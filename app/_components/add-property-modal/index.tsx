@@ -30,10 +30,12 @@ import {
 type Props = {
   opened: boolean;
   onClose: () => void;
+  onSubmit: (values: StepForm) => Promise<void>;
+  isAdding: boolean;
 };
 
 export const AddPropertyModal: FC<Props> = (props) => {
-  const { t, opened, onClose, state, dispatch, handleSubmit } =
+  const { t, opened, onClose, state, dispatch, handleSubmit, isAdding } =
     useAddPropertyModal(props);
 
   return (
@@ -89,7 +91,9 @@ export const AddPropertyModal: FC<Props> = (props) => {
               {t("completed.title")}
             </Typography>
             <Stack spacing="xs">
-              <Button onClick={handleSubmit}>{t("completed.submit")}</Button>
+              <Button onClick={handleSubmit} loading={isAdding}>
+                {t("completed.submit")}
+              </Button>
               <Button
                 variant="subtle"
                 onClick={() => dispatch({ type: StepType.PREVIOUS })}
@@ -127,7 +131,7 @@ export type StepForm = {
   location: PropertyStepTwoLocationFormValues;
   misc: PropertyStepThreeMiscFormValues;
   baseInfo: PropertyStepFourBaseInfoFormValues;
-  image: string;
+  image: File | null;
 };
 type StepPayload = {
   active: number;
@@ -158,7 +162,7 @@ const initialData: StepPayload = {
       description: "",
       price: 100,
     },
-    image: "",
+    image: null,
   },
 };
 export type StepAction = {
@@ -193,13 +197,11 @@ function reducerFnc(
   }
 }
 
-function useAddPropertyModal({ opened, onClose }: Props) {
+function useAddPropertyModal({ opened, onClose, onSubmit, isAdding }: Props) {
   const t = useTranslations("home.propertyModal");
   const [state, dispatch] = useReducer(reducerFnc, initialData);
 
-  const handleSubmit = () => {
-    console.log(state);
-  };
+  const handleSubmit = () => onSubmit(state.form);
 
-  return { t, opened, onClose, state, dispatch, handleSubmit };
+  return { t, opened, onClose, state, dispatch, handleSubmit, isAdding };
 }
