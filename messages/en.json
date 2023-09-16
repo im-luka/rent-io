@@ -51,7 +51,8 @@
     "invalidToken": "Invalid token provided",
     "noCategories": "There is no categories",
     "addCategory": "Problem with adding new category",
-    "translate": "Problem with translating entities"
+    "translate": "Problem with translating entities",
+    "addProperty": "Problem with adding new property"
   },
   "symbol": {
     "dot": ".",
