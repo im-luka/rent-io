@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import axios from "axios";
 import { getData } from "@/domain/remote/response/data";
+import { TranslatorData } from "@/domain/types/translator-data";
+import { DEFAULT_LOCALE, LOCALES } from "@/utils/constants";
 
 export async function POST(request: Request) {
-  const { from, to, text } = await request.json();
+  const text: string = await request.json();
+
+  const from = cookies().get("NEXT_LOCALE")?.value ?? DEFAULT_LOCALE;
+  const to = LOCALES.find((locale) => locale !== from)!;
 
   try {
     const result = await axios
@@ -23,7 +29,11 @@ export async function POST(request: Request) {
         }
       )
       .then(getData);
-    return NextResponse.json(result.data.translatedText);
+    return NextResponse.json({
+      text: result.data.translatedText,
+      from,
+      to,
+    } as TranslatorData);
   } catch (error) {
     return NextResponse.json("custom.translate", { status: 400 });
   }

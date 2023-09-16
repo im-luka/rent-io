@@ -36,34 +36,30 @@ model User {
   image                 String?
   hashedPassword        String?
   verificationToken     String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   accounts              Account[]
   properties            Property[]
   reviews               Review[]
-
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-
 }
 
 model Category {
   id                    String @id @default(auto()) @map("_id") @db.ObjectId
   name                  Json
   emoji                 String?
-
-  propertyIds           String[] @db.ObjectId
-
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
+  propertyIds           String[] @db.ObjectId
   properties            Property[] @relation(fields: [propertyIds], references: [id])
 }
 
 model Property {
   id                    String @id @default(auto()) @map("_id") @db.ObjectId
-  name                  String
-  description           String?
-  price                 Int
+  name                  Json
+  description           Json
+  price                 Float
   imageSrc              String
   quadrature            Int
   guestCount            Int
@@ -71,18 +67,19 @@ model Property {
   bathroomCount         Int
   includesKitchen       Boolean
   includesParking       Boolean
-
-  userId                String @db.ObjectId
-  adressId              String @db.ObjectId @unique
-  categoryIds           String[] @db.ObjectId
-  reviews               Review[]
-
   createdAt             DateTime @default(now())
   updatedtAt            DateTime @updatedAt
 
+  userId                String @db.ObjectId
   user                  User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  address               Address @relation(fields: [adressId], references: [id])
+
+  categoryIds           String[] @db.ObjectId
   categories            Category[] @relation(fields: [categoryIds], references: [id])
+
+  addressId             String @db.ObjectId @unique
+  address               Address @relation(fields: [addressId], references: [id])
+
+  reviews               Review[]
 }
 
 model Address {
@@ -91,25 +88,22 @@ model Address {
   city                  String
   county                String?
   country               String
-  postalCode            Int
-
-  property              Property?
-
+  postalCode            String
   createdAt             DateTime @default(now())
   updatedtAt            DateTime @updatedAt
+
+  property              Property?
 }
 
 model Review {
   id                    String @id @default(auto()) @map("_id") @db.ObjectId
   rating                Int
   comment               String
-
-  userId                String @db.ObjectId
-  propertyId            String @db.ObjectId
-
   createdAt             DateTime @default(now())
   updatedtAt            DateTime @updatedAt
 
+  userId                String @db.ObjectId
   user                  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  propertyId            String @db.ObjectId
   property              Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }

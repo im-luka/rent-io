@@ -31,13 +31,13 @@ export default function LoginPage() {
 
 function useLoginPage() {
   const t = useTranslations("auth.login");
-  const { onSuccess } = useNotification("login");
+  const { onSuccess } = useNotification();
   const { router } = useIntl();
 
   const { mutateAsync: signIn, isLoading: isSigning } = useMutation({
     mutationFn: credentialsLoginMutation.fnc,
     onSuccess: () => {
-      onSuccess();
+      onSuccess()("login");
       router.replace(paths.home());
     },
   });

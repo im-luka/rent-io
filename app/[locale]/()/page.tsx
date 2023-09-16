@@ -1,7 +1,11 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { AddPropertyModal } from "@/app/_components/add-property-modal";
+import {
+  AddPropertyModal,
+  PropertyModalRef,
+  StepForm,
+} from "@/app/_components/add-property-modal";
 import { CategoryWrapper } from "@/app/_components/categories/category-wrapper";
 import {
   CategoryFormValues,
@@ -14,10 +18,21 @@ import { useNotification } from "@/hooks/use-notification";
 import { Group } from "@mantine/core";
 import { Category } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { propertyMutation } from "@/domain/mutations/property-mutation";
+import { useRef } from "react";
 
 export default function HomePage() {
-  const { isOpen, open, close, categories, handleSubmit, isAdding } =
-    useHomePage();
+  const {
+    propertyModalRef,
+    isOpen,
+    open,
+    close,
+    categories,
+    isAddingCategory,
+    handleCategorySubmit,
+    isAddingProperty,
+    handlePropertySubmit,
+  } = useHomePage();
 
   return (
     <Group h="100%" align="start">
@@ -26,42 +41,83 @@ export default function HomePage() {
         <NewCategoryModal
           opened={isOpen.addCategory}
           onClose={close}
-          onSubmit={handleSubmit}
-          isAdding={isAdding}
+          onSubmit={handleCategorySubmit}
+          isAdding={isAddingCategory}
         />
       </Group>
       <Group>category example</Group>
-      <AddPropertyModal opened={isOpen.addProperty} onClose={close} />
+      <AddPropertyModal
+        ref={propertyModalRef}
+        opened={isOpen.addProperty}
+        onClose={close}
+        onSubmit={handlePropertySubmit}
+        isAdding={isAddingProperty}
+      />
     </Group>
   );
 }
 
 function useHomePage() {
-  const { onSuccess } = useNotification("category");
+  const propertyModalRef = useRef<PropertyModalRef>(null);
+  const { onSuccess } = useNotification();
   const [{ isOpen }, { open, close }] = useModal();
 
-  const { data: categories, refetch } = useQuery<Category[]>(categoryQuery.key);
-  const { mutateAsync: addCategory, isLoading: isAdding } = useMutation(
+  const { data: categories, refetch: categoriesRefetch } = useQuery<Category[]>(
+    categoryQuery.key
+  );
+  const { mutateAsync: addCategory, isLoading: isAddingCategory } = useMutation(
     categoryMutation.fnc,
     {
       onSuccess: () => {
-        onSuccess();
+        onSuccess()("category");
         close();
-        refetch();
+        categoriesRefetch();
       },
     }
   );
 
-  const handleSubmit = async (values: CategoryFormValues) => {
+  const { mutateAsync: addProperty, isLoading: isAddingProperty } = useMutation(
+    propertyMutation.fnc,
+    {
+      onSuccess: () => {
+        onSuccess()("property");
+        close();
+        propertyModalRef.current?.resetForm();
+      },
+    }
+  );
+
+  const handleCategorySubmit = async (values: CategoryFormValues) => {
     await addCategory(values);
   };
 
+  const handlePropertySubmit = async (values: StepForm) => {
+    const {
+      baseInfo,
+      category: categories,
+      image,
+      misc,
+      location: { latlng, ...restLocation },
+    } = values;
+
+    await addProperty({
+      ...baseInfo,
+      categories,
+      image,
+      ...misc,
+      ...restLocation,
+    });
+  };
+
   return {
+    propertyModalRef,
     isOpen,
     open,
     close,
     categories,
-    handleSubmit,
-    isAdding,
+    isAddingCategory,
+    handleCategorySubmit,
+    isAddingProperty,
+    handlePropertySubmit,
   };
 }

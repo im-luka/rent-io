@@ -28,8 +28,8 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
     t,
     classes,
     theme,
-    imageUrl,
-    setImageUrl,
+    image,
+    setImage,
     isSubmitted,
     handlePrevButton,
     handleSubmit,
@@ -37,7 +37,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {imageUrl ? (
+      {image ? (
         <Box w="100%" pos="relative" h={300}>
           <ActionIcon
             variant="subtle"
@@ -48,14 +48,14 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
             bottom={0}
             radius="100%"
             className="z-index-1"
-            onClick={() => setImageUrl("")}
+            onClick={() => setImage(null)}
           >
             <Tooltip label={t("home.propertyModal.image.tooltip")}>
               <IconTrash size={28} color={theme.colors.red[6]} />
             </Tooltip>
           </ActionIcon>
           <Image
-            src={imageUrl}
+            src={URL.createObjectURL(image)}
             alt={props.formState.baseInfo.name}
             fill
             className={classes.image}
@@ -65,7 +65,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
         <Dropzone
           accept={IMAGE_MIME_TYPE}
           multiple={false}
-          onDrop={(files) => setImageUrl(URL.createObjectURL(files[0]))}
+          onDrop={(files) => setImage(files[0])}
         >
           <Group h={rem(100)} position="center" align="center">
             <Dropzone.Accept>
@@ -88,7 +88,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
           </Group>
         </Dropzone>
       )}
-      {!imageUrl && isSubmitted && (
+      {!image && isSubmitted && (
         <Typography size="xs" mt="sm" ta="center" color="red.5">
           {t("validation.requiredImage")}
         </Typography>
@@ -101,7 +101,7 @@ export const PropertyStepFiveImage: FC<Props> = (props) => {
 function usePropertyStepFiveImage({ formState, dispatch }: Props) {
   const t = useTranslations();
   const { classes, theme } = useStyles();
-  const [imageUrl, setImageUrl] = useState(formState.image);
+  const [image, setImage] = useState<File | null>(formState.image);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handlePrevButton = () => dispatch({ type: StepType.PREVIOUS });
@@ -109,8 +109,8 @@ function usePropertyStepFiveImage({ formState, dispatch }: Props) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitted(true);
-    if (imageUrl) {
-      dispatch({ type: StepType.NEXT, payload: { image: imageUrl } });
+    if (image) {
+      dispatch({ type: StepType.NEXT, payload: { image } });
       setIsSubmitted(false);
     }
   };
@@ -119,8 +119,8 @@ function usePropertyStepFiveImage({ formState, dispatch }: Props) {
     t,
     classes,
     theme,
-    imageUrl,
-    setImageUrl,
+    image,
+    setImage,
     isSubmitted,
     handlePrevButton,
     handleSubmit,

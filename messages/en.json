@@ -35,6 +35,10 @@
     "category": {
       "title": "Category added!",
       "message": "More travel, more fun!"
+    },
+    "property": {
+      "title": "Property added!",
+      "message": "Expect traffic real soon!"
     }
   },
   "error": {
@@ -47,7 +51,9 @@
     "invalidToken": "Invalid token provided",
     "noCategories": "There is no categories",
     "addCategory": "Problem with adding new category",
-    "translate": "Problem with translating entities"
+    "translate": "Problem with translating entities",
+    "addProperty": "Problem with adding new property",
+    "authenticated": "Not authenticated"
   },
   "symbol": {
     "dot": ".",
@@ -121,6 +127,7 @@
         "guestNumber": "Number of guests:",
         "quadrature": "Quadrature (in m²):",
         "bathroomNumber": "Number of bathrooms:",
+        "roomNumber": "Number of rooms:",
         "includesKitchen": "Includes Kitchen",
         "includesParking": "Includes Parking"
       },

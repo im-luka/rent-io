@@ -55,6 +55,17 @@ export const PropertyStepThreeMisc: FC<Props> = (props) => {
           </Group>
           <Group align="center" grow spacing="md">
             <Typography size="sm" ta="right">
+              {t("roomNumber")}
+            </Typography>
+            <NumberInputWithHandlers
+              name="roomCount"
+              min={1}
+              withAsterisk
+              styles={fieldInputStyles}
+            />
+          </Group>
+          <Group align="center" grow spacing="md">
+            <Typography size="sm" ta="right">
               {t("bathroomNumber")}
             </Typography>
             <NumberInputWithHandlers
@@ -91,7 +102,7 @@ function usePropertyStepThreeMisc({ formState, dispatch }: Props) {
     NumberInputStylesNames,
     Record<string, any>
   > = {
-    wrapper: { width: rem(42) },
+    wrapper: { width: rem(50) },
     input: { textAlign: "center" },
   };
 
@@ -117,6 +128,7 @@ const propertyStepThreeMiscSchema = (greaterThanZero: string) =>
   z.object({
     quadrature: z.number().positive(greaterThanZero),
     guestCount: z.number().positive(greaterThanZero),
+    roomCount: z.number().positive(greaterThanZero),
     bathroomCount: z.number().positive(greaterThanZero),
     includesKitchen: z.boolean(),
     includesParking: z.boolean(),

@@ -1,6 +1,11 @@
 "use client";
 
-import { FC, useReducer } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  useImperativeHandle,
+  useReducer,
+} from "react";
 import { Button, Modal, Stack, Stepper, rem } from "@mantine/core";
 import { PropertyStepOneCategory } from "./property-step-one-category";
 import {
@@ -27,88 +32,104 @@ import {
   IconPhoto,
 } from "@tabler/icons-react";
 
+export type PropertyModalRef = {
+  resetForm: () => void;
+};
+
 type Props = {
   opened: boolean;
   onClose: () => void;
+  onSubmit: (values: StepForm) => Promise<void>;
+  isAdding: boolean;
 };
 
-export const AddPropertyModal: FC<Props> = (props) => {
-  const { t, opened, onClose, state, dispatch, handleSubmit } =
-    useAddPropertyModal(props);
+export const AddPropertyModal = forwardRef<PropertyModalRef, Props>(
+  function AddPropertyModal(props, ref) {
+    const { t, opened, onClose, state, dispatch, handleSubmit, isAdding } =
+      useAddPropertyModal(props, ref);
 
-  return (
-    <Modal
-      opened={opened}
-      onClose={onClose}
-      title={t("title")}
-      centered
-      styles={{ content: { minWidth: rem(900) } }}
-    >
-      <Stepper size="sm" active={state.active} allowNextStepsSelect={false}>
-        <Stepper.Step
-          label={t("category.label")}
-          description={t("category.description")}
-          icon={<IconCategory size={16} />}
-        >
-          <PropertyStepOneCategory formState={state.form} dispatch={dispatch} />
-        </Stepper.Step>
-        <Stepper.Step
-          label={t("location.label")}
-          description={t("location.description")}
-          icon={<IconMap size={16} />}
-        >
-          <PropertyStepTwoLocation formState={state.form} dispatch={dispatch} />
-        </Stepper.Step>
-        <Stepper.Step
-          label={t("misc.label")}
-          description={t("misc.description")}
-          icon={<IconBoxMultiple size={16} />}
-        >
-          <PropertyStepThreeMisc formState={state.form} dispatch={dispatch} />
-        </Stepper.Step>
-        <Stepper.Step
-          label={t("baseInfo.label")}
-          description={t("baseInfo.description")}
-          icon={<IconHome size={16} />}
-        >
-          <PropertyStepFourBaseInfo
-            formState={state.form}
-            dispatch={dispatch}
-          />
-        </Stepper.Step>
-        <Stepper.Step
-          label={t("image.label")}
-          description={t("image.description")}
-          icon={<IconPhoto size={16} />}
-        >
-          <PropertyStepFiveImage formState={state.form} dispatch={dispatch} />
-        </Stepper.Step>
-        <Stepper.Completed>
-          <Stack spacing="xl" mt="md">
-            <Typography component="h4" ta="center">
-              {t("completed.title")}
-            </Typography>
-            <Stack spacing="xs">
-              <Button onClick={handleSubmit}>{t("completed.submit")}</Button>
-              <Button
-                variant="subtle"
-                onClick={() => dispatch({ type: StepType.PREVIOUS })}
-              >
-                {t("completed.back")}
-              </Button>
-              <Button
-                color="red.7"
-                onClick={() => dispatch({ type: StepType.RESET })}
-              >
-                {t("completed.reset")}
-              </Button>
+    return (
+      <Modal
+        opened={opened}
+        onClose={onClose}
+        title={t("title")}
+        centered
+        styles={{ content: { minWidth: rem(900) } }}
+      >
+        <Stepper size="sm" active={state.active} allowNextStepsSelect={false}>
+          <Stepper.Step
+            label={t("category.label")}
+            description={t("category.description")}
+            icon={<IconCategory size={16} />}
+          >
+            <PropertyStepOneCategory
+              formState={state.form}
+              dispatch={dispatch}
+            />
+          </Stepper.Step>
+          <Stepper.Step
+            label={t("location.label")}
+            description={t("location.description")}
+            icon={<IconMap size={16} />}
+          >
+            <PropertyStepTwoLocation
+              formState={state.form}
+              dispatch={dispatch}
+            />
+          </Stepper.Step>
+          <Stepper.Step
+            label={t("misc.label")}
+            description={t("misc.description")}
+            icon={<IconBoxMultiple size={16} />}
+          >
+            <PropertyStepThreeMisc formState={state.form} dispatch={dispatch} />
+          </Stepper.Step>
+          <Stepper.Step
+            label={t("baseInfo.label")}
+            description={t("baseInfo.description")}
+            icon={<IconHome size={16} />}
+          >
+            <PropertyStepFourBaseInfo
+              formState={state.form}
+              dispatch={dispatch}
+            />
+          </Stepper.Step>
+          <Stepper.Step
+            label={t("image.label")}
+            description={t("image.description")}
+            icon={<IconPhoto size={16} />}
+          >
+            <PropertyStepFiveImage formState={state.form} dispatch={dispatch} />
+          </Stepper.Step>
+          <Stepper.Completed>
+            <Stack spacing="xl" mt="md">
+              <Typography component="h4" ta="center">
+                {t("completed.title")}
+              </Typography>
+              <Stack spacing="xs">
+                <Button onClick={handleSubmit} loading={isAdding}>
+                  {t("completed.submit")}
+                </Button>
+                <Button
+                  variant="subtle"
+                  onClick={() => dispatch({ type: StepType.PREVIOUS })}
+                >
+                  {t("completed.back")}
+                </Button>
+                <Button
+                  color="red.7"
+                  onClick={() => dispatch({ type: StepType.RESET })}
+                >
+                  {t("completed.reset")}
+                </Button>
+              </Stack>
             </Stack>
-          </Stack>
-        </Stepper.Completed>
-      </Stepper>
-    </Modal>
-  );
-};
+          </Stepper.Completed>
+        </Stepper>
+      </Modal>
+    );
+  }
+);
 
 enum AddPropertyStep {
   CATEGORY = 0,
@@ -127,7 +148,7 @@ export type StepForm = {
   location: PropertyStepTwoLocationFormValues;
   misc: PropertyStepThreeMiscFormValues;
   baseInfo: PropertyStepFourBaseInfoFormValues;
-  image: string;
+  image: File | null;
 };
 type StepPayload = {
   active: number;
@@ -148,6 +169,7 @@ const initialData: StepPayload = {
     misc: {
       quadrature: 1,
       guestCount: 1,
+      roomCount: 1,
       bathroomCount: 1,
       includesKitchen: false,
       includesParking: false,
@@ -157,7 +179,7 @@ const initialData: StepPayload = {
       description: "",
       price: 100,
     },
-    image: "",
+    image: null,
   },
 };
 export type StepAction = {
@@ -192,11 +214,24 @@ function reducerFnc(
   }
 }
 
-function useAddPropertyModal({ opened, onClose }: Props) {
+function useAddPropertyModal(
+  { opened, onClose, onSubmit, isAdding }: Props,
+  ref: ForwardedRef<PropertyModalRef>
+) {
   const t = useTranslations("home.propertyModal");
   const [state, dispatch] = useReducer(reducerFnc, initialData);
 
-  const handleSubmit = () => console.log(state);
+  const handleSubmit = () => onSubmit(state.form);
 
-  return { t, opened, onClose, state, dispatch, handleSubmit };
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        resetForm: () => dispatch({ type: StepType.RESET }),
+      };
+    },
+    []
+  );
+
+  return { t, opened, onClose, state, dispatch, handleSubmit, isAdding };
 }

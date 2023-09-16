@@ -40,7 +40,7 @@ export default function RegisterPage() {
 
 function useRegisterPage() {
   const t = useTranslations("auth.register");
-  const { onSuccess } = useNotification("register");
+  const { onSuccess } = useNotification();
 
   const {
     mutate: register,
@@ -48,7 +48,7 @@ function useRegisterPage() {
     isSuccess: isRegistrationSuccess,
   } = useMutation({
     mutationFn: registerMutation.fnc,
-    onSuccess,
+    onSuccess: () => onSuccess()("register"),
   });
 
   const handleRegistration = (values: RegisterFormValues) => {
