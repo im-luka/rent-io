@@ -5,4 +5,12 @@ const nextConfig = {};
 
 module.exports = withNextIntl({
   nextConfig,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ucarecdn.com",
+      },
+    ],
+  },
 });

@@ -7,6 +7,18 @@ import { api } from "@/domain/remote";
 import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
 
+export async function GET(request: Request) {
+  const properties = await prisma.property.findMany({
+    include: { address: true, categories: true },
+    take: 6,
+  });
+  if (!properties) {
+    return NextResponse.json("custom.noProperties", { status: 400 });
+  }
+
+  return NextResponse.json(properties);
+}
+
 export async function POST(request: Request) {
   const {
     name,

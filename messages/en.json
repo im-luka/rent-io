@@ -49,11 +49,12 @@
     "verificationEmail": "Problem with sending verification email",
     "noToken": "Token not provided",
     "invalidToken": "Invalid token provided",
-    "noCategories": "There is no categories",
+    "noCategories": "There are no categories",
     "addCategory": "Problem with adding new category",
     "translate": "Problem with translating entities",
     "addProperty": "Problem with adding new property",
-    "authenticated": "Not authenticated"
+    "authenticated": "Not authenticated",
+    "noProperties": "There are no properties"
   },
   "symbol": {
     "dot": ".",

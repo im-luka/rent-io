@@ -8,6 +8,7 @@ import { Chip, Grid } from "@mantine/core";
 import { useIntl } from "@/hooks/use-intl";
 import { Typography } from "../base/typography";
 import { useTranslations } from "next-intl";
+import { generateLocaleTranslation } from "@/utils/objects";
 
 type Props = {
   formState: StepForm;
@@ -29,7 +30,7 @@ export const PropertyStepOneCategory: FC<Props> = (props) => {
   const renderCategory = ({ id, name, emoji }: Category) => (
     <Grid.Col key={id} span={4}>
       <Chip value={id} w="100%">
-        {emoji} {(name as Record<string, string>)[locale]}
+        {emoji} {generateLocaleTranslation(name, locale)}
       </Chip>
     </Grid.Col>
   );

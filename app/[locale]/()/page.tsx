@@ -16,10 +16,12 @@ import { categoryQuery } from "@/domain/queries/categories-query";
 import { useModal } from "@/hooks/use-modal";
 import { useNotification } from "@/hooks/use-notification";
 import { Group } from "@mantine/core";
-import { Category } from "@prisma/client";
+import { Category, Property } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { propertyMutation } from "@/domain/mutations/property-mutation";
 import { useRef } from "react";
+import { propertiesQuery } from "@/domain/queries/properties-query";
+import { PropertyWrapper } from "@/app/_components/properties/property-wrapper";
 
 export default function HomePage() {
   const {
@@ -30,6 +32,8 @@ export default function HomePage() {
     categories,
     isAddingCategory,
     handleCategorySubmit,
+    properties,
+    propertiesLoading,
     isAddingProperty,
     handlePropertySubmit,
   } = useHomePage();
@@ -45,14 +49,16 @@ export default function HomePage() {
           isAdding={isAddingCategory}
         />
       </Group>
-      <Group>category example</Group>
-      <AddPropertyModal
-        ref={propertyModalRef}
-        opened={isOpen.addProperty}
-        onClose={close}
-        onSubmit={handlePropertySubmit}
-        isAdding={isAddingProperty}
-      />
+      <Group className="flex-1">
+        <PropertyWrapper items={properties} isLoading={propertiesLoading} />
+        <AddPropertyModal
+          ref={propertyModalRef}
+          opened={isOpen.addProperty}
+          onClose={close}
+          onSubmit={handlePropertySubmit}
+          isAdding={isAddingProperty}
+        />
+      </Group>
     </Group>
   );
 }
@@ -76,12 +82,18 @@ function useHomePage() {
     }
   );
 
+  const {
+    data: properties,
+    isLoading: propertiesLoading,
+    refetch: propertiesRefetch,
+  } = useQuery<Property[]>(propertiesQuery.key);
   const { mutateAsync: addProperty, isLoading: isAddingProperty } = useMutation(
     propertyMutation.fnc,
     {
       onSuccess: () => {
         onSuccess()("property");
         close();
+        propertiesRefetch();
         propertyModalRef.current?.resetForm();
       },
     }
@@ -117,6 +129,8 @@ function useHomePage() {
     categories,
     isAddingCategory,
     handleCategorySubmit,
+    properties,
+    propertiesLoading,
     isAddingProperty,
     handlePropertySubmit,
   };

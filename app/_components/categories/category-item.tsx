@@ -7,6 +7,7 @@ import { useIntl } from "@/hooks/use-intl";
 import { Button, createStyles } from "@mantine/core";
 import { Category } from "@prisma/client";
 import qs from "query-string";
+import { generateLocaleTranslation } from "@/utils/objects";
 
 type Props = {
   item: Category;
@@ -37,7 +38,7 @@ function useCategoryItem({ item: { id, name, emoji } }: Props) {
   const { locale, router, pathname } = useIntl();
   const searchParams = useSearchParams();
 
-  const localeName = (name as Record<string, string>)[locale];
+  const localeName = generateLocaleTranslation(name, locale);
   const isActive = searchParams.get("category") === id;
 
   const handleClick = () => {
