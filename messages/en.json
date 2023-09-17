@@ -103,6 +103,12 @@
         "createAction": "Create"
       }
     },
+    "properties": {
+      "item": {
+        "categoriesLabel": "Perfect for you, if you enjoy",
+        "showDetailsAction": "Show Details"
+      }
+    },
     "propertyModal": {
       "title": "Add Property",
       "actions": {

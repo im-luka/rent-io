@@ -67,7 +67,7 @@ export const PropertyItem: FC<Props> = (props) => {
         <Card.Section>
           <Box p="md" className={classes.categoriesBlock}>
             <Typography size="xs" transform="uppercase" fw={700} c="gray.6">
-              Perfect 4 you, if you enjoy
+              {t("categoriesLabel")}
             </Typography>
             <Group mt="xs" spacing="xs">
               {categories?.map(renderCategory)}
@@ -75,7 +75,7 @@ export const PropertyItem: FC<Props> = (props) => {
           </Box>
           <Group py="sm" px="xs">
             <Button radius="md" className="flex-1">
-              Show Details
+              {t("showDetailsAction")}
             </Button>
             <ActionIcon variant="default" radius="md" size={40}>
               <IconHeart size={24} color="red" />
@@ -90,7 +90,7 @@ export const PropertyItem: FC<Props> = (props) => {
 function usePropertyItem({
   item: { name, description, imageSrc, address, categories },
 }: Props) {
-  const t = useTranslations();
+  const t = useTranslations("home.properties.item");
   const [{ isDarkTheme }] = useColorScheme();
   const { classes } = useStyles(isDarkTheme);
   const { locale } = useIntl();
