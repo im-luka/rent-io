@@ -39,8 +39,8 @@ export default function HomePage() {
   } = useHomePage();
 
   return (
-    <Group h="100%" align="start">
-      <Group>
+    <Group align="start">
+      <Group h="100%" align="start">
         <CategoryWrapper categories={categories} onOpen={open} />
         <NewCategoryModal
           opened={isOpen.addCategory}
