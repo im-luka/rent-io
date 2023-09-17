@@ -49,7 +49,7 @@ export default function HomePage() {
           isAdding={isAddingCategory}
         />
       </Group>
-      <Group className="flex-1">
+      <Group h="100%" align="start" className="flex-1">
         <PropertyWrapper items={properties} isLoading={propertiesLoading} />
         <AddPropertyModal
           ref={propertyModalRef}

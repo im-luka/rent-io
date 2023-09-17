@@ -2,11 +2,13 @@ import { FC } from "react";
 import { Property as PropertyPrisma } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import { Typography } from "../base/typography";
-import { Grid } from "@mantine/core";
+import { Button, Flex, Grid, Stack } from "@mantine/core";
 import { PropertyItem } from "./property-item";
 import { Property } from "@/types/property";
 import { SkeletonCards } from "../skeleton-cards";
 import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
+import { useIntl } from "@/hooks/use-intl";
+import { paths } from "@/navigation/paths";
 
 type Props = {
   items: PropertyPrisma[] | undefined;
@@ -14,14 +16,31 @@ type Props = {
 };
 
 export const PropertyWrapper: FC<Props> = (props) => {
-  const { t, items, isLoading } = usePropertyWrapper(props);
+  const { t, items, isLoading, handleResetFilters } = usePropertyWrapper(props);
 
   if (isLoading) {
     return <SkeletonCards cardsCount={HOME_PROPERTIES_PER_PAGE} />;
   }
 
-  if (items?.length === 0) {
-    return <Typography>there are no items.</Typography>;
+  if (!items?.length) {
+    return (
+      <Flex w="100%" h="100%" align="center" justify="center">
+        <Stack align="center" spacing="xs">
+          <Typography component="h3" fw={600}>
+            {t("empty.title")}
+          </Typography>
+          <Typography size="sm">{t("empty.description")}</Typography>
+          <Button
+            w="100%"
+            mt="lg"
+            variant="outline"
+            onClick={handleResetFilters}
+          >
+            {t("empty.resetAction")}
+          </Button>
+        </Stack>
+      </Flex>
+    );
   }
 
   return (
@@ -34,7 +53,10 @@ export const PropertyWrapper: FC<Props> = (props) => {
 };
 
 function usePropertyWrapper({ items, isLoading }: Props) {
-  const t = useTranslations();
+  const t = useTranslations("home.properties");
+  const { router } = useIntl();
 
-  return { t, items, isLoading };
+  const handleResetFilters = () => router.replace(paths.home());
+
+  return { t, items, isLoading, handleResetFilters };
 }

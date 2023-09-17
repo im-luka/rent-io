@@ -107,6 +107,11 @@
       "item": {
         "categoriesLabel": "Perfect for you, if you enjoy",
         "showDetailsAction": "Show Details"
+      },
+      "empty": {
+        "title": "No properties found.",
+        "description": "Add new property now or try resetting filters.",
+        "resetAction": "Reset Filters"
       }
     },
     "propertyModal": {
