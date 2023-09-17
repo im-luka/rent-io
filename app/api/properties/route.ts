@@ -6,11 +6,12 @@ import { authOptions } from "@/domain/auth";
 import { api } from "@/domain/remote";
 import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
+import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
 
 export async function GET(request: Request) {
   const properties = await prisma.property.findMany({
     include: { address: true, categories: true },
-    take: 6,
+    take: HOME_PROPERTIES_PER_PAGE,
     orderBy: { createdAt: "desc" },
   });
   if (!properties) {

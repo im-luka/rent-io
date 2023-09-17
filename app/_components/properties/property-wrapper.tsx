@@ -5,6 +5,8 @@ import { Typography } from "../base/typography";
 import { Grid } from "@mantine/core";
 import { PropertyItem } from "./property-item";
 import { Property } from "@/types/property";
+import { SkeletonCards } from "../skeleton-cards";
+import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
 
 type Props = {
   items: PropertyPrisma[] | undefined;
@@ -15,7 +17,7 @@ export const PropertyWrapper: FC<Props> = (props) => {
   const { t, items, isLoading } = usePropertyWrapper(props);
 
   if (isLoading) {
-    return <Typography>loading...</Typography>;
+    return <SkeletonCards cardsCount={HOME_PROPERTIES_PER_PAGE} />;
   }
 
   if (items?.length === 0) {
