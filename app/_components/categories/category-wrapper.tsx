@@ -79,6 +79,8 @@ function useCategoryWrapper() {
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minWidth: rem(200),
+    position: "sticky",
+    top: rem(10),
     display: "flex",
     flexDirection: "column",
     gap: theme.spacing.xl,

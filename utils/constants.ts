@@ -10,6 +10,7 @@ export const SEARCH_CATEGORIES_KEY = "K";
 export const DEFAULT_CATEGORY_EMOJI = "🏡";
 export const MIN_PASSWORD_CHARS = 8;
 export const NOTIFICATIONS_LIMIT = 5;
+export const HOME_PROPERTIES_PER_PAGE = 6;
 
 // 🖼️ UI
 export const MAP_TILE_LAYER_DARK =
