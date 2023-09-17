@@ -11,6 +11,7 @@ export async function GET(request: Request) {
   const properties = await prisma.property.findMany({
     include: { address: true, categories: true },
     take: 6,
+    orderBy: { createdAt: "desc" },
   });
   if (!properties) {
     return NextResponse.json("custom.noProperties", { status: 400 });
