@@ -101,6 +101,10 @@
         "emoji": "Emoji",
         "emojiPlaceholder": "🏡",
         "createAction": "Create"
+      },
+      "spotlight": {
+        "searchPlaceholder": "Search category...",
+        "emptyMessage": "Category not found..."
       }
     },
     "properties": {

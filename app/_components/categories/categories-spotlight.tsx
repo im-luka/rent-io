@@ -1,11 +1,11 @@
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode } from "react";
 import { useCategoryQuery } from "@/hooks/use-category-query";
 import { useIntl } from "@/hooks/use-intl";
 import { generateLocaleTranslation } from "@/utils/objects";
-import { Box } from "@mantine/core";
 import { SpotlightAction, SpotlightProvider } from "@mantine/spotlight";
 import { Category } from "@prisma/client";
 import { IconSearch } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   categories: Category[];
@@ -13,23 +13,17 @@ type Props = {
 };
 
 export const CategoriesSpotlight: FC<Props> = (props) => {
-  const { children, actions } = useCategoriesSpotlight(props);
-
-  const [value, setValue] = useState("");
+  const { t, children, actions } = useCategoriesSpotlight(props);
 
   return (
     <SpotlightProvider
       shortcut="mod + K"
       actions={actions}
-      searchPlaceholder="Search category..."
+      searchPlaceholder={t("searchPlaceholder")}
       searchIcon={<IconSearch size={20} />}
-      nothingFoundMessage="Category not found..."
+      nothingFoundMessage={t("emptyMessage")}
       radius="md"
-      onQueryChange={(e) => setValue(e)}
       highlightQuery
-      // actionComponent={value && (
-      //   <Box></Box>
-      // )}
     >
       {children}
     </SpotlightProvider>
@@ -37,6 +31,7 @@ export const CategoriesSpotlight: FC<Props> = (props) => {
 };
 
 function useCategoriesSpotlight({ categories, children }: Props) {
+  const t = useTranslations("home.categories.spotlight");
   const { locale } = useIntl();
   const [, { handleSelect }] = useCategoryQuery();
 
@@ -46,5 +41,5 @@ function useCategoriesSpotlight({ categories, children }: Props) {
     onTrigger: () => handleSelect(id),
   }));
 
-  return { children, actions };
+  return { t, children, actions };
 }
