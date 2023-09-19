@@ -61,7 +61,8 @@ function usePropertyWrapper({ items, isLoading }: Props) {
   const t = useTranslations("home.properties");
   const { router } = useIntl();
 
-  const handleResetFilters = () => router.replace(paths.home());
+  const handleResetFilters = () =>
+    router.replace(paths.home(), { scroll: false });
 
   return { t, items, isLoading, handleResetFilters };
 }
