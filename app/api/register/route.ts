@@ -2,13 +2,13 @@ import { hash } from "bcrypt";
 import { PASSWORD_HASH_SALT } from "@/utils/constants";
 import { RegisterData } from "@/domain/types/register-data";
 import { prisma } from "@/domain/db/prisma-client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { generateRandomToken } from "@/utils/token";
 import mail, { MailDataRequired } from "@sendgrid/mail";
 
 mail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { firstName, lastName, email, password }: RegisterData =
     await request.json();
   const name = firstName.concat(" ", lastName);

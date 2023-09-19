@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { PropertyData } from "@/domain/types/property-data";
 import { prisma } from "@/domain/db/prisma-client";
 import { getServerSession } from "next-auth";
@@ -8,7 +8,7 @@ import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
 import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const properties = await prisma.property.findMany({
     include: { address: true, categories: true },
     take: HOME_PROPERTIES_PER_PAGE,
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
   return NextResponse.json(properties);
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const {
     name,
     description,

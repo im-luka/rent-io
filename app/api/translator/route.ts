@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import axios from "axios";
 import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
 import { DEFAULT_LOCALE, LOCALES } from "@/utils/constants";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const text: string = await request.json();
 
   const from = cookies().get("NEXT_LOCALE")?.value ?? DEFAULT_LOCALE;
