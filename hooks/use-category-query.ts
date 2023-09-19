@@ -18,7 +18,7 @@ export const useCategoryQuery = (
       },
       { skipNull: true }
     );
-    router.replace(url);
+    router.replace(url, { scroll: false });
   };
 
   return [isActive, { handleSelect }];
