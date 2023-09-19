@@ -1,20 +1,19 @@
 "use client";
 
 import { FC } from "react";
-import { useSearchParams } from "next/navigation";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useIntl } from "@/hooks/use-intl";
 import { Button, createStyles } from "@mantine/core";
 import { Category } from "@prisma/client";
-import qs from "query-string";
 import { generateLocaleTranslation } from "@/utils/objects";
+import { useCategoryQuery } from "@/hooks/use-category-query";
 
 type Props = {
   item: Category;
 };
 
 export const CategoryItem: FC<Props> = (props) => {
-  const { classes, name, emoji, isActive, cx, handleClick } =
+  const { classes, name, emoji, isActive, cx, handleSelect } =
     useCategoryItem(props);
 
   return (
@@ -25,7 +24,7 @@ export const CategoryItem: FC<Props> = (props) => {
       className={cx(classes.categoryItem, {
         [classes.categoryItemActive]: isActive,
       })}
-      onClick={handleClick}
+      onClick={() => handleSelect()}
     >
       {emoji} {name}
     </Button>
@@ -35,24 +34,17 @@ export const CategoryItem: FC<Props> = (props) => {
 function useCategoryItem({ item: { id, name, emoji } }: Props) {
   const [{ isDarkTheme }] = useColorScheme();
   const { classes, cx } = useStyles(isDarkTheme);
-  const { locale, router, pathname } = useIntl();
-  const searchParams = useSearchParams();
+  const { locale } = useIntl();
+  const [isActive, { handleSelect }] = useCategoryQuery(id);
 
-  const localeName = generateLocaleTranslation(name, locale);
-  const isActive = searchParams.get("category") === id;
-
-  const handleClick = () => {
-    const url = qs.stringifyUrl(
-      {
-        url: pathname,
-        query: { category: isActive ? null : id },
-      },
-      { skipNull: true }
-    );
-    router.replace(url);
+  return {
+    classes,
+    name: generateLocaleTranslation(name, locale),
+    emoji,
+    isActive,
+    handleSelect,
+    cx,
   };
-
-  return { classes, name: localeName, emoji, isActive, cx, handleClick };
 }
 
 const useStyles = createStyles((theme, isDarkTheme: boolean) => ({

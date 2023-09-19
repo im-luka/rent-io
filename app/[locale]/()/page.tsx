@@ -22,6 +22,7 @@ import { propertyMutation } from "@/domain/mutations/property-mutation";
 import { useRef } from "react";
 import { propertiesQuery } from "@/domain/queries/properties-query";
 import { PropertyWrapper } from "@/app/_components/properties/property-wrapper";
+import { CategoriesSpotlight } from "@/app/_components/categories/categories-spotlight";
 
 export default function HomePage() {
   const {
@@ -39,27 +40,29 @@ export default function HomePage() {
   } = useHomePage();
 
   return (
-    <Group align="start">
-      <Group h="100%" align="start">
-        <CategoryWrapper categories={categories} onOpen={open} />
-        <NewCategoryModal
-          opened={isOpen.addCategory}
-          onClose={close}
-          onSubmit={handleCategorySubmit}
-          isAdding={isAddingCategory}
-        />
+    <CategoriesSpotlight categories={categories ?? []}>
+      <Group align="start">
+        <Group h="100%" align="start">
+          <CategoryWrapper categories={categories} onOpen={open} />
+          <NewCategoryModal
+            opened={isOpen.addCategory}
+            onClose={close}
+            onSubmit={handleCategorySubmit}
+            isAdding={isAddingCategory}
+          />
+        </Group>
+        <Group h="100%" align="start" className="flex-1">
+          <PropertyWrapper items={properties} isLoading={propertiesLoading} />
+          <AddPropertyModal
+            ref={propertyModalRef}
+            opened={isOpen.addProperty}
+            onClose={close}
+            onSubmit={handlePropertySubmit}
+            isAdding={isAddingProperty}
+          />
+        </Group>
       </Group>
-      <Group h="100%" align="start" className="flex-1">
-        <PropertyWrapper items={properties} isLoading={propertiesLoading} />
-        <AddPropertyModal
-          ref={propertyModalRef}
-          opened={isOpen.addProperty}
-          onClose={close}
-          onSubmit={handlePropertySubmit}
-          isAdding={isAddingProperty}
-        />
-      </Group>
-    </Group>
+    </CategoriesSpotlight>
   );
 }
 

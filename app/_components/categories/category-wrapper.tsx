@@ -20,6 +20,7 @@ import { SEARCH_CATEGORIES_KEY } from "@/utils/constants";
 import { useTranslations } from "next-intl";
 import { CategoryItem } from "./category-item";
 import { ModalType } from "@/hooks/use-modal";
+import { spotlight } from "@mantine/spotlight";
 
 type Props = {
   categories: Category[] | undefined;
@@ -47,6 +48,7 @@ export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
               <Typography>{SEARCH_CATEGORIES_KEY}</Typography>
             </Code>
           }
+          onClick={() => spotlight.open()}
         />
       </Navbar.Section>
       <Navbar.Section className={classes.categoriesBlock}>
