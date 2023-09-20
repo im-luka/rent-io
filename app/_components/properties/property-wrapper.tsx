@@ -5,7 +5,7 @@ import { Button, Flex, Grid, Group, Pagination, Stack } from "@mantine/core";
 import { PropertyItem } from "./property-item";
 import { PropertyWithPagination } from "@/types/property";
 import { SkeletonCards } from "../skeleton-cards";
-import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
+import { DEFAULT_PAGE, HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
 import { useIntl } from "@/hooks/use-intl";
 import { paths } from "@/navigation/paths";
 import { useQueryPagination } from "@/hooks/use-query-pagination";
@@ -60,6 +60,7 @@ export const PropertyWrapper: FC<Props> = (props) => {
           })}
         </Typography>
         <Pagination
+          value={pagination?.page ?? DEFAULT_PAGE}
           total={pagination?.totalPages!}
           onChange={(page) => addToQuery({ page })}
         />

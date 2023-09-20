@@ -10,12 +10,10 @@ import { Pagination } from "@/types/pagination";
 import { PropertyWithPagination } from "@/types/property";
 import { parseSearchParamsToObject } from "@/utils/objects";
 
-// TODO: prisma.$transaction for same time requests
-
 export async function GET(request: NextRequest) {
   const searchParams = parseSearchParamsToObject(request.nextUrl.searchParams);
-  const page = searchParams.page!;
-  const perPage = searchParams.perPage!;
+  const page = Number(searchParams.page!);
+  const perPage = Number(searchParams.perPage!);
   const category = searchParams.category;
 
   const where = category
@@ -26,14 +24,16 @@ export async function GET(request: NextRequest) {
       }
     : {};
 
-  const propertiesCount = await prisma.property.count({ where });
-  const properties = await prisma.property.findMany({
-    include: { address: true, categories: true },
-    take: page * perPage,
-    skip: (page - 1) * perPage,
-    orderBy: { createdAt: "desc" },
-    where,
-  });
+  const [propertiesCount, properties] = await prisma.$transaction([
+    prisma.property.count({ where }),
+    prisma.property.findMany({
+      include: { address: true, categories: true },
+      take: page * perPage,
+      skip: (page - 1) * perPage,
+      orderBy: { createdAt: "desc" },
+      where,
+    }),
+  ]);
 
   const pagination: Pagination = {
     page,
