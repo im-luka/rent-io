@@ -21,6 +21,7 @@ import { Category } from "@prisma/client";
 import { IconHeart } from "@tabler/icons-react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { OPTIMAL_IMAGE_SIZES } from "@/utils/constants";
+import { useSession } from "@/hooks/use-session";
 
 type Props = {
   item: Property;
@@ -36,6 +37,7 @@ export const PropertyItem: FC<Props> = (props) => {
     imageSrc,
     country,
     categories,
+    isAuthenticated,
   } = usePropertyItem(props);
 
   const renderCategory = (category: Category) => (
@@ -85,9 +87,11 @@ export const PropertyItem: FC<Props> = (props) => {
             <Button radius="md" className="flex-1">
               {t("showDetailsAction")}
             </Button>
-            <ActionIcon variant="default" radius="md" size={40}>
-              <IconHeart size={24} color="red" />
-            </ActionIcon>
+            {isAuthenticated && (
+              <ActionIcon variant="default" radius="md" size={40}>
+                <IconHeart size={24} color="red" />
+              </ActionIcon>
+            )}
           </Group>
         </Card.Section>
       </Card>
@@ -103,6 +107,7 @@ function usePropertyItem({
   const { classes } = useStyles(isDarkTheme);
   const { locale } = useIntl();
   const [, { getCountry }] = useCountries();
+  const { isAuthenticated } = useSession();
 
   return {
     t,
@@ -113,6 +118,7 @@ function usePropertyItem({
     imageSrc,
     country: getCountry(address.country)?.name,
     categories,
+    isAuthenticated,
   };
 }
 
