@@ -7,6 +7,7 @@ export type QueryParams = {
   page?: number;
   perPage?: number;
   category?: string | null;
+  sort?: string | null;
 };
 
 export const useQueryPagination = (): [
@@ -38,6 +39,7 @@ export const useQueryPagination = (): [
       page: Number(queryParams.page),
       perPage: Number(queryParams.perPage),
       category: queryParams.category,
+      sort: queryParams.sort,
     },
     {
       addToQuery,

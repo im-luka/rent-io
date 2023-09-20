@@ -116,7 +116,14 @@
         "resetAction": "Reset Filters"
       },
       "pagination": {
-        "totalOf": "{count} of {total}"
+        "totalOf": "{count} of {total}",
+        "sort": {
+          "label": "Sort by:",
+          "newest": "Newest",
+          "oldest": "Oldest",
+          "priceLowHigh": "Price - Low to High",
+          "priceHighLow": "Price - High to Low"
+        }
       }
     },
     "propertyModal": {

@@ -8,13 +8,17 @@ import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
 import { Pagination } from "@/types/pagination";
 import { PropertyWithPagination } from "@/types/property";
-import { parseSearchParamsToObject } from "@/utils/objects";
+import {
+  parseSearchParamsToObject,
+  parseSortParamToObject,
+} from "@/utils/objects";
 
 export async function GET(request: NextRequest) {
   const searchParams = parseSearchParamsToObject(request.nextUrl.searchParams);
   const page = Number(searchParams.page!);
   const perPage = Number(searchParams.perPage!);
   const category = searchParams.category;
+  const sortParam = parseSortParamToObject(searchParams.sort!);
 
   const where = category
     ? {
@@ -30,7 +34,7 @@ export async function GET(request: NextRequest) {
       include: { address: true, categories: true },
       take: page * perPage,
       skip: (page - 1) * perPage,
-      orderBy: { createdAt: "desc" },
+      orderBy: sortParam,
       where,
     }),
   ]);

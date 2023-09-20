@@ -28,6 +28,14 @@ export const parseSearchParamsToObject = (
   return queryParams;
 };
 
+export const parseSortParamToObject = (sortObj: string) => {
+  if (!sortObj) {
+    return;
+  }
+  const [field, value] = sortObj.split(":") as [string, "asc" | "desc"];
+  return { [field]: value };
+};
+
 export const generateLocaleTranslation = (
   value: Prisma.JsonValue,
   locale: string

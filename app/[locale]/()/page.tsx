@@ -76,7 +76,7 @@ function useHomePage() {
   const propertyModalRef = useRef<PropertyModalRef>(null);
   const { onSuccess } = useNotification();
   const [{ isOpen }, { open, close }] = useModal();
-  const [{ category, page, perPage }] = useQueryPagination();
+  const [{ category, sort, page, perPage }] = useQueryPagination();
 
   const { data: categories, refetch: categoriesRefetch } = useQuery<Category[]>(
     categoryQuery.key
@@ -99,6 +99,7 @@ function useHomePage() {
   } = useQuery<PropertyWithPagination>(
     propertiesQuery.key({
       category,
+      sort,
       page: page || DEFAULT_PAGE,
       perPage: perPage || HOME_PROPERTIES_PER_PAGE,
     }),

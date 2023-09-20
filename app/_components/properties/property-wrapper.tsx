@@ -35,6 +35,8 @@ export const PropertyWrapper: FC<Props> = (props) => {
     properties,
     pagination,
     isLoading,
+    sortValue,
+    sortOptions,
     perPageOptions,
     addToQuery,
     handleResetFilters,
@@ -67,24 +69,37 @@ export const PropertyWrapper: FC<Props> = (props) => {
 
   return (
     <Stack w="100%" mt="md" spacing={0}>
-      <Group sx={{ alignSelf: "flex-end" }}>
-        <Typography>
-          {t.rich("pagination.totalOf", {
-            count: properties.length,
-            total: pagination?.total,
-          })}
-        </Typography>
-        <Pagination
-          value={pagination?.page ?? DEFAULT_PAGE}
-          total={pagination?.totalPages!}
-          onChange={(page) => addToQuery({ page })}
-        />
-        <Select
-          value={pagination?.perPage.toString() ?? perPageOptions[0].value}
-          data={perPageOptions}
-          onChange={(perPage) => addToQuery({ perPage: +perPage! })}
-          w={rem(70)}
-        />
+      <Group position="apart" px="lg">
+        <Group>
+          <Typography size="sm" fw={600}>
+            {t("pagination.sort.label")}
+          </Typography>
+          <Select
+            value={sortValue ?? null}
+            data={sortOptions}
+            onChange={(val) => addToQuery({ sort: val })}
+            clearable
+          />
+        </Group>
+        <Group>
+          <Typography>
+            {t.rich("pagination.totalOf", {
+              count: properties.length,
+              total: pagination?.total,
+            })}
+          </Typography>
+          <Pagination
+            value={pagination?.page ?? DEFAULT_PAGE}
+            total={pagination?.totalPages!}
+            onChange={(page) => addToQuery({ page })}
+          />
+          <Select
+            value={pagination?.perPage.toString() ?? perPageOptions[0].value}
+            data={perPageOptions}
+            onChange={(perPage) => addToQuery({ perPage: +perPage! })}
+            w={rem(70)}
+          />
+        </Group>
       </Group>
       <Grid m="xs" gutter="lg">
         {properties?.map((property) => (
@@ -99,7 +114,26 @@ function usePropertyWrapper({ properties: propertiesProp, isLoading }: Props) {
   const t = useTranslations("home.properties");
   const { properties, pagination } = propertiesProp ?? {};
   const { router } = useIntl();
-  const [, { addToQuery }] = useQueryPagination();
+  const [{ sort: sortValue }, { addToQuery }] = useQueryPagination();
+
+  const sortOptions: SelectItem[] = [
+    {
+      value: "createdAt:desc",
+      label: t("pagination.sort.newest"),
+    },
+    {
+      value: "createdAt:asc",
+      label: t("pagination.sort.oldest"),
+    },
+    {
+      value: "price:asc",
+      label: t("pagination.sort.priceLowHigh"),
+    },
+    {
+      value: "price:desc",
+      label: t("pagination.sort.priceHighLow"),
+    },
+  ];
 
   const perPageOptions: SelectItem[] = HOME_PROPERTIES_PER_PAGE_OPTIONS.map(
     (option) => ({
@@ -116,6 +150,8 @@ function usePropertyWrapper({ properties: propertiesProp, isLoading }: Props) {
     properties,
     pagination,
     isLoading,
+    sortValue,
+    sortOptions,
     perPageOptions,
     addToQuery,
     handleResetFilters,
