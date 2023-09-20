@@ -70,7 +70,7 @@ export const PropertyWrapper: FC<Props> = (props) => {
   return (
     <Stack w="100%" mt="md" spacing={0}>
       <Group position="apart" px="lg">
-        <Group>
+        <Group spacing="sm">
           <Typography size="sm" fw={600}>
             {t("pagination.sort.label")}
           </Typography>
