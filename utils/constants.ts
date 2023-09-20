@@ -13,6 +13,7 @@ export const NOTIFICATIONS_LIMIT = 5;
 
 export const DEFAULT_PAGE = 1;
 export const HOME_PROPERTIES_PER_PAGE = 6;
+export const HOME_PROPERTIES_PER_PAGE_OPTIONS = [6, 12, 24, 48, 96];
 
 // 🖼️ UI
 export const MAP_TILE_LAYER_DARK =

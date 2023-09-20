@@ -1,11 +1,25 @@
 import { FC } from "react";
 import { useTranslations } from "next-intl";
 import { Typography } from "../base/typography";
-import { Button, Flex, Grid, Group, Pagination, Stack } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  Grid,
+  Group,
+  Pagination,
+  Select,
+  SelectItem,
+  Stack,
+  rem,
+} from "@mantine/core";
 import { PropertyItem } from "./property-item";
 import { PropertyWithPagination } from "@/types/property";
 import { SkeletonCards } from "../skeleton-cards";
-import { DEFAULT_PAGE, HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
+import {
+  DEFAULT_PAGE,
+  HOME_PROPERTIES_PER_PAGE,
+  HOME_PROPERTIES_PER_PAGE_OPTIONS,
+} from "@/utils/constants";
 import { useIntl } from "@/hooks/use-intl";
 import { paths } from "@/navigation/paths";
 import { useQueryPagination } from "@/hooks/use-query-pagination";
@@ -21,6 +35,7 @@ export const PropertyWrapper: FC<Props> = (props) => {
     properties,
     pagination,
     isLoading,
+    perPageOptions,
     addToQuery,
     handleResetFilters,
   } = usePropertyWrapper(props);
@@ -64,6 +79,12 @@ export const PropertyWrapper: FC<Props> = (props) => {
           total={pagination?.totalPages!}
           onChange={(page) => addToQuery({ page })}
         />
+        <Select
+          value={pagination?.perPage.toString() ?? perPageOptions[0].value}
+          data={perPageOptions}
+          onChange={(perPage) => addToQuery({ perPage: +perPage! })}
+          w={rem(70)}
+        />
       </Group>
       <Grid m="xs" gutter="lg">
         {properties?.map((property) => (
@@ -80,6 +101,13 @@ function usePropertyWrapper({ properties: propertiesProp, isLoading }: Props) {
   const { router } = useIntl();
   const [, { addToQuery }] = useQueryPagination();
 
+  const perPageOptions: SelectItem[] = HOME_PROPERTIES_PER_PAGE_OPTIONS.map(
+    (option) => ({
+      value: option.toString(),
+      label: option.toString(),
+    })
+  );
+
   const handleResetFilters = () =>
     router.replace(paths.home(), { scroll: false });
 
@@ -88,6 +116,7 @@ function usePropertyWrapper({ properties: propertiesProp, isLoading }: Props) {
     properties,
     pagination,
     isLoading,
+    perPageOptions,
     addToQuery,
     handleResetFilters,
   };
