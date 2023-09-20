@@ -6,14 +6,14 @@ import { useIntl } from "@/hooks/use-intl";
 import { Button, createStyles } from "@mantine/core";
 import { Category } from "@prisma/client";
 import { generateLocaleTranslation } from "@/utils/objects";
-import { useCategoryQuery } from "@/hooks/use-category-query";
+import { useQueryPagination } from "@/hooks/use-query-pagination";
 
 type Props = {
   item: Category;
 };
 
 export const CategoryItem: FC<Props> = (props) => {
-  const { classes, name, emoji, isActive, cx, handleSelect } =
+  const { classes, name, emoji, isActive, cx, handleClick } =
     useCategoryItem(props);
 
   return (
@@ -24,7 +24,7 @@ export const CategoryItem: FC<Props> = (props) => {
       className={cx(classes.categoryItem, {
         [classes.categoryItemActive]: isActive,
       })}
-      onClick={() => handleSelect()}
+      onClick={handleClick}
     >
       {emoji} {name}
     </Button>
@@ -35,14 +35,18 @@ function useCategoryItem({ item: { id, name, emoji } }: Props) {
   const [{ isDarkTheme }] = useColorScheme();
   const { classes, cx } = useStyles(isDarkTheme);
   const { locale } = useIntl();
-  const [{ isActive }, { handleSelect }] = useCategoryQuery(id);
+  const [{ category }, { addToQuery }] = useQueryPagination();
+
+  const isActive = category === id;
+
+  const handleClick = () => addToQuery({ category: isActive ? null : id });
 
   return {
     classes,
     name: generateLocaleTranslation(name, locale),
     emoji,
     isActive,
-    handleSelect,
+    handleClick,
     cx,
   };
 }

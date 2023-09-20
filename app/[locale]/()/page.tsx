@@ -23,7 +23,6 @@ import { useRef } from "react";
 import { propertiesQuery } from "@/domain/queries/properties-query";
 import { PropertyWrapper } from "@/app/_components/properties/property-wrapper";
 import { CategoriesSpotlight } from "@/app/_components/categories/categories-spotlight";
-import { useCategoryQuery } from "@/hooks/use-category-query";
 import { DEFAULT_PAGE, HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
 import { PropertyWithPagination } from "@/types/property";
 import { useQueryPagination } from "@/hooks/use-query-pagination";
@@ -77,8 +76,7 @@ function useHomePage() {
   const propertyModalRef = useRef<PropertyModalRef>(null);
   const { onSuccess } = useNotification();
   const [{ isOpen }, { open, close }] = useModal();
-  const [{ page, perPage }] = useQueryPagination();
-  const [{ categoryId }] = useCategoryQuery();
+  const [{ category, page, perPage }] = useQueryPagination();
 
   const { data: categories, refetch: categoriesRefetch } = useQuery<Category[]>(
     categoryQuery.key
@@ -100,7 +98,7 @@ function useHomePage() {
     refetch: propertiesRefetch,
   } = useQuery<PropertyWithPagination>(
     propertiesQuery.key({
-      category: categoryId || undefined,
+      category,
       page: page || DEFAULT_PAGE,
       perPage: perPage || HOME_PROPERTIES_PER_PAGE,
     }),

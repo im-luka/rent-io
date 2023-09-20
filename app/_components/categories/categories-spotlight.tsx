@@ -1,11 +1,11 @@
 import { FC, ReactNode } from "react";
-import { useCategoryQuery } from "@/hooks/use-category-query";
 import { useIntl } from "@/hooks/use-intl";
 import { generateLocaleTranslation } from "@/utils/objects";
 import { SpotlightAction, SpotlightProvider } from "@mantine/spotlight";
 import { Category } from "@prisma/client";
 import { IconSearch } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
+import { useQueryPagination } from "@/hooks/use-query-pagination";
 
 type Props = {
   categories: Category[];
@@ -33,12 +33,12 @@ export const CategoriesSpotlight: FC<Props> = (props) => {
 function useCategoriesSpotlight({ categories, children }: Props) {
   const t = useTranslations("home.categories.spotlight");
   const { locale } = useIntl();
-  const [, { handleSelect }] = useCategoryQuery();
+  const [, { addToQuery }] = useQueryPagination();
 
   const actions: SpotlightAction[] = categories.map(({ id, name, emoji }) => ({
     title: generateLocaleTranslation(name, locale),
     icon: emoji,
-    onTrigger: () => handleSelect(id),
+    onTrigger: () => addToQuery({ category: id }),
   }));
 
   return { t, children, actions };

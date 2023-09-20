@@ -5,13 +5,13 @@ import { useIntl } from "./use-intl";
 export type QueryParams = {
   page?: number;
   perPage?: number;
-  category?: string;
+  category?: string | null;
 };
 
 export const useQueryPagination = (): [
   obj: QueryParams,
   fnc: {
-    addToQuery: (params: QueryParams) => void;
+    addToQuery: (params?: QueryParams) => void;
   }
 ] => {
   const { pathname, router } = useIntl();
@@ -22,7 +22,7 @@ export const useQueryPagination = (): [
     queryParams = { ...queryParams, [key]: value };
   });
 
-  const addToQuery = (params: QueryParams) => {
+  const addToQuery = (params?: QueryParams) => {
     const updatedQuery = { ...queryParams, ...params };
     const url = qs.stringifyUrl(
       {

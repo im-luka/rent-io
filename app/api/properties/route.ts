@@ -9,6 +9,9 @@ import { TranslatorData } from "@/domain/types/translator-data";
 import { Pagination } from "@/types/pagination";
 import { PropertyWithPagination } from "@/types/property";
 
+// TODO: requestSearchParams.forEach
+// TODO: prisma.$transaction for same time requests
+
 export async function GET(request: NextRequest) {
   const page = Number(request.nextUrl.searchParams.get("page"));
   const perPage = Number(request.nextUrl.searchParams.get("perPage"));
