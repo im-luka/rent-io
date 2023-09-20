@@ -22,8 +22,9 @@ import {
 import { useTranslations } from "next-intl";
 import { paths } from "@/navigation/paths";
 import { Link } from "../base/link";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { Typography } from "../base/typography";
+import { useSession } from "@/hooks/use-session";
 
 export const Menu: FC = () => {
   const { t, classes, theme, user } = useMenu();
@@ -118,7 +119,7 @@ export const Menu: FC = () => {
 function useMenu() {
   const t = useTranslations("navbar.menu");
   const { classes, theme } = useStyles();
-  const { data: session } = useSession();
+  const { session } = useSession();
   const user = session?.user;
 
   return { t, classes, theme, user };

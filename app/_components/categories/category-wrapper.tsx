@@ -21,6 +21,7 @@ import { useTranslations } from "next-intl";
 import { CategoryItem } from "./category-item";
 import { ModalType } from "@/hooks/use-modal";
 import { spotlight } from "@mantine/spotlight";
+import { useSession } from "@/hooks/use-session";
 
 type Props = {
   categories: Category[] | undefined;
@@ -28,7 +29,7 @@ type Props = {
 };
 
 export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
-  const { t, classes } = useCategoryWrapper();
+  const { t, classes, isAuthenticated } = useCategoryWrapper();
 
   const renderCategory = (item: Category) => (
     <CategoryItem key={item.id} item={item} />
@@ -55,15 +56,17 @@ export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
         <Divider />
         <Group position="apart" px="xs">
           <Typography size="xs">{t("title")}</Typography>
-          <Tooltip label={t("create.tooltip")} position="right" withArrow>
-            <ActionIcon
-              variant="default"
-              size={18}
-              onClick={() => onOpen("addCategory")}
-            >
-              <IconPlus size={14} stroke={1.5} />
-            </ActionIcon>
-          </Tooltip>
+          {isAuthenticated && (
+            <Tooltip label={t("create.tooltip")} position="right" withArrow>
+              <ActionIcon
+                variant="default"
+                size={18}
+                onClick={() => onOpen("addCategory")}
+              >
+                <IconPlus size={14} stroke={1.5} />
+              </ActionIcon>
+            </Tooltip>
+          )}
         </Group>
         <Stack spacing={0}>{categories?.map(renderCategory)}</Stack>
       </Navbar.Section>
@@ -74,8 +77,9 @@ export const CategoryWrapper: FC<Props> = ({ categories, onOpen }) => {
 function useCategoryWrapper() {
   const t = useTranslations("home.categories");
   const { classes } = useStyles();
+  const { isAuthenticated } = useSession();
 
-  return { t, classes };
+  return { t, classes, isAuthenticated };
 }
 
 const useStyles = createStyles((theme) => ({
