@@ -6,27 +6,29 @@ import { authOptions } from "@/domain/auth";
 import { api } from "@/domain/remote";
 import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
-import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
+import { Pagination } from "@/types/pagination";
+import { PropertyWithPagination } from "@/types/property";
 
 export async function GET(request: NextRequest) {
-  const categoryId = request.nextUrl.searchParams.get("categoryId");
+  const page = Number(request.nextUrl.searchParams.get("page"));
+  const perPage = Number(request.nextUrl.searchParams.get("perPage"));
+
+  const propertiesCount = await prisma.property.count();
   const properties = await prisma.property.findMany({
     include: { address: true, categories: true },
-    take: HOME_PROPERTIES_PER_PAGE,
+    take: page * perPage,
+    skip: (page - 1) * perPage,
     orderBy: { createdAt: "desc" },
-    where: categoryId
-      ? {
-          categoryIds: {
-            has: categoryId,
-          },
-        }
-      : {},
   });
-  if (!properties) {
-    return NextResponse.json("custom.noProperties", { status: 400 });
-  }
 
-  return NextResponse.json(properties);
+  const pagination: Pagination = {
+    page,
+    perPage,
+    total: propertiesCount,
+    totalPages: Math.floor(propertiesCount / perPage + 1),
+  };
+
+  return NextResponse.json<PropertyWithPagination>({ properties, pagination });
 }
 
 export async function POST(request: NextRequest) {

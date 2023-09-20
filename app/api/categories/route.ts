@@ -8,9 +8,6 @@ import { DEFAULT_CATEGORY_EMOJI } from "@/utils/constants";
 
 export async function GET(request: NextRequest) {
   const categories = await prisma.category.findMany();
-  if (!categories) {
-    return NextResponse.json("custom.noCategories", { status: 400 });
-  }
 
   return NextResponse.json(categories);
 }

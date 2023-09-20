@@ -16,7 +16,7 @@ import { categoryQuery } from "@/domain/queries/categories-query";
 import { useModal } from "@/hooks/use-modal";
 import { useNotification } from "@/hooks/use-notification";
 import { Group } from "@mantine/core";
-import { Category, Property } from "@prisma/client";
+import { Category } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { propertyMutation } from "@/domain/mutations/property-mutation";
 import { useRef } from "react";
@@ -24,6 +24,9 @@ import { propertiesQuery } from "@/domain/queries/properties-query";
 import { PropertyWrapper } from "@/app/_components/properties/property-wrapper";
 import { CategoriesSpotlight } from "@/app/_components/categories/categories-spotlight";
 import { useCategoryQuery } from "@/hooks/use-category-query";
+import { DEFAULT_PAGE, HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
+import { PropertyWithPagination } from "@/types/property";
+import { useQueryPagination } from "@/hooks/use-query-pagination";
 
 export default function HomePage() {
   const {
@@ -53,7 +56,10 @@ export default function HomePage() {
           />
         </Group>
         <Group h="100%" align="start" className="flex-1">
-          <PropertyWrapper items={properties} isLoading={propertiesLoading} />
+          <PropertyWrapper
+            properties={properties}
+            isLoading={propertiesLoading}
+          />
           <AddPropertyModal
             ref={propertyModalRef}
             opened={isOpen.addProperty}
@@ -71,6 +77,7 @@ function useHomePage() {
   const propertyModalRef = useRef<PropertyModalRef>(null);
   const { onSuccess } = useNotification();
   const [{ isOpen }, { open, close }] = useModal();
+  const [{ page, perPage }] = useQueryPagination();
   const [{ categoryId }] = useCategoryQuery();
 
   const { data: categories, refetch: categoriesRefetch } = useQuery<Category[]>(
@@ -91,9 +98,16 @@ function useHomePage() {
     data: properties,
     isLoading: propertiesLoading,
     refetch: propertiesRefetch,
-  } = useQuery<Property[]>(propertiesQuery.key({ categoryId: categoryId }), {
-    keepPreviousData: true,
-  });
+  } = useQuery<PropertyWithPagination>(
+    propertiesQuery.key({
+      category: categoryId || undefined,
+      page: page || DEFAULT_PAGE,
+      perPage: perPage || HOME_PROPERTIES_PER_PAGE,
+    }),
+    {
+      keepPreviousData: true,
+    }
+  );
   const { mutateAsync: addProperty, isLoading: isAddingProperty } = useMutation(
     propertyMutation.fnc,
     {
