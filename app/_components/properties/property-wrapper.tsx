@@ -9,7 +9,6 @@ import { SkeletonCards } from "../skeleton-cards";
 import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
 import { useIntl } from "@/hooks/use-intl";
 import { paths } from "@/navigation/paths";
-import { useSearchParams } from "next/navigation";
 
 type Props = {
   items: PropertyPrisma[] | undefined;
@@ -19,15 +18,11 @@ type Props = {
 export const PropertyWrapper: FC<Props> = (props) => {
   const { t, items, isLoading, handleResetFilters } = usePropertyWrapper(props);
 
-  // TODO: WIP - properties empty state manual render
-  const searchParams = useSearchParams();
-  const hasParams = searchParams.get("category");
-
   if (isLoading) {
     return <SkeletonCards cardsCount={HOME_PROPERTIES_PER_PAGE} />;
   }
 
-  if (!items?.length || hasParams) {
+  if (!items?.length) {
     return (
       <Flex w="100%" h="100%" align="center" justify="center">
         <Stack align="center" spacing="xs">
@@ -49,7 +44,7 @@ export const PropertyWrapper: FC<Props> = (props) => {
   }
 
   return (
-    <Grid m="xs" gutter="lg">
+    <Grid w="100%" m="xs" gutter="lg">
       {items?.map((item) => (
         <PropertyItem key={item.id} item={item as Property} />
       ))}

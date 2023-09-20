@@ -2,13 +2,22 @@ import { useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { useIntl } from "./use-intl";
 
+type ReturnObject = {
+  categoryId: string | null;
+  isActive: boolean;
+};
+
 export const useCategoryQuery = (
   id?: string
-): [data: boolean, fnc: { handleSelect: (categoryId?: string) => void }] => {
+): [
+  obj: ReturnObject,
+  fnc: { handleSelect: (categoryId?: string) => void }
+] => {
   const { router, pathname } = useIntl();
   const searchParams = useSearchParams();
 
-  const isActive = searchParams.get("category") === id;
+  const paramsCategoryId = searchParams.get("category");
+  const isActive = paramsCategoryId === id;
 
   const handleSelect = (categoryId?: string) => {
     const url = qs.stringifyUrl(
@@ -21,5 +30,5 @@ export const useCategoryQuery = (
     router.replace(url, { scroll: false });
   };
 
-  return [isActive, { handleSelect }];
+  return [{ categoryId: paramsCategoryId, isActive }, { handleSelect }];
 };

@@ -9,10 +9,18 @@ import { TranslatorData } from "@/domain/types/translator-data";
 import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
 
 export async function GET(request: NextRequest) {
+  const categoryId = request.nextUrl.searchParams.get("categoryId");
   const properties = await prisma.property.findMany({
     include: { address: true, categories: true },
     take: HOME_PROPERTIES_PER_PAGE,
     orderBy: { createdAt: "desc" },
+    where: categoryId
+      ? {
+          categoryIds: {
+            has: categoryId,
+          },
+        }
+      : {},
   });
   if (!properties) {
     return NextResponse.json("custom.noProperties", { status: 400 });

@@ -23,6 +23,7 @@ import { useRef } from "react";
 import { propertiesQuery } from "@/domain/queries/properties-query";
 import { PropertyWrapper } from "@/app/_components/properties/property-wrapper";
 import { CategoriesSpotlight } from "@/app/_components/categories/categories-spotlight";
+import { useCategoryQuery } from "@/hooks/use-category-query";
 
 export default function HomePage() {
   const {
@@ -70,6 +71,7 @@ function useHomePage() {
   const propertyModalRef = useRef<PropertyModalRef>(null);
   const { onSuccess } = useNotification();
   const [{ isOpen }, { open, close }] = useModal();
+  const [{ categoryId }] = useCategoryQuery();
 
   const { data: categories, refetch: categoriesRefetch } = useQuery<Category[]>(
     categoryQuery.key
@@ -89,7 +91,9 @@ function useHomePage() {
     data: properties,
     isLoading: propertiesLoading,
     refetch: propertiesRefetch,
-  } = useQuery<Property[]>(propertiesQuery.key);
+  } = useQuery<Property[]>(propertiesQuery.key({ categoryId: categoryId }), {
+    keepPreviousData: true,
+  });
   const { mutateAsync: addProperty, isLoading: isAddingProperty } = useMutation(
     propertyMutation.fnc,
     {

@@ -35,7 +35,7 @@ function useCategoryItem({ item: { id, name, emoji } }: Props) {
   const [{ isDarkTheme }] = useColorScheme();
   const { classes, cx } = useStyles(isDarkTheme);
   const { locale } = useIntl();
-  const [isActive, { handleSelect }] = useCategoryQuery(id);
+  const [{ isActive }, { handleSelect }] = useCategoryQuery(id);
 
   return {
     classes,
