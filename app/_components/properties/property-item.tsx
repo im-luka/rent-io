@@ -20,6 +20,7 @@ import { Typography } from "../base/typography";
 import { Category } from "@prisma/client";
 import { IconHeart } from "@tabler/icons-react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { OPTIMAL_IMAGE_SIZES } from "@/utils/constants";
 
 type Props = {
   item: Property;
@@ -48,7 +49,14 @@ export const PropertyItem: FC<Props> = (props) => {
       <Card h="100%" radius="md" withBorder className={classes.card}>
         <Card.Section>
           <Box pos="relative" h={200}>
-            <Image src={imageSrc} alt={name} fill className={classes.image} />
+            <Image
+              src={imageSrc}
+              alt={name}
+              fill
+              sizes={OPTIMAL_IMAGE_SIZES}
+              priority
+              className={classes.image}
+            />
           </Box>
           <Box p="md">
             <Group position="apart" spacing="xs">
