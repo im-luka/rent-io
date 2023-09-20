@@ -1,4 +1,6 @@
+import { QueryParams } from "@/hooks/use-query-pagination";
 import { Prisma } from "@prisma/client";
+import { ReadonlyURLSearchParams } from "next/navigation";
 
 export const parseFormDataToObject = <T>(formData: FormData) => {
   const obj: Record<string, any> = {};
@@ -14,6 +16,16 @@ export const parseFormDataToObject = <T>(formData: FormData) => {
     obj[key].push(val);
   });
   return obj as T;
+};
+
+export const parseSearchParamsToObject = (
+  searchParams: URLSearchParams | ReadonlyURLSearchParams
+) => {
+  let queryParams: Partial<QueryParams> = {};
+  searchParams.forEach((value, key) => {
+    queryParams = { ...queryParams, [key]: value };
+  });
+  return queryParams;
 };
 
 export const generateLocaleTranslation = (

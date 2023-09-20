@@ -51,11 +51,11 @@ export const PropertyWrapper: FC<Props> = (props) => {
   }
 
   return (
-    <Stack mt="md" spacing={0}>
+    <Stack w="100%" mt="md" spacing={0}>
       <Group sx={{ alignSelf: "flex-end" }}>
         <Typography>
           {t.rich("pagination.totalOf", {
-            count: pagination?.perPage,
+            count: properties.length,
             total: pagination?.total,
           })}
         </Typography>
@@ -64,7 +64,7 @@ export const PropertyWrapper: FC<Props> = (props) => {
           onChange={(page) => addToQuery({ page })}
         />
       </Group>
-      <Grid w="100%" m="xs" gutter="lg">
+      <Grid m="xs" gutter="lg">
         {properties?.map((property) => (
           <PropertyItem key={property.id} item={property} />
         ))}

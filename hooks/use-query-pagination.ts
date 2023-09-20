@@ -1,6 +1,7 @@
 import { useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { useIntl } from "./use-intl";
+import { parseSearchParamsToObject } from "@/utils/objects";
 
 export type QueryParams = {
   page?: number;
@@ -17,10 +18,7 @@ export const useQueryPagination = (): [
   const { pathname, router } = useIntl();
   const searchParams = useSearchParams();
 
-  let queryParams: Partial<QueryParams> = {};
-  searchParams.forEach((value, key) => {
-    queryParams = { ...queryParams, [key]: value };
-  });
+  const queryParams = parseSearchParamsToObject(searchParams);
 
   const addToQuery = (params?: QueryParams) => {
     const updatedQuery = { ...queryParams, ...params };

@@ -8,20 +8,31 @@ import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
 import { Pagination } from "@/types/pagination";
 import { PropertyWithPagination } from "@/types/property";
+import { parseSearchParamsToObject } from "@/utils/objects";
 
-// TODO: requestSearchParams.forEach
 // TODO: prisma.$transaction for same time requests
 
 export async function GET(request: NextRequest) {
-  const page = Number(request.nextUrl.searchParams.get("page"));
-  const perPage = Number(request.nextUrl.searchParams.get("perPage"));
+  const searchParams = parseSearchParamsToObject(request.nextUrl.searchParams);
+  const page = searchParams.page!;
+  const perPage = searchParams.perPage!;
+  const category = searchParams.category;
 
-  const propertiesCount = await prisma.property.count();
+  const where = category
+    ? {
+        categoryIds: {
+          has: category,
+        },
+      }
+    : {};
+
+  const propertiesCount = await prisma.property.count({ where });
   const properties = await prisma.property.findMany({
     include: { address: true, categories: true },
     take: page * perPage,
     skip: (page - 1) * perPage,
     orderBy: { createdAt: "desc" },
+    where,
   });
 
   const pagination: Pagination = {
