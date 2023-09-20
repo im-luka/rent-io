@@ -10,7 +10,7 @@ export const Logo: FC = () => {
   const { t } = useLogo();
 
   return (
-    <Link href={paths.home()}>
+    <Link href={paths.home()} scroll={false}>
       <Image
         src="/images/logo.png"
         alt={t("logoAlt")}
