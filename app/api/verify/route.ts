@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/domain/db/prisma-client";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const token: string = await request.json();
   if (!token) {
     return NextResponse.json("custom.noToken", { status: 400 });

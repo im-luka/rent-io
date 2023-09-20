@@ -49,12 +49,10 @@
     "verificationEmail": "Problem with sending verification email",
     "noToken": "Token not provided",
     "invalidToken": "Invalid token provided",
-    "noCategories": "There are no categories",
     "addCategory": "Problem with adding new category",
     "translate": "Problem with translating entities",
     "addProperty": "Problem with adding new property",
-    "authenticated": "Not authenticated",
-    "noProperties": "There are no properties"
+    "authenticated": "Not authenticated"
   },
   "symbol": {
     "dot": ".",
@@ -101,6 +99,10 @@
         "emoji": "Emoji",
         "emojiPlaceholder": "🏡",
         "createAction": "Create"
+      },
+      "spotlight": {
+        "searchPlaceholder": "Search category...",
+        "emptyMessage": "Category not found..."
       }
     },
     "properties": {
@@ -112,6 +114,16 @@
         "title": "No properties found.",
         "description": "Add new property now or try resetting filters.",
         "resetAction": "Reset Filters"
+      },
+      "pagination": {
+        "totalOf": "{count} of {total}",
+        "sort": {
+          "label": "Sort by:",
+          "newest": "Newest",
+          "oldest": "Oldest",
+          "priceLowHigh": "Price - Low to High",
+          "priceHighLow": "Price - High to Low"
+        }
       }
     },
     "propertyModal": {

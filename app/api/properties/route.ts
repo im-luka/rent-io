@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { PropertyData } from "@/domain/types/property-data";
 import { prisma } from "@/domain/db/prisma-client";
 import { getServerSession } from "next-auth";
@@ -6,22 +6,50 @@ import { authOptions } from "@/domain/auth";
 import { api } from "@/domain/remote";
 import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
-import { HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
+import { Pagination } from "@/types/pagination";
+import { PropertyWithPagination } from "@/types/property";
+import {
+  parseSearchParamsToObject,
+  parseSortParamToObject,
+} from "@/utils/objects";
 
-export async function GET(request: Request) {
-  const properties = await prisma.property.findMany({
-    include: { address: true, categories: true },
-    take: HOME_PROPERTIES_PER_PAGE,
-    orderBy: { createdAt: "desc" },
-  });
-  if (!properties) {
-    return NextResponse.json("custom.noProperties", { status: 400 });
-  }
+export async function GET(request: NextRequest) {
+  const searchParams = parseSearchParamsToObject(request.nextUrl.searchParams);
+  const page = Number(searchParams.page!);
+  const perPage = Number(searchParams.perPage!);
+  const category = searchParams.category;
+  const sortParam = parseSortParamToObject(searchParams.sort!);
 
-  return NextResponse.json(properties);
+  const where = category
+    ? {
+        categoryIds: {
+          has: category,
+        },
+      }
+    : {};
+
+  const [propertiesCount, properties] = await prisma.$transaction([
+    prisma.property.count({ where }),
+    prisma.property.findMany({
+      include: { address: true, categories: true },
+      take: page * perPage,
+      skip: (page - 1) * perPage,
+      orderBy: sortParam,
+      where,
+    }),
+  ]);
+
+  const pagination: Pagination = {
+    page,
+    perPage,
+    total: propertiesCount,
+    totalPages: Math.floor(propertiesCount / perPage + 1),
+  };
+
+  return NextResponse.json<PropertyWithPagination>({ properties, pagination });
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const {
     name,
     description,

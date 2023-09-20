@@ -10,7 +10,10 @@ export const SEARCH_CATEGORIES_KEY = "K";
 export const DEFAULT_CATEGORY_EMOJI = "🏡";
 export const MIN_PASSWORD_CHARS = 8;
 export const NOTIFICATIONS_LIMIT = 5;
+
+export const DEFAULT_PAGE = 1;
 export const HOME_PROPERTIES_PER_PAGE = 6;
+export const HOME_PROPERTIES_PER_PAGE_OPTIONS = [6, 12, 24, 48, 96];
 
 // 🖼️ UI
 export const MAP_TILE_LAYER_DARK =
@@ -25,3 +28,6 @@ export const DEFAULT_MAP_LATLNG = [51.505, -0.09];
 export const MODAL_OVERLAY_Z_INDEX = 1001;
 export const NOTIFICATION_Z_INDEX = 9999;
 export const COUNTRY_SELECT_Z_INDEX = 1000;
+
+export const OPTIMAL_IMAGE_SIZES =
+  "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw";
