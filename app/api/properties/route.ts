@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
     page,
     perPage,
     total: propertiesCount,
-    totalPages: Math.floor(propertiesCount / perPage + 1),
+    totalPages: Math.ceil(propertiesCount / perPage),
   };
 
   return NextResponse.json<PropertyWithPagination>({ properties, pagination });
