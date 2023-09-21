@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
     prisma.property.count({ where }),
     prisma.property.findMany({
       include: { address: true, categories: true },
-      take: page * perPage,
+      take: perPage,
       skip: (page - 1) * perPage,
       orderBy: sortParam,
       where,
