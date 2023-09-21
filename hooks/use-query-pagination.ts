@@ -22,7 +22,7 @@ export const useQueryPagination = (): [
   const queryParams = parseSearchParamsToObject(searchParams);
 
   const addToQuery = (params?: QueryParams) => {
-    const { page, perPage, ...restQueryParams } = queryParams;
+    const { page, ...restQueryParams } = queryParams;
     const updatedQuery = { ...restQueryParams, ...params };
     const url = qs.stringifyUrl(
       {
