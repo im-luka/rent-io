@@ -80,12 +80,17 @@
       }
     },
     "menu": {
+      "auth": "Auth",
       "login": "Login",
       "register": "Register",
-      "signOut": "Sign out",
       "userData": "{firstName} {lastName}",
+      "favorites": "Favorites",
+      "myProperties": "My properties",
+      "myReservations": "My reservations",
+      "myReviews": "My reviews",
       "accountSettings": "Account settings",
-      "profile": "Profile"
+      "profile": "Profile",
+      "signOut": "Sign out"
     }
   },
   "home": {

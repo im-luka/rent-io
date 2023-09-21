@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, Fragment, ReactNode } from "react";
 import {
   Avatar,
   Group,
@@ -11,79 +11,42 @@ import {
 } from "@mantine/core";
 import {
   IconBallpen,
+  IconBookmark,
+  IconBuildingEstate,
   IconChevronDown,
   IconDoorEnter,
   IconHeart,
   IconLogout,
   IconMessage,
-  IconStar,
   IconUserEdit,
 } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { paths } from "@/navigation/paths";
-import { Link } from "../base/link";
 import { signOut } from "next-auth/react";
 import { Typography } from "../base/typography";
 import { useSession } from "@/hooks/use-session";
+import { useIntl } from "@/hooks/use-intl";
+
+type MenuItem = {
+  icon: JSX.Element;
+  label: string;
+  onClick: () => void;
+  header?: ReactNode;
+};
 
 export const Menu: FC = () => {
-  const { t, classes, theme, user } = useMenu();
+  const { t, classes, user, menuItems } = useMenu();
 
-  // TODO: 🖌️ implement cleaner menu items once other pages are ready & complete
-  const menuItems = user ? (
-    <>
-      <MantineMenu.Item
-        icon={<IconHeart size={14} color={theme.colors.red[6]} stroke={1.5} />}
-      >
-        Liked posts
+  const renderMenuItem = (
+    { icon, label, onClick, header }: MenuItem,
+    i: number
+  ) => (
+    <Fragment key={i}>
+      {header}
+      <MantineMenu.Item icon={icon} onClick={onClick}>
+        {label}
       </MantineMenu.Item>
-      <MantineMenu.Item
-        icon={
-          <IconStar size={14} color={theme.colors.yellow[6]} stroke={1.5} />
-        }
-      >
-        Saved posts
-      </MantineMenu.Item>
-      <MantineMenu.Item
-        icon={
-          <IconMessage size={14} color={theme.colors.blue[6]} stroke={1.5} />
-        }
-      >
-        Your comments
-      </MantineMenu.Item>
-      <MantineMenu.Divider />
-      <MantineMenu.Label>{t("accountSettings")}</MantineMenu.Label>
-      <MantineMenu.Item
-        icon={
-          <IconUserEdit size={14} stroke={1.5} color={theme.colors.green[5]} />
-        }
-      >
-        {t("profile")}
-      </MantineMenu.Item>
-      <MantineMenu.Item
-        icon={<IconLogout size={14} stroke={1.5} color={theme.colors.red[5]} />}
-        onClick={() => signOut()}
-      >
-        {t("signOut")}
-      </MantineMenu.Item>
-    </>
-  ) : (
-    <>
-      <MantineMenu.Item
-        component={Link}
-        href={paths.login()}
-        icon={<IconDoorEnter size={14} stroke={1.5} />}
-      >
-        {t("login")}
-      </MantineMenu.Item>
-      <MantineMenu.Item
-        component={Link}
-        href={paths.register()}
-        icon={<IconBallpen size={14} stroke={1.5} />}
-      >
-        {t("register")}
-      </MantineMenu.Item>
-    </>
+    </Fragment>
   );
 
   return (
@@ -111,7 +74,9 @@ export const Menu: FC = () => {
           </Group>
         </UnstyledButton>
       </MantineMenu.Target>
-      <MantineMenu.Dropdown>{menuItems}</MantineMenu.Dropdown>
+      <MantineMenu.Dropdown>
+        {menuItems.map(renderMenuItem)}
+      </MantineMenu.Dropdown>
     </MantineMenu>
   );
 };
@@ -119,10 +84,96 @@ export const Menu: FC = () => {
 function useMenu() {
   const t = useTranslations("navbar.menu");
   const { classes, theme } = useStyles();
+  const { router } = useIntl();
   const { session } = useSession();
   const user = session?.user;
 
-  return { t, classes, theme, user };
+  const menuItems: MenuItem[] = user
+    ? [
+        {
+          icon: (
+            <IconHeart size={14} color={theme.colors.red[6]} stroke={1.5} />
+          ),
+          label: t("favorites"),
+          onClick: () => router.push(paths.home()),
+        },
+        {
+          icon: (
+            <IconBuildingEstate
+              size={14}
+              color={theme.colors.violet[6]}
+              stroke={1.5}
+            />
+          ),
+          label: t("myProperties"),
+          onClick: () => router.push(paths.home()),
+        },
+        {
+          icon: (
+            <IconBookmark
+              size={14}
+              color={theme.colors.yellow[6]}
+              stroke={1.5}
+            />
+          ),
+          label: t("myReservations"),
+          onClick: () => router.push(paths.home()),
+        },
+        {
+          icon: (
+            <IconMessage size={14} color={theme.colors.blue[6]} stroke={1.5} />
+          ),
+          label: t("myReviews"),
+          onClick: () => router.push(paths.home()),
+        },
+        {
+          icon: (
+            <IconUserEdit
+              size={14}
+              color={theme.colors.green[5]}
+              stroke={1.5}
+            />
+          ),
+          label: t("profile"),
+          onClick: () => router.push(paths.home()),
+          header: (
+            <>
+              <MantineMenu.Divider />
+              <MantineMenu.Label>{t("accountSettings")}</MantineMenu.Label>
+            </>
+          ),
+        },
+        {
+          icon: (
+            <IconLogout size={14} color={theme.colors.red[5]} stroke={1.5} />
+          ),
+          label: t("signOut"),
+          onClick: () => signOut(),
+        },
+      ]
+    : [
+        {
+          icon: (
+            <IconDoorEnter
+              size={14}
+              color={theme.colors.blue[5]}
+              stroke={1.5}
+            />
+          ),
+          label: t("login"),
+          onClick: () => router.push(paths.login()),
+          header: <MantineMenu.Label>{t("auth")}</MantineMenu.Label>,
+        },
+        {
+          icon: (
+            <IconBallpen size={14} color={theme.colors.green[5]} stroke={1.5} />
+          ),
+          label: t("register"),
+          onClick: () => router.push(paths.register()),
+        },
+      ];
+
+  return { t, classes, user, menuItems };
 }
 
 const useStyles = createStyles((theme) => ({
