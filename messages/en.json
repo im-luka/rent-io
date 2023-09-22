@@ -39,6 +39,14 @@
     "property": {
       "title": "Property added!",
       "message": "Expect traffic real soon!"
+    },
+    "favorite": {
+      "title": "❤️",
+      "message": "Added to favorites!"
+    },
+    "unfavorite": {
+      "title": "💔",
+      "message": "Removed from favorites!"
     }
   },
   "error": {
@@ -52,7 +60,8 @@
     "addCategory": "Problem with adding new category",
     "translate": "Problem with translating entities",
     "addProperty": "Problem with adding new property",
-    "authenticated": "Not authenticated"
+    "authenticated": "Not authenticated",
+    "propertyId": "Property ID not provided"
   },
   "symbol": {
     "dot": ".",

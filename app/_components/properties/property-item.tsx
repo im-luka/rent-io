@@ -18,10 +18,14 @@ import { generateLocaleTranslation } from "@/utils/objects";
 import { useCountries } from "@/hooks/use-countries";
 import { Typography } from "../base/typography";
 import { Category } from "@prisma/client";
-import { IconHeart } from "@tabler/icons-react";
+import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { OPTIMAL_IMAGE_SIZES } from "@/utils/constants";
 import { useSession } from "@/hooks/use-session";
+import { useMutation } from "@tanstack/react-query";
+import { favoritesMutation } from "@/domain/mutations/favorites-mutation";
+import { useNotification } from "@/hooks/use-notification";
+import { FavoriteAction, generateFavorites } from "@/utils/user";
 
 type Props = {
   item: Property;
@@ -38,6 +42,8 @@ export const PropertyItem: FC<Props> = (props) => {
     country,
     categories,
     isAuthenticated,
+    isFavorite,
+    handleFavorite,
   } = usePropertyItem(props);
 
   const renderCategory = (category: Category) => (
@@ -88,8 +94,17 @@ export const PropertyItem: FC<Props> = (props) => {
               {t("showDetailsAction")}
             </Button>
             {isAuthenticated && (
-              <ActionIcon variant="default" radius="md" size={40}>
-                <IconHeart size={24} color="red" />
+              <ActionIcon
+                variant="default"
+                radius="md"
+                size={40}
+                onClick={handleFavorite}
+              >
+                {isFavorite ? (
+                  <IconHeartFilled size={24} style={{ color: "red" }} />
+                ) : (
+                  <IconHeart size={24} color="red" />
+                )}
               </ActionIcon>
             )}
           </Group>
@@ -100,14 +115,27 @@ export const PropertyItem: FC<Props> = (props) => {
 };
 
 function usePropertyItem({
-  item: { name, description, imageSrc, address, categories },
+  item: { id, name, description, imageSrc, address, categories },
 }: Props) {
   const t = useTranslations("home.properties.item");
   const [{ isDarkTheme }] = useColorScheme();
   const { classes } = useStyles(isDarkTheme);
   const { locale } = useIntl();
   const [, { getCountry }] = useCountries();
-  const { isAuthenticated } = useSession();
+  const { onSuccess } = useNotification();
+  const { session, update } = useSession();
+  const user = session?.user;
+
+  const { mutateAsync: toggleFavorite } = useMutation(favoritesMutation.fnc, {
+    onSuccess: async (action: FavoriteAction, propertyId) => {
+      await update({
+        favoriteIds: generateFavorites(user?.favoriteIds!, propertyId!),
+      });
+      onSuccess()(action === FavoriteAction.ADDED ? "favorite" : "unfavorite");
+    },
+  });
+
+  const handleFavorite = () => toggleFavorite(id);
 
   return {
     t,
@@ -118,7 +146,9 @@ function usePropertyItem({
     imageSrc,
     country: getCountry(address.country)?.name,
     categories,
-    isAuthenticated,
+    isAuthenticated: !!user,
+    isFavorite: user?.favoriteIds?.includes(id),
+    handleFavorite,
   };
 }
 
