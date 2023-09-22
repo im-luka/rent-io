@@ -8,6 +8,25 @@ import {
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
+export async function GET(request: NextRequest) {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+  if (!session || !user) {
+    return NextResponse.json("custom.authenticated", { status: 400 });
+  }
+
+  const properties = await prisma.property.findMany({
+    include: { address: true, categories: true },
+    where: {
+      id: {
+        in: user.favoriteIds,
+      },
+    },
+  });
+
+  return NextResponse.json(properties);
+}
+
 export async function PUT(request: NextRequest) {
   const propertyId: string = await request.json();
   if (!propertyId) {

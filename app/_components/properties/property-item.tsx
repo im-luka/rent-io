@@ -22,10 +22,11 @@ import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { OPTIMAL_IMAGE_SIZES } from "@/utils/constants";
 import { useSession } from "@/hooks/use-session";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { favoritesMutation } from "@/domain/mutations/favorites-mutation";
 import { useNotification } from "@/hooks/use-notification";
 import { FavoriteAction, generateFavorites } from "@/utils/user";
+import { FAVORITES_QUERY_KEY } from "@/domain/queries/favorites-query";
 
 type Props = {
   item: Property;
@@ -125,6 +126,7 @@ function usePropertyItem({
   const { onSuccess } = useNotification();
   const { session, update } = useSession();
   const user = session?.user;
+  const qc = useQueryClient();
 
   const { mutateAsync: toggleFavorite } = useMutation(favoritesMutation.fnc, {
     onSuccess: async (action: FavoriteAction, propertyId) => {
@@ -132,6 +134,9 @@ function usePropertyItem({
         favoriteIds: generateFavorites(user?.favoriteIds!, propertyId!),
       });
       onSuccess()(action === FavoriteAction.ADDED ? "favorite" : "unfavorite");
+      qc.setQueryData([FAVORITES_QUERY_KEY], (data: Property[] = []) =>
+        data.filter((el) => el.id !== propertyId)
+      );
     },
   });
 

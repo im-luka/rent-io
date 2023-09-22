@@ -243,5 +243,14 @@
       "title": "Verification complete!",
       "description": "Redirecting to login page in {count}..."
     }
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "description": "Places I would like to visit...",
+    "addMoreAction": "Add More",
+    "empty": {
+      "title": "No favorites found.",
+      "description": "Start adding favorites."
+    }
   }
 }
