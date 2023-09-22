@@ -95,7 +95,7 @@ function useMenu() {
             <IconHeart size={14} color={theme.colors.red[6]} stroke={1.5} />
           ),
           label: t("favorites"),
-          onClick: () => router.push(paths.home()),
+          onClick: () => router.push(paths.favorites()),
         },
         {
           icon: (

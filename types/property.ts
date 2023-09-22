@@ -7,5 +7,5 @@ export type Property = Prisma.PropertyGetPayload<{
 
 export type PropertyWithPagination = {
   properties: Property[];
-  pagination: Pagination;
+  pagination: Pagination | null;
 };

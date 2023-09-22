@@ -27,6 +27,9 @@ import { useQueryPagination } from "@/hooks/use-query-pagination";
 type Props = {
   properties: PropertyWithPagination | undefined;
   isLoading: boolean;
+  disablePagination?: boolean;
+  emptyTitle?: string;
+  emptyDescription?: string;
 };
 
 export const PropertyWrapper: FC<Props> = (props) => {
@@ -38,6 +41,9 @@ export const PropertyWrapper: FC<Props> = (props) => {
     sortValue,
     sortOptions,
     perPageOptions,
+    disablePagination,
+    emptyTitle,
+    emptyDescription,
     addToQuery,
     handleResetFilters,
   } = usePropertyWrapper(props);
@@ -51,17 +57,21 @@ export const PropertyWrapper: FC<Props> = (props) => {
       <Flex w="100%" h="100%" align="center" justify="center">
         <Stack align="center" spacing="xs">
           <Typography component="h3" fw={600}>
-            {t("empty.title")}
+            {emptyTitle ?? t("empty.title")}
           </Typography>
-          <Typography size="sm">{t("empty.description")}</Typography>
-          <Button
-            w="100%"
-            mt="lg"
-            variant="outline"
-            onClick={handleResetFilters}
-          >
-            {t("empty.resetAction")}
-          </Button>
+          <Typography size="sm">
+            {emptyDescription ?? t("empty.description")}
+          </Typography>
+          {!disablePagination && (
+            <Button
+              w="100%"
+              mt="lg"
+              variant="outline"
+              onClick={handleResetFilters}
+            >
+              {t("empty.resetAction")}
+            </Button>
+          )}
         </Stack>
       </Flex>
     );
@@ -69,38 +79,40 @@ export const PropertyWrapper: FC<Props> = (props) => {
 
   return (
     <Stack w="100%" mt="md" spacing={0}>
-      <Group position="apart" px="lg">
-        <Group spacing="sm">
-          <Typography size="sm" fw={600}>
-            {t("pagination.sort.label")}
-          </Typography>
-          <Select
-            value={sortValue ?? null}
-            data={sortOptions}
-            onChange={(val) => addToQuery({ sort: val })}
-            clearable
-          />
+      {!disablePagination && (
+        <Group position="apart" px="lg">
+          <Group spacing="sm">
+            <Typography size="sm" fw={600}>
+              {t("pagination.sort.label")}
+            </Typography>
+            <Select
+              value={sortValue ?? null}
+              data={sortOptions}
+              onChange={(val) => addToQuery({ sort: val })}
+              clearable
+            />
+          </Group>
+          <Group>
+            <Typography>
+              {t.rich("pagination.totalOf", {
+                count: properties.length,
+                total: pagination?.total,
+              })}
+            </Typography>
+            <Pagination
+              value={pagination?.page ?? DEFAULT_PAGE}
+              total={pagination?.totalPages!}
+              onChange={(page) => addToQuery({ page })}
+            />
+            <Select
+              value={pagination?.perPage.toString() ?? perPageOptions[0].value}
+              data={perPageOptions}
+              onChange={(perPage) => addToQuery({ perPage: +perPage! })}
+              w={rem(70)}
+            />
+          </Group>
         </Group>
-        <Group>
-          <Typography>
-            {t.rich("pagination.totalOf", {
-              count: properties.length,
-              total: pagination?.total,
-            })}
-          </Typography>
-          <Pagination
-            value={pagination?.page ?? DEFAULT_PAGE}
-            total={pagination?.totalPages!}
-            onChange={(page) => addToQuery({ page })}
-          />
-          <Select
-            value={pagination?.perPage.toString() ?? perPageOptions[0].value}
-            data={perPageOptions}
-            onChange={(perPage) => addToQuery({ perPage: +perPage! })}
-            w={rem(70)}
-          />
-        </Group>
-      </Group>
+      )}
       <Grid m="xs" gutter="lg">
         {properties?.map((property) => (
           <PropertyItem key={property.id} item={property} />
@@ -110,7 +122,13 @@ export const PropertyWrapper: FC<Props> = (props) => {
   );
 };
 
-function usePropertyWrapper({ properties: propertiesProp, isLoading }: Props) {
+function usePropertyWrapper({
+  properties: propertiesProp,
+  isLoading,
+  disablePagination,
+  emptyTitle,
+  emptyDescription,
+}: Props) {
   const t = useTranslations("home.properties");
   const { properties, pagination } = propertiesProp ?? {};
   const { router } = useIntl();
@@ -153,6 +171,9 @@ function usePropertyWrapper({ properties: propertiesProp, isLoading }: Props) {
     sortValue,
     sortOptions,
     perPageOptions,
+    disablePagination,
+    emptyTitle,
+    emptyDescription,
     addToQuery,
     handleResetFilters,
   };
