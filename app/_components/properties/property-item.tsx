@@ -22,11 +22,7 @@ import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { OPTIMAL_IMAGE_SIZES } from "@/utils/constants";
 import { useSession } from "@/hooks/use-session";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { favoritesMutation } from "@/domain/mutations/favorites-mutation";
-import { useNotification } from "@/hooks/use-notification";
-import { FavoriteAction, generateFavorites } from "@/utils/user";
-import { FAVORITES_QUERY_KEY } from "@/domain/queries/favorites-query";
+import { useFavorites } from "@/hooks/use-favorites";
 
 type Props = {
   item: Property;
@@ -122,23 +118,9 @@ function usePropertyItem({
   const [{ isDarkTheme }] = useColorScheme();
   const { classes } = useStyles(isDarkTheme);
   const { locale } = useIntl();
+  const { isAuthenticated } = useSession();
+  const [{ isFavorite, toggleFavorite }] = useFavorites();
   const [, { getCountry }] = useCountries();
-  const { onSuccess } = useNotification();
-  const { session, update } = useSession();
-  const user = session?.user;
-  const qc = useQueryClient();
-
-  const { mutateAsync: toggleFavorite } = useMutation(favoritesMutation.fnc, {
-    onSuccess: async (action: FavoriteAction, propertyId) => {
-      await update({
-        favoriteIds: generateFavorites(user?.favoriteIds!, propertyId!),
-      });
-      onSuccess()(action === FavoriteAction.ADDED ? "favorite" : "unfavorite");
-      qc.setQueryData([FAVORITES_QUERY_KEY], (data: Property[] = []) =>
-        data.filter((el) => el.id !== propertyId)
-      );
-    },
-  });
 
   const handleFavorite = () => toggleFavorite(id);
 
@@ -151,8 +133,8 @@ function usePropertyItem({
     imageSrc,
     country: getCountry(address.country)?.name,
     categories,
-    isAuthenticated: !!user,
-    isFavorite: user?.favoriteIds?.includes(id),
+    isAuthenticated,
+    isFavorite: isFavorite(id),
     handleFavorite,
   };
 }
