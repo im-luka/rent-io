@@ -8,9 +8,11 @@ import { Actions } from "./actions";
 import { ColorSchemeIcon } from "./color-scheme-icon";
 import { InternationalizationSwitch } from "./internationalization-switch";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useIntl } from "@/hooks/use-intl";
+import { paths } from "@/navigation/paths";
 
 export const Navbar: FC = () => {
-  const { classes, smallScreen } = useNavbar();
+  const { classes, smallScreen, showActions } = useNavbar();
 
   return (
     <Header
@@ -19,9 +21,7 @@ export const Navbar: FC = () => {
       pb={smallScreen ? "md" : "0"}
     >
       <Group className={classes.containerBlock}>
-        <Box className={classes.actionsBlock}>
-          <Actions />
-        </Box>
+        <Box className={classes.actionsBlock}>{showActions && <Actions />}</Box>
         <Box className={classes.logoBlock}>
           <Logo />
         </Box>
@@ -40,8 +40,11 @@ export const Navbar: FC = () => {
 function useNavbar() {
   const { classes } = useStyles();
   const smallScreen = useMediaQuery("xs", "smallerThan");
+  const { pathname } = useIntl();
 
-  return { classes, smallScreen };
+  const showActions = pathname === paths.home();
+
+  return { classes, smallScreen, showActions };
 }
 
 const useStyles = createStyles((theme) => ({
