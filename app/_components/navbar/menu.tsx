@@ -135,7 +135,7 @@ function useMenu() {
             />
           ),
           label: t("profile"),
-          onClick: () => router.push(paths.home()),
+          onClick: () => router.push(paths.user(user.id)),
           header: (
             <>
               <MantineMenu.Divider />
