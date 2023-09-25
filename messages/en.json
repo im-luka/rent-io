@@ -54,6 +54,7 @@
     "noEmail": "Email doesn't exist",
     "wrongPassword": "Wrong password",
     "notVerified": "Email not verified",
+    "noUser": "User doesn't exist",
     "verificationEmail": "Problem with sending verification email",
     "noToken": "Token not provided",
     "invalidToken": "Invalid token provided",
@@ -61,6 +62,7 @@
     "translate": "Problem with translating entities",
     "addProperty": "Problem with adding new property",
     "authenticated": "Not authenticated",
+    "providedId": "ID not provided",
     "propertyId": "Property ID not provided"
   },
   "symbol": {
@@ -252,5 +254,15 @@
       "title": "No favorites found.",
       "description": "Start adding favorites."
     }
+  },
+  "userProperties": {
+    "title": "{name}'s Properties",
+    "titleMe": "My Properties",
+    "profileAction": "Go to Profile",
+    "empty": {
+      "title": "No properties added.",
+      "description": "Try adding some now."
+    },
+    "error": "User doesn't exist."
   }
 }
