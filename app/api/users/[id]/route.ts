@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const { id } = params;
   if (!id) {
-    return NextResponse.json("custom.providedId");
+    return NextResponse.json("custom.providedId", { status: 400 });
   }
 
   const user = await prisma.user.findUnique({
@@ -15,7 +15,7 @@ export async function GET(
     include: { properties: { include: { address: true, categories: true } } },
   });
   if (!user) {
-    return NextResponse.json("custom.noUser");
+    return NextResponse.json("custom.noUser", { status: 400 });
   }
 
   return NextResponse.json(user);
