@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@/app/_components/base/link";
-import { NoUserError } from "@/app/_components/users/no-user-error";
+import { PageError } from "@/app/_components/page-error";
 import { UserPropertiesWrapper } from "@/app/_components/users/user-properties-wrapper";
 import { userQuery } from "@/domain/queries/user-query";
 import { paths } from "@/navigation/paths";
@@ -23,7 +23,7 @@ export default function UserDetailsPropertiesPage(props: Props) {
   const { t, user, isLoading, isError } = useUserDetailsPropertiesPage(props);
 
   if (isError) {
-    return <NoUserError />;
+    return <PageError message={t("error")} />;
   }
 
   return (
@@ -37,7 +37,7 @@ export default function UserDetailsPropertiesPage(props: Props) {
           href={paths.user(user?.id!)}
           leftIcon={<IconLego size={20} />}
         >
-          {t("profileAction")}
+          {t("properties.profileAction")}
         </Button>
       }
     />
@@ -45,7 +45,7 @@ export default function UserDetailsPropertiesPage(props: Props) {
 }
 
 function useUserDetailsPropertiesPage({ params: { id } }: Props) {
-  const t = useTranslations("user.properties");
+  const t = useTranslations("user");
 
   const {
     data: user,

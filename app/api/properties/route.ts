@@ -7,7 +7,6 @@ import { api } from "@/domain/remote";
 import { getData } from "@/domain/remote/response/data";
 import { TranslatorData } from "@/domain/types/translator-data";
 import { Pagination } from "@/types/pagination";
-import { PropertyWithPagination } from "@/types/property";
 import {
   parseSearchParamsToObject,
   parseSortParamToObject,
@@ -46,7 +45,7 @@ export async function GET(request: NextRequest) {
     totalPages: Math.ceil(propertiesCount / perPage),
   };
 
-  return NextResponse.json<PropertyWithPagination>({ properties, pagination });
+  return NextResponse.json({ properties, pagination });
 }
 
 export async function POST(request: NextRequest) {
