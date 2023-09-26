@@ -2,19 +2,19 @@
   "appName": "Rent.io",
   "metadata": {
     "home": {
-      "title": "Rent.io - Putovanje i istraživanje s udobnošću",
-      "description": "Otkrijte izvanredne boravke: Vaša krajnja aplikacija za iznajmljivanje nezaboravnih odmora. Rezervirajte odmah i stvorite uspomene!"
+      "title": "Rent.io - Putujte i istražujte s udobnošću",
+      "description": "Otključajte nevjerojatne boravke: Vaša krajnja aplikacija za najnevjerojatnije izlete. Rezervirajte sada i stvarajte uspomene!"
     }
   },
   "validation": {
     "required": "Obavezno polje",
     "requiredImage": "Slika je obavezna",
     "invalidEmail": "Neispravan format e-pošte",
-    "minChars": "Mora sadržavati najmanje {count}",
+    "minChars": "Mora imati najmanje {count}",
     "includesNumber": "Sadrži broj",
     "includesLowercase": "Sadrži malo slovo",
     "includesUppercase": "Sadrži veliko slovo",
-    "includesSymbol": "Sadrži poseban simbol",
+    "includesSymbol": "Sadrži poseban znak",
     "passwordMatch": "Lozinke se ne podudaraju",
     "categorySelected": "Potrebna je barem jedna kategorija",
     "greaterThanZero": "Mora biti veće od 0"
@@ -22,44 +22,61 @@
   "notifications": {
     "error": {
       "title": "Nešto je pošlo po zlu...",
-      "message": "Molimo vas da prijavite, a naš tim će se brinuti o tome što prije."
+      "message": "Molimo prijavite, a naš tim će se brinuti o tome što prije."
     },
     "register": {
-      "title": "Registracija uspješna!",
-      "message": "Molimo provjerite svoj e-mail i prijavite se."
+      "title": "Uspješna registracija!",
+      "message": "Molimo provjerite svoju e-poštu i prijavite se."
     },
     "login": {
       "title": "Uspješna prijava!",
-      "message": "Drago nam je što vas ponovno vidimo."
+      "message": "Drago nam je što ste se vratili"
     },
     "category": {
       "title": "Kategorija dodana!",
       "message": "Više putovanja, više zabave!"
     },
     "property": {
-      "title": "Nekretnina dodana!",
-      "message": "Očekujte promet uskoro!"
+      "title": "Objekt dodan!",
+      "message": "Očekujte stvarno brzo!"
+    },
+    "favorite": {
+      "title": "❤️",
+      "message": "Dodano u favorite!"
+    },
+    "unfavorite": {
+      "title": "💔",
+      "message": "Uklonjeno iz favorita!"
     }
   },
   "error": {
-    "invalidCredentials": "Neispravni pristupni podaci",
-    "noEmail": "E-mail adresa ne postoji",
+    "invalidCredentials": "Neispravne prijavnice",
+    "noEmail": "E-pošta ne postoji",
     "wrongPassword": "Pogrešna lozinka",
-    "notVerified": "E-mail nije potvrđen",
-    "verificationEmail": "Problem s slanjem e-maila za potvrdu",
+    "notVerified": "E-pošta nije verificirana",
+    "noUser": "Korisnik ne postoji",
+    "verificationEmail": "Problem s slanjem e-pošte za verifikaciju",
     "noToken": "Token nije pružen",
-    "invalidToken": "Neispravan pruženi token",
+    "invalidToken": "Neispravan token",
     "addCategory": "Problem s dodavanjem nove kategorije",
     "translate": "Problem s prevođenjem entiteta",
     "addProperty": "Problem s dodavanjem nove nekretnine",
-    "authenticated": "Niste autentificirani"
+    "authenticated": "Nije autenticiran",
+    "providedId": "ID nije pružen",
+    "propertyId": "ID nekretnine nije pružen",
+    "noProperty": "Nekretnina s navedenim ID-om ne postoji"
   },
   "symbol": {
     "dot": ".",
     "comma": ",",
     "minus": "-",
     "plus": "+",
-    "dollar": "$"
+    "dollar": "$",
+    "round": "•"
+  },
+  "global": {
+    "loading": "Učitavanje...",
+    "error": "Entitet ne postoji."
   },
   "navbar": {
     "logoAlt": "Logotip",
@@ -67,7 +84,7 @@
       "startExploring": "Započnite istraživanje",
       "explore": "Istražujte",
       "addYours": "Dodajte svoje",
-      "add": "Dodajte"
+      "add": "Dodaj"
     },
     "intl": {
       "en": {
@@ -80,12 +97,17 @@
       }
     },
     "menu": {
+      "auth": "Autentikacija",
       "login": "Prijava",
       "register": "Registracija",
-      "signOut": "Odjava",
       "userData": "{firstName} {lastName}",
+      "favorites": "Favoriti",
+      "myProperties": "Moje nekretnine",
+      "myReservations": "Moje rezervacije",
+      "myReviews": "Moje recenzije",
       "accountSettings": "Postavke računa",
-      "profile": "Profil"
+      "profile": "Profil",
+      "signOut": "Odjava"
     }
   },
   "home": {
@@ -94,11 +116,11 @@
       "create": {
         "title": "Nova kategorija",
         "tooltip": "Nova kategorija",
-        "name": "Ime",
+        "name": "Naziv",
         "namePlaceholder": "npr. Apartmani",
         "emoji": "Emoji",
         "emojiPlaceholder": "🏡",
-        "createAction": "Kreiraj"
+        "createAction": "Stvori"
       },
       "spotlight": {
         "searchPlaceholder": "Pretraži kategoriju...",
@@ -107,18 +129,18 @@
     },
     "properties": {
       "item": {
-        "categoriesLabel": "Idealno za vas, ako uživate u",
+        "categoriesLabel": "Savršeno za vas, ako uživate u",
         "showDetailsAction": "Prikaži detalje"
       },
       "empty": {
         "title": "Nema pronađenih nekretnina.",
         "description": "Dodajte novu nekretninu sada ili pokušajte resetirati filtre.",
-        "resetAction": "Resetirajte filtre"
+        "resetAction": "Resetiraj filtre"
       },
       "pagination": {
         "totalOf": "{count} od {total}",
         "sort": {
-          "label": "Sortiraj po:",
+          "label": "Sortiraj prema:",
           "newest": "Najnovije",
           "oldest": "Najstarije",
           "priceLowHigh": "Cijena - Niska do Visoka",
@@ -138,7 +160,7 @@
       },
       "location": {
         "label": "Korak 2",
-        "description": "Unesite lokaciju",
+        "description": "Unesi lokaciju",
         "country": "Država",
         "city": "Grad",
         "street": "Ulica",
@@ -158,10 +180,10 @@
       "baseInfo": {
         "label": "Korak 4",
         "description": "Osnovne informacije",
-        "name": "Ime",
+        "name": "Naziv",
         "namePlaceholder": "Luksuzni apartman u Beverly Hillsu",
         "descriptionLabel": "Opis",
-        "descriptionLabelPlaceholder": "Apartman s luksuznim interijerom i prekrasnim pogledom smješten u najživljem dijelu grada",
+        "descriptionLabelPlaceholder": "Apartman s luksuznim interijerom i nevjerojatnim pogledom smješten u najživljem dijelu grada",
         "price": "Cijena"
       },
       "image": {
@@ -169,58 +191,58 @@
         "description": "Odaberi sliku",
         "tooltip": "Ukloni",
         "dropzoneTitle": "Povuci ovdje ili klikni za odabir slike",
-        "dropzoneDescription": "Molimo odaberite samo jednu sliku"
+        "dropzoneDescription": "Odaberite samo jednu sliku"
       },
       "completed": {
-        "title": "Nekretnina je spremna za kreaciju!",
+        "title": "Nekretnina je spremna za stvaranje!",
         "submit": "Pošalji",
-        "back": "Povratak",
+        "back": "Natrag",
         "reset": "Resetiraj"
       }
     }
   },
   "auth": {
-    "coverImgAlt": "Putujući kamp prikolica u ilustraciji noći",
+    "coverImgAlt": "Putujući kamp prikolica u ilustraciji noću",
     "register": {
       "title": "Započnite s <s>Rent.io</s>",
       "form": {
-        "email": "E-mail",
+        "email": "E-pošta",
         "emailPlaceholder": "primjer@gmail.com",
         "firstName": "Ime",
-        "firstNamePlaceholder": "Ivan",
+        "firstNamePlaceholder": "John",
         "lastName": "Prezime",
-        "lastNamePlaceholder": "Horvat",
+        "lastNamePlaceholder": "Doe",
         "password": "Lozinka",
         "confirmPassword": "Potvrdi lozinku",
-        "agreeTerms": "Registracijom se slažete s našim <s>Uvjetima korištenja</s> i <s>Politikom privatnosti</s>",
-        "registerAction": "Registriraj se sada",
+        "agreeTerms": "Registracijom se slažete s našim <s>Uvjetima korištenja</s> i <s>Početkom privatnosti</s>",
+        "registerAction": "Registrirajte se sada",
         "goLoginAction": "Već imate račun? <s>Prijavite se sada.</s>"
       },
       "success": {
         "title": "Registracija je uspješna!",
-        "description": "Molimo provjerite svoj e-mail i vratite se. <b></b>(obavezno provjerite mapu za neželjenu poštu)",
-        "loginLink": "Želim se <l>prijaviti</l>"
+        "description": "Molimo verificirajte svoju e-poštu i vratite se. <b></b>(obavezno provjerite mapu za neželjenu poštu)",
+        "loginLink": "Želim <l>Prijaviti se</l>"
       }
     },
     "login": {
-      "title": "Dobrodošli natrag na <s>Rent.io</s>",
+      "title": "Dobrodošli natrag u <s>Rent.io</s>",
       "form": {
-        "email": "E-mail",
+        "email": "E-pošta",
         "emailPlaceholder": "primjer@gmail.com",
         "password": "Lozinka",
-        "loginAction": "Prijavi se",
+        "loginAction": "Prijava",
         "goRegisterAction": "Nemate račun? <s>Kreirajte ga sada.</s>"
       }
     },
     "socials": {
-      "googleAction": "Nastavite s Googleom",
-      "githubAction": "Nastavite s GitHubom",
-      "redditAction": "Nastavite s Redditom"
+      "googleAction": "Nastavi s Googleom",
+      "githubAction": "Nastavi s GitHubom",
+      "redditAction": "Nastavi s Redditom"
     }
   },
   "verify": {
     "loading": {
-      "title": "Provjera vašeg e-maila..."
+      "title": "Provjeravam vašu e-poštu..."
     },
     "error": {
       "title": "Nešto je pošlo po zlu..."
@@ -228,6 +250,48 @@
     "success": {
       "title": "Verifikacija je završena!",
       "description": "Preusmjeravanje na stranicu za prijavu za {count}..."
+    }
+  },
+  "property": {
+    "header": {
+      "rating": "⭐️ {value}",
+      "reviewsCount": "{count, plural, =0 {Nema recenzija} =1 {# recenzija} other {# recenzija}}"
+    }
+  },
+  "favorites": {
+    "title": "Moji Favoriti",
+    "description": "Mjesta koja želim posjetiti...",
+    "addMoreAction": "Dodaj više",
+    "empty": {
+      "title": "Nema pronađenih favorita.",
+      "description": "Započnite dodavati favorite."
+    }
+  },
+  "user": {
+    "error": "Korisnik ne postoji.",
+    "profileCard": {
+      "title": "O <s>{name}</s>",
+      "photoPlaceholder": "Mjesto za avatar",
+      "baseInfo": "Osnovne informacije",
+      "stats": "Statistike",
+      "userConfirmedInfo": "Potvrđene informacije o {name}",
+      "name": "😎 Puno ime:",
+      "email": "✉️ E-pošta:",
+      "reviewsGiven": "⭐️ Dano recenzija:",
+      "reviewsReceived": "🌟 Primljeno recenzija:",
+      "confirmed": "✅",
+      "identity": "Identitet",
+      "emailAddress": "Adresa e-pošte"
+    },
+    "properties": {
+      "title": "Nekretnine korisnika {name}",
+      "titleMe": "Moje nekretnine",
+      "empty": {
+        "title": "Nema dodanih nekretnina.",
+        "description": "Pokušajte dodati neke sada."
+      },
+      "propertiesAction": "Prikaži sve nekretnine",
+      "profileAction": "Idi na profil"
     }
   }
 }
