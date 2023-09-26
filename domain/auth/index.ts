@@ -47,7 +47,6 @@ export const authOptions: AuthOptions = {
         return user;
       },
     }),
-    // TODO: 🔨 add Google auth once request is resolved in the Google Console
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,

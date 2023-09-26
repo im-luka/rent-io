@@ -6,6 +6,7 @@ import { Property } from "@/types/property";
 import { User } from "@/types/user";
 import { Typography } from "../base/typography";
 import { PropertyWrapper } from "../properties/property-wrapper";
+import { getFirstName } from "@/utils/user";
 
 type Props = {
   properties: Property[];
@@ -50,7 +51,7 @@ function useUserPropertiesWrapper({
   const title = user
     ? session?.user?.id === user?.id
       ? t("titleMe")
-      : t.rich("title", { name: user?.firstName })
+      : t.rich("title", { name: user.firstName ?? getFirstName(user.name) })
     : "";
 
   return { t, properties, user, isLoading, actionButton, title };

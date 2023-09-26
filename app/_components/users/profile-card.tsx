@@ -11,6 +11,7 @@ import {
   ProfileCardSection,
   ProfileCardSectionOption,
 } from "./profile-card-section";
+import { getFirstName } from "@/utils/user";
 
 type Props = {
   user: User | undefined;
@@ -41,7 +42,7 @@ export const ProfileCard: FC<Props> = (props) => {
         <Stack h="100%" p="md" spacing="lg" sx={{ flexGrow: 1 }}>
           <Typography component="h1">
             {t.rich("title", {
-              name: user?.firstName,
+              name: user?.firstName ?? getFirstName(user?.name),
               s: (chunk) => (
                 <Typography component="span" color="indigo.5">
                   {chunk}
@@ -57,7 +58,9 @@ export const ProfileCard: FC<Props> = (props) => {
             <ProfileCardSection title={t("stats")} options={statsOptions} />
             <ProfileCardSection
               title={
-                t.rich("userConfirmedInfo", { name: user?.firstName }) as string
+                t.rich("userConfirmedInfo", {
+                  name: user?.firstName ?? getFirstName(user?.name),
+                }) as string
               }
               options={confirmedInfoOptions}
             />
