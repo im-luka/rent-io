@@ -29,5 +29,6 @@ export const MODAL_OVERLAY_Z_INDEX = 1001;
 export const NOTIFICATION_Z_INDEX = 9999;
 export const COUNTRY_SELECT_Z_INDEX = 1000;
 
+export const PROFILE_PHOTO_PLACEHOLDER = "/images/profile-placeholder.jpeg";
 export const OPTIMAL_IMAGE_SIZES =
   "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw";

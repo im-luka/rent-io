@@ -255,6 +255,24 @@
       "description": "Start adding favorites."
     }
   },
+  "user": {
+    "loading": "Loading...",
+    "error": "User doesn't exist.",
+    "profileCard": {
+      "title": "About <s>{name}</s>",
+      "photoPlaceholder": "Avatar placeholder",
+      "baseInfo": "Base Info",
+      "stats": "Stats",
+      "userConfirmedInfo": "{name}'s Confirmed Info",
+      "name": "😎 Full Name:",
+      "email": "✉️ Email:",
+      "reviewsGiven": "⭐️ Reviews Given:",
+      "reviewsReceived": "🌟 Reviews Received:",
+      "confirmed": "✅",
+      "identity": "Identity",
+      "emailAddress": "Email Address"
+    }
+  },
   "userProperties": {
     "title": "{name}'s Properties",
     "titleMe": "My Properties",
@@ -262,7 +280,6 @@
     "empty": {
       "title": "No properties added.",
       "description": "Try adding some now."
-    },
-    "error": "User doesn't exist."
+    }
   }
 }

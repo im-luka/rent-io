@@ -10,13 +10,13 @@ export async function GET(
     return NextResponse.json("custom.providedId", { status: 400 });
   }
 
-  const user = await prisma.user.findUnique({
-    where: { id },
-    include: { properties: { include: { address: true, categories: true } } },
-  });
-  if (!user) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id },
+      include: { properties: { include: { address: true, categories: true } } },
+    });
+    return NextResponse.json(user);
+  } catch (err) {
     return NextResponse.json("custom.noUser", { status: 400 });
   }
-
-  return NextResponse.json(user);
 }

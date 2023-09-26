@@ -3,13 +3,14 @@
 import { Link } from "@/app/_components/base/link";
 import { Typography } from "@/app/_components/base/typography";
 import { PropertyWrapper } from "@/app/_components/properties/property-wrapper";
+import { NoUserError } from "@/app/_components/users/no-user-error";
 import { userQuery } from "@/domain/queries/user-query";
 import { useSession } from "@/hooks/use-session";
 import { paths } from "@/navigation/paths";
 import { Property } from "@/types/property";
 import { User } from "@/types/user";
-import { Button, Group, Stack, useMantineTheme } from "@mantine/core";
-import { IconLego, IconX } from "@tabler/icons-react";
+import { Button, Group, Stack } from "@mantine/core";
+import { IconLego } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 
@@ -21,16 +22,11 @@ type Props = {
 };
 
 export default function UserDetailsPropertiesPage(props: Props) {
-  const { t, theme, user, isLoading, isError, title } =
+  const { t, user, isLoading, isError, title } =
     useUserDetailsPropertiesPage(props);
 
   if (isError) {
-    return (
-      <Stack h="100%" align="center" justify="center">
-        <IconX size={72} color={theme.colors.red[8]} />
-        <Typography component="h2">{t("error")}</Typography>
-      </Stack>
-    );
+    return <NoUserError />;
   }
 
   return (
@@ -63,7 +59,6 @@ export default function UserDetailsPropertiesPage(props: Props) {
 
 function useUserDetailsPropertiesPage({ params: { id } }: Props) {
   const t = useTranslations("userProperties");
-  const theme = useMantineTheme();
   const { session } = useSession();
 
   const {
@@ -81,5 +76,5 @@ function useUserDetailsPropertiesPage({ params: { id } }: Props) {
       : t.rich("title", { name: user?.firstName })
     : "";
 
-  return { t, theme, user, isLoading, isError, title };
+  return { t, user, isLoading, isError, title };
 }
