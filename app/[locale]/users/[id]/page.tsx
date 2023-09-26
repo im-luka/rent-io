@@ -41,7 +41,7 @@ export default function UserDetailsPage(props: Props) {
   }
 
   return (
-    <Stack mt="md" spacing="xl">
+    <Stack mt="lg" spacing="xl">
       <ProfileCard user={user} />
       <Stack m="md">
         <Group mt="sm" position="apart">
