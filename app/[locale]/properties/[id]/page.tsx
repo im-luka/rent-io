@@ -7,6 +7,7 @@ import { Property } from "@/types/property";
 import { propertyQuery } from "@/domain/queries/property-query";
 import { PageLoading } from "@/app/_components/page-loading";
 import { PageError } from "@/app/_components/page-error";
+import { PropertyHeader } from "@/app/_components/properties/property-header";
 
 type Props = {
   params: {
@@ -26,7 +27,16 @@ export default function PropertyDetailsPage(props: Props) {
     return <PageLoading />;
   }
 
-  return <Stack>tu sam</Stack>;
+  return (
+    <Stack m="md">
+      <PropertyHeader
+        name={property?.name!}
+        imageSrc={property?.imageSrc!}
+        address={property?.address!}
+        reviews={property?.reviews!}
+      />
+    </Stack>
+  );
 }
 
 function usePropertyDetailsPage({ params: { id } }: Props) {
@@ -40,8 +50,6 @@ function usePropertyDetailsPage({ params: { id } }: Props) {
     queryKey: propertyQuery.key(id),
     queryFn: () => propertyQuery.fnc(id),
   });
-
-  console.log(property);
 
   return { t, property, isLoading, isError };
 }

@@ -71,7 +71,8 @@
     "comma": ",",
     "minus": "-",
     "plus": "+",
-    "dollar": "$"
+    "dollar": "$",
+    "round": "•"
   },
   "global": {
     "loading": "Loading...",
@@ -251,7 +252,12 @@
       "description": "Redirecting to login page in {count}..."
     }
   },
-  "property": {},
+  "property": {
+    "header": {
+      "rating": "⭐️ {value}",
+      "reviewsCount": "{count, plural, =0 {No reviews} =1 {# review} other {# reviews}}"
+    }
+  },
   "favorites": {
     "title": "My Favorites",
     "description": "Places I would like to visit...",

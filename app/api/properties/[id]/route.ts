@@ -13,7 +13,7 @@ export async function GET(
   try {
     const property = await prisma.property.findUnique({
       where: { id },
-      include: { address: true, categories: true, user: true },
+      include: { address: true, categories: true, user: true, reviews: true },
     });
     return NextResponse.json(property);
   } catch (err) {
