@@ -106,7 +106,7 @@ function useMenu() {
             />
           ),
           label: t("myProperties"),
-          onClick: () => router.push(paths.home()),
+          onClick: () => router.push(paths.userProperties(user.id)),
         },
         {
           icon: (
@@ -135,7 +135,7 @@ function useMenu() {
             />
           ),
           label: t("profile"),
-          onClick: () => router.push(paths.home()),
+          onClick: () => router.push(paths.user(user.id)),
           header: (
             <>
               <MantineMenu.Divider />
