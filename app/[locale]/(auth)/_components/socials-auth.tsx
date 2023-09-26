@@ -19,6 +19,7 @@ export const SocialsAuth: FC = () => {
         variant="default"
         color="gray.2"
         leftIcon={<GoogleIcon />}
+        onClick={() => signIn("google")}
       >
         {t("googleAction")}
       </Button>

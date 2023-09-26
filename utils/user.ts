@@ -16,3 +16,5 @@ export const generateFavorites = (
     ? currFavorites.filter((id) => id !== propertyId)
     : [...(currFavorites ?? []), propertyId];
 };
+
+export const getFirstName = (name?: string | null) => name?.split(" ")[0] ?? "";

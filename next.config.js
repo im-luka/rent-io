@@ -11,6 +11,14 @@ module.exports = withNextIntl({
         protocol: "https",
         hostname: "ucarecdn.com",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
     ],
   },
 });
