@@ -19,7 +19,9 @@ export const WIPBanner: FC = () => {
         alignItems: "center",
       }}
     >
-      <Typography component="h3">⚠️ WIP - Work in Progress ⚠️</Typography>
+      <Typography component="h3" color="orange.5">
+        ⚠️ WIP - Work in Progress ⚠️
+      </Typography>
     </div>
   );
 };
