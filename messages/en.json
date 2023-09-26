@@ -282,14 +282,5 @@
       "propertiesAction": "See All Properties",
       "profileAction": "Go to Profile"
     }
-  },
-  "userProperties": {
-    "title": "{name}'s Properties",
-    "titleMe": "My Properties",
-    "profileAction": "Go to Profile",
-    "empty": {
-      "title": "No properties added.",
-      "description": "Try adding some now."
-    }
   }
 }
