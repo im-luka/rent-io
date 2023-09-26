@@ -15,7 +15,7 @@ import { categoryMutation } from "@/domain/mutations/category-mutation";
 import { categoryQuery } from "@/domain/queries/categories-query";
 import { useModal } from "@/hooks/use-modal";
 import { useNotification } from "@/hooks/use-notification";
-import { Group } from "@mantine/core";
+import { Box, Drawer, Group } from "@mantine/core";
 import { Category } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { propertyMutation } from "@/domain/mutations/property-mutation";
@@ -26,6 +26,8 @@ import { CategoriesSpotlight } from "@/app/_components/categories/categories-spo
 import { DEFAULT_PAGE, HOME_PROPERTIES_PER_PAGE } from "@/utils/constants";
 import { PropertyWithPagination } from "@/types/property";
 import { useQueryPagination } from "@/hooks/use-query-pagination";
+import { Typography } from "@/app/_components/base/typography";
+import { WIPBanner } from "@/app/_components/wip-banner";
 
 export default function HomePage() {
   const {
@@ -68,6 +70,8 @@ export default function HomePage() {
           />
         </Group>
       </Group>
+      {/* TODO: 👷🏼‍♂️ WIP banner - remove later */}
+      <WIPBanner />
     </CategoriesSpotlight>
   );
 }
