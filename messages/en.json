@@ -271,6 +271,16 @@
       "confirmed": "✅",
       "identity": "Identity",
       "emailAddress": "Email Address"
+    },
+    "properties": {
+      "title": "{name}'s Properties",
+      "titleMe": "My Properties",
+      "empty": {
+        "title": "No properties added.",
+        "description": "Try adding some now."
+      },
+      "propertiesAction": "See All Properties",
+      "profileAction": "Go to Profile"
     }
   },
   "userProperties": {
