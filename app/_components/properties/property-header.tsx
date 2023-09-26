@@ -9,6 +9,7 @@ import { useIntl } from "@/hooks/use-intl";
 import { formatAddress } from "@/utils/address";
 import Image from "next/image";
 import { FavoriteButton } from "../favorite-button";
+import { useSession } from "@/hooks/use-session";
 
 type Props = {
   id: string;
@@ -23,6 +24,7 @@ export const PropertyHeader: FC<Props> = (props) => {
     t,
     id,
     classes,
+    isAuthenticated,
     name,
     imageSrc,
     address,
@@ -47,7 +49,7 @@ export const PropertyHeader: FC<Props> = (props) => {
             <Typography size="sm">{address}</Typography>
           </Breadcrumbs>
         </Stack>
-        <FavoriteButton propertyId={id} />
+        {isAuthenticated && <FavoriteButton propertyId={id} />}
       </Group>
       <Box h={375} pos="relative">
         <Image src={imageSrc} alt={name} fill className={classes.image} />
@@ -60,6 +62,7 @@ function usePropertyHeader({ id, name, imageSrc, address, reviews }: Props) {
   const t = useTranslations();
   const { classes } = useStyles();
   const { locale } = useIntl();
+  const { isAuthenticated } = useSession();
 
   const averageRating = (meanBy(reviews, "rating") || 0).toFixed(2);
 
@@ -67,6 +70,7 @@ function usePropertyHeader({ id, name, imageSrc, address, reviews }: Props) {
     t,
     id,
     classes,
+    isAuthenticated,
     name: generateLocaleTranslation(name, locale),
     imageSrc,
     address: formatAddress(address),
