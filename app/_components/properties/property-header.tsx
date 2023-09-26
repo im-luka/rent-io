@@ -1,13 +1,5 @@
 import { FC } from "react";
-import {
-  ActionIcon,
-  Box,
-  Breadcrumbs,
-  Group,
-  Stack,
-  createStyles,
-  rem,
-} from "@mantine/core";
+import { Box, Breadcrumbs, Group, Stack, createStyles } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { Typography } from "../base/typography";
 import { generateLocaleTranslation } from "@/utils/objects";
@@ -15,10 +7,11 @@ import { Address, Prisma, Review } from "@prisma/client";
 import { meanBy } from "lodash";
 import { useIntl } from "@/hooks/use-intl";
 import { formatAddress } from "@/utils/address";
-import { IconHeart } from "@tabler/icons-react";
 import Image from "next/image";
+import { FavoriteButton } from "../favorite-button";
 
 type Props = {
+  id: string;
   name: Prisma.JsonValue;
   imageSrc: string;
   address: Address;
@@ -26,8 +19,16 @@ type Props = {
 };
 
 export const PropertyHeader: FC<Props> = (props) => {
-  const { t, classes, name, imageSrc, address, averageRating, reviewsCount } =
-    usePropertyHeader(props);
+  const {
+    t,
+    id,
+    classes,
+    name,
+    imageSrc,
+    address,
+    averageRating,
+    reviewsCount,
+  } = usePropertyHeader(props);
 
   return (
     <Stack spacing="xl">
@@ -46,9 +47,7 @@ export const PropertyHeader: FC<Props> = (props) => {
             <Typography size="sm">{address}</Typography>
           </Breadcrumbs>
         </Stack>
-        <ActionIcon variant="default" size="xl">
-          <IconHeart size={28} color="red" />
-        </ActionIcon>
+        <FavoriteButton propertyId={id} />
       </Group>
       <Box h={375} pos="relative">
         <Image src={imageSrc} alt={name} fill className={classes.image} />
@@ -57,7 +56,7 @@ export const PropertyHeader: FC<Props> = (props) => {
   );
 };
 
-function usePropertyHeader({ name, imageSrc, address, reviews }: Props) {
+function usePropertyHeader({ id, name, imageSrc, address, reviews }: Props) {
   const t = useTranslations();
   const { classes } = useStyles();
   const { locale } = useIntl();
@@ -66,6 +65,7 @@ function usePropertyHeader({ name, imageSrc, address, reviews }: Props) {
 
   return {
     t,
+    id,
     classes,
     name: generateLocaleTranslation(name, locale),
     imageSrc,

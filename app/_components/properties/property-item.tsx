@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Property } from "@/types/property";
 import {
-  ActionIcon,
   Badge,
   Box,
   Button,
@@ -18,13 +17,12 @@ import { generateLocaleTranslation } from "@/utils/objects";
 import { useCountries } from "@/hooks/use-countries";
 import { Typography } from "../base/typography";
 import { Category } from "@prisma/client";
-import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { OPTIMAL_IMAGE_SIZES } from "@/utils/constants";
 import { useSession } from "@/hooks/use-session";
-import { useFavorites } from "@/hooks/use-favorites";
 import { Link } from "../base/link";
 import { paths } from "@/navigation/paths";
+import { FavoriteButton } from "../favorite-button";
 
 type Props = {
   item: Property;
@@ -42,8 +40,6 @@ export const PropertyItem: FC<Props> = (props) => {
     country,
     categories,
     isAuthenticated,
-    isFavorite,
-    handleFavorite,
   } = usePropertyItem(props);
 
   const renderCategory = (category: Category) => (
@@ -98,20 +94,7 @@ export const PropertyItem: FC<Props> = (props) => {
             >
               {t("showDetailsAction")}
             </Button>
-            {isAuthenticated && (
-              <ActionIcon
-                variant="default"
-                radius="md"
-                size={40}
-                onClick={handleFavorite}
-              >
-                {isFavorite ? (
-                  <IconHeartFilled size={24} style={{ color: "red" }} />
-                ) : (
-                  <IconHeart size={24} color="red" />
-                )}
-              </ActionIcon>
-            )}
+            {isAuthenticated && <FavoriteButton propertyId={id} />}
           </Group>
         </Card.Section>
       </Card>
@@ -127,10 +110,7 @@ function usePropertyItem({
   const { classes } = useStyles(isDarkTheme);
   const { locale } = useIntl();
   const { isAuthenticated } = useSession();
-  const [{ isFavorite, toggleFavorite }] = useFavorites();
   const [, { getCountry }] = useCountries();
-
-  const handleFavorite = () => toggleFavorite(id);
 
   return {
     t,
@@ -143,8 +123,6 @@ function usePropertyItem({
     country: getCountry(address.country)?.name,
     categories,
     isAuthenticated,
-    isFavorite: isFavorite(id),
-    handleFavorite,
   };
 }
 

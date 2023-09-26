@@ -30,6 +30,7 @@ export default function PropertyDetailsPage(props: Props) {
   return (
     <Stack m="md">
       <PropertyHeader
+        id={property?.id!}
         name={property?.name!}
         imageSrc={property?.imageSrc!}
         address={property?.address!}
