@@ -23,6 +23,8 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 import { OPTIMAL_IMAGE_SIZES } from "@/utils/constants";
 import { useSession } from "@/hooks/use-session";
 import { useFavorites } from "@/hooks/use-favorites";
+import { Link } from "../base/link";
+import { paths } from "@/navigation/paths";
 
 type Props = {
   item: Property;
@@ -31,6 +33,7 @@ type Props = {
 export const PropertyItem: FC<Props> = (props) => {
   const {
     t,
+    id,
     classes,
     locale,
     name,
@@ -87,7 +90,12 @@ export const PropertyItem: FC<Props> = (props) => {
             </Group>
           </Box>
           <Group py="sm" px="xs">
-            <Button radius="md" className="flex-1">
+            <Button
+              component={Link}
+              href={paths.property(id)}
+              radius="md"
+              className="flex-1"
+            >
               {t("showDetailsAction")}
             </Button>
             {isAuthenticated && (
@@ -126,6 +134,7 @@ function usePropertyItem({
 
   return {
     t,
+    id,
     classes,
     locale,
     name: generateLocaleTranslation(name, locale),

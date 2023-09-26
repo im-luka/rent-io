@@ -63,7 +63,8 @@
     "addProperty": "Problem with adding new property",
     "authenticated": "Not authenticated",
     "providedId": "ID not provided",
-    "propertyId": "Property ID not provided"
+    "propertyId": "Property ID not provided",
+    "noProperty": "Property with given ID doesn't exist"
   },
   "symbol": {
     "dot": ".",
@@ -71,6 +72,10 @@
     "minus": "-",
     "plus": "+",
     "dollar": "$"
+  },
+  "global": {
+    "loading": "Loading...",
+    "error": "Entity doesn't exist."
   },
   "navbar": {
     "logoAlt": "Logo",
@@ -246,6 +251,7 @@
       "description": "Redirecting to login page in {count}..."
     }
   },
+  "property": {},
   "favorites": {
     "title": "My Favorites",
     "description": "Places I would like to visit...",
@@ -256,7 +262,6 @@
     }
   },
   "user": {
-    "loading": "Loading...",
     "error": "User doesn't exist.",
     "profileCard": {
       "title": "About <s>{name}</s>",
