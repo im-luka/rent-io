@@ -53,3 +53,4 @@ _Find your perfect place to stay while traveling the World. 🌎_
 <img width="1440" alt="Screenshot 2023-09-26 at 20 37 43" src="https://github.com/im-luka/rent-io/assets/46372998/0b1aa91d-8aa9-4a1a-81bd-bb3640c2b648">
 <img width="1440" alt="Screenshot 2023-09-26 at 20 38 17" src="https://github.com/im-luka/rent-io/assets/46372998/225ef6cd-b1f7-43e7-9511-e1cd050f870e">
 <img width="1440" alt="Screenshot 2023-09-26 at 20 36 57" src="https://github.com/im-luka/rent-io/assets/46372998/045adb4b-d1f2-46a2-9bb6-5783509a1d86">
+
